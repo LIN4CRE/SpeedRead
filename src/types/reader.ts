@@ -187,3 +187,53 @@ export interface SaveState {
   updatedAt: number;
 }
 
+export interface VocabularyItem {
+  id: string;
+  word: string;
+  cleanWord: string;
+  contextSentence: string;
+  documentTitle: string;
+  timestamp: number;
+  definition?: string;
+  partOfSpeech?: string;
+  // SM-2 Spaced Repetition fields
+  repetition: number;        // consecutive successful reviews
+  intervalDays: number;      // days until next review (e.g. 1, 6, ...)
+  easeFactor: number;        // SM-2 difficulty multiplier (starts at 2.5)
+  nextReviewDate: number;    // timestamp for next scheduled review
+  lastReviewedDate?: number;
+}
+
+export interface CloudlessSyncPayload {
+  version: number;
+  exportedAt: number;
+  activeDocumentId: string;
+  activeDocumentTitle: string;
+  activeDocumentType: string;
+  currentWordIndex: number;
+  wpm: number;
+  bookmarks: SavedBookmark[];
+  vocabulary: VocabularyItem[];
+}
+
+export interface CatalogBook {
+  id: string;
+  title: string;
+  author: string;
+  year?: string;
+  category: string;
+  description: string;
+  wordCount: number;
+  coverAccent: string;
+  content: string;
+}
+
+export interface WebClipperResult {
+  title: string;
+  byline?: string;
+  siteName?: string;
+  cleanedText: string;
+  wordCount: number;
+  sourceUrl?: string;
+}
+

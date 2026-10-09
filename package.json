@@ -1,7 +1,7 @@
 {
   "name": "kinetic-rsvp-speed-reader",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "High-performance RSVP speed reader supporting PDF, ePub, TXT, and custom books with Optimal Recognition Point (ORP) focal tracking.",
   "license": "MIT",
   "type": "module",

@@ -17,7 +17,10 @@ import {
   VolumeX,
   Sparkles,
   Cookie,
-  Activity
+  Activity,
+  BookMarked,
+  Scissors,
+  Smartphone
 } from 'lucide-react';
 import { ThemeColors } from '../types/reader';
 
@@ -48,6 +51,9 @@ interface ControlsProps {
   onOpenSaveStates?: () => void;
   chunkSize?: 1 | 2 | 3;
   onCycleChunkSize?: () => void;
+  onOpenVocabulary?: () => void;
+  onOpenWebClipper?: () => void;
+  onOpenSync?: () => void;
 }
 
 export const Controls: React.FC<ControlsProps> = ({
@@ -76,6 +82,9 @@ export const Controls: React.FC<ControlsProps> = ({
   onOpenSaveStates,
   chunkSize = 1,
   onCycleChunkSize,
+  onOpenVocabulary,
+  onOpenWebClipper,
+  onOpenSync,
 }) => {
   const progressPercent = totalWords > 0 ? (currentWordIndex / totalWords) * 100 : 0;
   const wordsRemaining = Math.max(0, totalWords - currentWordIndex);
@@ -297,6 +306,54 @@ export const Controls: React.FC<ControlsProps> = ({
               }}
             >
               <Cookie className="w-4 h-4 text-amber-400" />
+            </button>
+          )}
+
+          {/* Vocabulary Vault & SM-2 Flashcards Button */}
+          {onOpenVocabulary && (
+            <button
+              onClick={onOpenVocabulary}
+              title="Vocabulary Vault & Spaced Repetition (D)"
+              className="p-2.5 rounded-xl border transition-all active:scale-95 flex items-center justify-center hover:opacity-90"
+              style={{
+                backgroundColor: theme.bg,
+                borderColor: theme.border,
+                color: theme.textDim,
+              }}
+            >
+              <BookMarked className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Web Clipper & Readability Button */}
+          {onOpenWebClipper && (
+            <button
+              onClick={onOpenWebClipper}
+              title="Instant Web Clipper & Readability Mode"
+              className="p-2.5 rounded-xl border transition-all active:scale-95 flex items-center justify-center hover:opacity-90"
+              style={{
+                backgroundColor: theme.bg,
+                borderColor: theme.border,
+                color: theme.textDim,
+              }}
+            >
+              <Scissors className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Cloudless Device Sync Button */}
+          {onOpenSync && (
+            <button
+              onClick={onOpenSync}
+              title="Cloudless Device Sync & QR Mirror (Y)"
+              className="p-2.5 rounded-xl border transition-all active:scale-95 flex items-center justify-center hover:opacity-90"
+              style={{
+                backgroundColor: theme.bg,
+                borderColor: theme.border,
+                color: theme.textDim,
+              }}
+            >
+              <Smartphone className="w-4 h-4" />
             </button>
           )}
 

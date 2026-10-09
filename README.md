@@ -14,9 +14,9 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.x-646cff.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-38bdf8.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Tests-48%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
+[![Vitest](https://img.shields.io/badge/Tests-63%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
 [![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-blueviolet.svg?logo=pwa&logoColor=white)](#offline-pwa-support)
-[![Formats](https://img.shields.io/badge/Formats-PDF%20%7C%20ePub%20%7C%20TXT-emerald.svg)](#supported-formats)
+[![Formats](https://img.shields.io/badge/Formats-PDF%20%7C%20ePub%20%7C%20TXT%20%7C%20Web-emerald.svg)](#supported-formats)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-rose.svg)](#privacy--security)
 
 [🚀 Live Demo](https://speedread-rsvp-1791551209.surge.sh) · [✨ Features](#key-features) · [🔬 The Science](#the-science-of-rsvp) · [⌨️ Shortcuts](#keyboard-shortcuts) · [📚 Free Ebooks](#free-ebooks-directory) · [🗺️ Roadmap](ROADMAP.md) · [🛠️ Installation](#getting-started) · [🤝 Contributing](CONTRIBUTING.md)
@@ -44,6 +44,24 @@ When reading a physical book or standard screen, your eyes don't glide smoothly�
 ---
 
 ## ✨ Key Features
+
+### 📚 Open Ebook Catalog & Direct Stream Ingestion
+- **1-Click Classic Streamer:** Instant stream ingestion for curated public domain masterworks (*The Time Machine*, *The Picture of Dorian Gray*, *Sherlock Holmes*, *The Art of War*, *Meditations*) without needing to download files to disk first.
+- **OPDS Feed Parser:** Ingest open Atom XML OPDS library feeds directly into your personal bookshelf.
+
+### 📱 Cloudless Device Sync & QR Mirror (<kbd>Y</kbd> Key)
+- **Peer-to-Peer QR Mirroring:** Instant SVG QR code and base64 transfer payload to continue reading seamlessly on your smartphone with zero cloud tracking.
+- **Zero-Knowledge Passphrase Encryption:** Client-side 256-bit AES-GCM encryption (PBKDF2 SHA-256) via the Web Crypto API for private backups.
+
+### ✂️ Instant Web Clipper & Readability Mode
+- **Article Readability Cleaner:** Strips advertisements, tracking scripts, navigation headers, sidebars, and cookie banners to stream web articles straight into RSVP.
+- **1-Click Bookmarklet:** Drag the SpeedRead bookmarklet to your browser toolbar to ingest any web article with a single click.
+
+### 🧠 Vocabulary Vault & Spaced Repetition (<kbd>D</kbd> Key)
+- **1-Key Vocabulary Bookmarking:** Press <kbd>D</kbd> during playback to save unfamiliar words with their sentence context.
+- **Embedded Offline Lexicon:** Built-in dictionary definitions with online API fallback.
+- **SuperMemo SM-2 Flashcards:** Interactive spaced repetition review mode with automated interval scheduling.
+- **Anki Deck Export:** 1-click export to Anki-compatible TSV decks (`SpeedRead_Vocabulary_Anki.tsv`).
 
 ### 👁️ Multi-Word Saccadic Chunking (1, 2, & 3 Word Modes)
 - **Fluid Word Grouping (<kbd>W</kbd> Key):** Switch between single-word RSVP, 2-word pairs with dual focal markers, or 3-word saccadic trios centered on the stationary axis.

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-10-09
+
+### Added
+- **Direct OPDS & Ebook Catalog Streamer (`openCatalog.ts`):** In-app curated public domain catalog featuring classics (*The Time Machine*, *The Picture of Dorian Gray*, *Sherlock Holmes*, *The Art of War*, *Meditations*) with 1-click stream ingestion into RSVP, plus Atom XML OPDS feed parsing.
+- **Cloudless Local-First Multi-Device Sync (`cloudlessSync.ts`):** Instant device-to-device mirroring via SVG QR codes, compact base64 payloads, and Zero-Knowledge 256-bit AES-GCM client-side passphrase encryption.
+- **Instant Web Clipper & Readability Mode (`webClipper.ts`):** Article URL fetcher, cleaner stripping ads/scripts/banners, and copyable 1-click browser bookmarklet (`javascript:(function(){...})()`).
+- **Vocabulary Vault & Spaced Repetition (`vocabulary.ts`):** Hotkey <kbd>D</kbd> bookmarks unfamiliar words and context sentences; embedded offline dictionary with online API fallback; interactive SuperMemo SM-2 flashcard review; and one-click Anki TSV export.
+- **Expanded Test Suite:** Added `tests/vocabulary.test.ts`, `tests/webClipper.test.ts`, `tests/cloudlessSync.test.ts`, and `tests/openCatalog.test.ts`, expanding test coverage to 12 suites and 63 unit tests (100% passing).
+
+---
+
 ## [1.1.0] - 2026-10-09
 
 ### Added

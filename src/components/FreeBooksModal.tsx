@@ -1,10 +1,26 @@
-import React from 'react';
-import { X, ExternalLink, Download, BookOpen, Sparkles, CheckCircle2, Globe } from 'lucide-react';
-import { ThemeColors } from '../types/reader';
+import React, { useState } from 'react';
+import { 
+  X, 
+  ExternalLink, 
+  Download, 
+  BookOpen, 
+  Sparkles, 
+  CheckCircle2, 
+  Globe, 
+  Play, 
+  Rss, 
+  Search, 
+  ArrowRight,
+  Layers
+} from 'lucide-react';
+import { ThemeColors, DocumentSource, CatalogBook } from '../types/reader';
+import { CURATED_OPEN_CATALOG, parseOpdsFeedXml } from '../utils/openCatalog';
+import { tokenizeText } from '../utils/orp';
 
 interface FreeBooksModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSelectBook?: (doc: DocumentSource) => void;
   theme: ThemeColors;
 }
 
@@ -71,9 +87,51 @@ export const FREE_BOOK_SOURCES: FreeBookSource[] = [
 export const FreeBooksModal: React.FC<FreeBooksModalProps> = ({
   isOpen,
   onClose,
+  onSelectBook,
   theme,
 }) => {
+  const [activeTab, setActiveTab] = useState<'stream' | 'sources' | 'opds'>('stream');
+  const [search, setSearch] = useState('');
+  const [opdsInput, setOpdsInput] = useState('');
+  const [opdsEntries, setOpdsEntries] = useState<Array<{ id: string; title: string; author: string; summary: string }>>([]);
+
   if (!isOpen) return null;
+
+  const filteredCatalog = CURATED_OPEN_CATALOG.filter((book) =>
+    book.title.toLowerCase().includes(search.toLowerCase()) ||
+    book.author.toLowerCase().includes(search.toLowerCase()) ||
+    book.category.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleStreamBook = (book: CatalogBook) => {
+    if (!onSelectBook) return;
+    const words = tokenizeText(book.content);
+    const newDoc: DocumentSource = {
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      type: 'sample',
+      totalWords: words.length,
+      chapters: [{
+        id: 'chap_1',
+        title: book.title,
+        startWordIndex: 0,
+        wordCount: words.length,
+      }],
+      rawText: book.content,
+      words,
+      dateAdded: Date.now(),
+    };
+
+    onSelectBook(newDoc);
+    onClose();
+  };
+
+  const handleParseOpds = () => {
+    if (!opdsInput.trim()) return;
+    const entries = parseOpdsFeedXml(opdsInput);
+    setOpdsEntries(entries);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm animate-fadeIn">
@@ -98,9 +156,9 @@ export const FreeBooksModal: React.FC<FreeBooksModalProps> = ({
               <Globe className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-semibold text-base sm:text-lg">Where to Get Free Books (EPUB & PDF)</h2>
+              <h2 className="font-semibold text-base sm:text-lg">Open Ebook Catalog & OPDS Ingestion</h2>
               <p className="text-xs" style={{ color: theme.textDim }}>
-                Download tens of thousands of free books and read them in Kinetic RSVP at 600 WPM
+                Stream free public domain classics or connect open OPDS feeds
               </p>
             </div>
           </div>
@@ -114,111 +172,199 @@ export const FreeBooksModal: React.FC<FreeBooksModalProps> = ({
           </button>
         </div>
 
-        {/* Body Content */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1">
-          {/* Quick 3-Step Instruction Card */}
-          <div
-            className="p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs"
-            style={{ backgroundColor: theme.bg, borderColor: theme.border }}
+        {/* Tab Controls */}
+        <div className="flex border-b px-6 pt-2 gap-4 text-sm font-medium" style={{ borderColor: theme.border }}>
+          <button
+            onClick={() => setActiveTab('stream')}
+            className={`pb-2.5 border-b-2 transition-colors flex items-center gap-2 ${
+              activeTab === 'stream' ? 'border-current font-bold' : 'border-transparent opacity-60 hover:opacity-100'
+            }`}
+            style={{ color: activeTab === 'stream' ? theme.accent : theme.textBright }}
           >
-            <div className="flex items-center gap-2.5 font-medium" style={{ color: theme.textBright }}>
-              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>How it works:</span>
-            </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-xs font-mono" style={{ color: theme.textDim }}>
-              <div className="flex items-center gap-1.5">
-                <span className="w-4 h-4 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-[10px]">1</span>
-                <span>Click a source below</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-4 h-4 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-[10px]">2</span>
-                <span>Download .epub or .pdf</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-4 h-4 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-[10px]">3</span>
-                <span>Drop or Upload here</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Sources List */}
-          <div className="space-y-3">
-            {FREE_BOOK_SOURCES.map((source) => (
-              <div
-                key={source.name}
-                className="p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:border-opacity-100"
-                style={{ backgroundColor: theme.bg, borderColor: theme.border }}
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-sm" style={{ color: theme.textBright }}>
-                      {source.name}
-                    </h3>
-                    <span
-                      className="text-[10px] px-2 py-0.5 rounded font-mono font-medium"
-                      style={{ backgroundColor: theme.surface, color: theme.accent }}
-                    >
-                      {source.tag}
-                    </span>
-                  </div>
-                  <p className="text-xs mt-1" style={{ color: theme.textDim }}>
-                    {source.description}
-                  </p>
-                  <div className="flex items-center gap-2 mt-2 text-[11px] font-mono" style={{ color: theme.textDim }}>
-                    <span>Formats:</span>
-                    {source.formats.map((fmt) => (
-                      <span key={fmt} className="px-1.5 py-0.2 rounded border text-[10px]" style={{ borderColor: theme.border }}>
-                        {fmt}
-                      </span>
-                    ))}
-                    <span className="hidden sm:inline">· Popular: {source.recommended}</span>
-                  </div>
-                </div>
-
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition-transform active:scale-95 shrink-0 shadow-md"
-                  style={{ backgroundColor: theme.accent }}
-                >
-                  <span>Visit Library</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            ))}
-          </div>
-
-          {/* Notice about Copyrighted Books vs Public Domain */}
-          <div
-            className="p-4 rounded-xl border text-xs space-y-1.5"
-            style={{ backgroundColor: `${theme.surface}80`, borderColor: theme.border, color: theme.textDim }}
+            <Play className="w-4 h-4" /> 1-Click Stream Catalog
+          </button>
+          <button
+            onClick={() => setActiveTab('sources')}
+            className={`pb-2.5 border-b-2 transition-colors flex items-center gap-2 ${
+              activeTab === 'sources' ? 'border-current font-bold' : 'border-transparent opacity-60 hover:opacity-100'
+            }`}
+            style={{ color: activeTab === 'sources' ? theme.accent : theme.textBright }}
           >
-            <div className="font-semibold flex items-center gap-1.5" style={{ color: theme.textBright }}>
-              <BookOpen className="w-3.5 h-3.5" style={{ color: theme.accent }} />
-              <span>Public Domain Library & Personal Books</span>
-            </div>
-            <p>
-              All sample classics built into SpeedRead (<em>Alice in Wonderland</em>, <em>Frankenstein</em>, <em>Peter Pan</em>, <em>Wizard of Oz</em>, <em>The Time Machine</em>) are <strong>100% public domain works</strong> free to read and share.
-            </p>
-            <p>
-              For contemporary copyrighted books, you can load your legally owned <strong>EPUB, PDF, or TXT</strong> files into Kinetic RSVP instantly using the <strong>Upload</strong> button or by dragging and dropping them anywhere on screen.
-            </p>
-          </div>
+            <Layers className="w-4 h-4" /> Ebook Directories
+          </button>
+          <button
+            onClick={() => setActiveTab('opds')}
+            className={`pb-2.5 border-b-2 transition-colors flex items-center gap-2 ${
+              activeTab === 'opds' ? 'border-current font-bold' : 'border-transparent opacity-60 hover:opacity-100'
+            }`}
+            style={{ color: activeTab === 'opds' ? theme.accent : theme.textBright }}
+          >
+            <Rss className="w-4 h-4" /> OPDS Feeds
+          </button>
         </div>
 
-        {/* Footer */}
-        <div
-          className="px-6 py-3.5 border-t flex justify-end"
-          style={{ borderColor: theme.border, backgroundColor: theme.bg }}
-        >
-          <button
-            onClick={onClose}
-            className="px-5 py-2 text-xs font-semibold rounded-xl text-white transition-transform active:scale-95"
-            style={{ backgroundColor: theme.accent }}
-          >
-            Got It
-          </button>
+        {/* Body Content */}
+        <div className="p-5 sm:px-6 overflow-y-auto space-y-4 flex-1">
+          {activeTab === 'stream' && (
+            <div className="space-y-4">
+              {/* Search Bar */}
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 opacity-40" />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search open titles or authors..."
+                  className="w-full pl-9 pr-3 py-2 text-sm rounded-xl border bg-black/20 focus:outline-none"
+                  style={{ borderColor: theme.border, color: theme.textBright }}
+                />
+              </div>
+
+              {/* Book Cards */}
+              <div className="space-y-3">
+                {filteredCatalog.map((book) => (
+                  <div
+                    key={book.id}
+                    className="p-4 rounded-xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-colors hover:border-white/20"
+                    style={{ backgroundColor: `${theme.bg}80`, borderColor: theme.border }}
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="w-2.5 h-2.5 rounded-full"
+                          style={{ backgroundColor: book.coverAccent }}
+                        />
+                        <h4 className="text-sm font-bold tracking-wide">{book.title}</h4>
+                        <span className="text-xs opacity-60">· {book.author}</span>
+                        {book.year && <span className="text-[10px] opacity-40 font-mono">({book.year})</span>}
+                      </div>
+                      <p className="text-xs leading-relaxed opacity-70">
+                        {book.description}
+                      </p>
+                      <div className="flex items-center gap-2 text-[11px] font-mono opacity-50 pt-1">
+                        <span>{book.category}</span>
+                        <span>·</span>
+                        <span>{book.wordCount} words</span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => handleStreamBook(book)}
+                      className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border transition-all shrink-0 self-end sm:self-center"
+                      style={{
+                        backgroundColor: `${theme.accent}15`,
+                        borderColor: `${theme.accent}40`,
+                        color: theme.accent,
+                      }}
+                    >
+                      <Play className="w-3.5 h-3.5 fill-current" />
+                      <span>Stream & Read</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'sources' && (
+            <div className="space-y-4">
+              <div
+                className="p-3.5 rounded-xl border flex items-center gap-2.5 text-xs"
+                style={{ backgroundColor: theme.bg, borderColor: theme.border }}
+              >
+                <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="opacity-80">
+                  Download any `.epub`, `.pdf`, or `.txt` from these repositories and drag into SpeedRead!
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {FREE_BOOK_SOURCES.map((source) => (
+                  <div
+                    key={source.name}
+                    className="p-4 rounded-xl border flex flex-col justify-between gap-3 transition-all hover:border-white/30"
+                    style={{ backgroundColor: `${theme.bg}60`, borderColor: theme.border }}
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-sm">{source.name}</span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-white/5 border border-white/10 opacity-70">
+                          {source.tag}
+                        </span>
+                      </div>
+                      <p className="text-xs opacity-70 leading-relaxed">{source.description}</p>
+                    </div>
+
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold hover:underline"
+                      style={{ color: theme.accent }}
+                    >
+                      <span>Visit Catalog</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'opds' && (
+            <div className="space-y-4 text-xs">
+              <div className="p-3.5 rounded-xl border bg-white/5 space-y-1.5" style={{ borderColor: theme.border }}>
+                <span className="font-bold text-sm flex items-center gap-1.5" style={{ color: theme.accent }}>
+                  <Rss className="w-4 h-4" /> Open Publication Distribution System (OPDS)
+                </span>
+                <p className="opacity-70 leading-relaxed">
+                  Paste the XML feed content from an OPDS root catalog (e.g. Calibre, Standard Ebooks OPDS) to parse books into your local stream library.
+                </p>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="font-semibold uppercase tracking-wider opacity-70">
+                  OPDS XML Feed Payload
+                </label>
+                <textarea
+                  rows={5}
+                  value={opdsInput}
+                  onChange={(e) => setOpdsInput(e.target.value)}
+                  placeholder="Paste <feed xmlns='http://www.w3.org/2005/Atom'> ... </feed> XML content here..."
+                  className="w-full p-3 font-mono rounded-xl border bg-black/20 focus:outline-none resize-none text-[11px]"
+                  style={{ borderColor: theme.border, color: theme.textBright }}
+                />
+              </div>
+
+              <button
+                onClick={handleParseOpds}
+                disabled={!opdsInput.trim()}
+                className="w-full py-2.5 rounded-xl font-bold uppercase tracking-wider border disabled:opacity-40 transition-colors"
+                style={{
+                  backgroundColor: `${theme.accent}20`,
+                  borderColor: theme.accent,
+                  color: theme.accent,
+                }}
+              >
+                Parse OPDS Feed
+              </button>
+
+              {opdsEntries.length > 0 && (
+                <div className="space-y-2 pt-2">
+                  <span className="font-semibold opacity-70">Found {opdsEntries.length} Books:</span>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {opdsEntries.map((e) => (
+                      <div key={e.id} className="p-2.5 rounded-lg border bg-black/30 space-y-1" style={{ borderColor: theme.border }}>
+                        <span className="font-bold">{e.title}</span>
+                        <span className="opacity-60 ml-2">by {e.author}</span>
+                        {e.summary && <p className="opacity-70 text-[11px] line-clamp-2">{e.summary}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

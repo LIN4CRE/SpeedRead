@@ -78,6 +78,11 @@ import { FreeBooksModal } from './components/FreeBooksModal';
 import { ReadingInsightsModal } from './components/ReadingInsightsModal';
 import { EyeRestModal } from './components/EyeRestModal';
 import { SaveStateModal } from './components/SaveStateModal';
+import { VocabularyModal } from './components/VocabularyModal';
+import { WebClipperModal } from './components/WebClipperModal';
+import { CloudlessSyncModal } from './components/CloudlessSyncModal';
+import { addVocabularyItem, loadVocabularyItems } from './utils/vocabulary';
+import { CloudlessSyncPayload, VocabularyItem } from './types/reader';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 import { useSpeechSynthesis } from './hooks/useSpeechSynthesis';
 
@@ -115,6 +120,42 @@ export default function App() {
   const [isInsightsOpen, setIsInsightsOpen] = useState<boolean>(false);
   const [isEyeRestOpen, setIsEyeRestOpen] = useState<boolean>(false);
   const [isSaveStateOpen, setIsSaveStateOpen] = useState<boolean>(false);
+  const [isVocabularyOpen, setIsVocabularyOpen] = useState<boolean>(false);
+  const [isWebClipperOpen, setIsWebClipperOpen] = useState<boolean>(false);
+  const [isSyncOpen, setIsSyncOpen] = useState<boolean>(false);
+  const [vocabularyItems, setVocabularyItems] = useState<VocabularyItem[]>(() => loadVocabularyItems());
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = useCallback((msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage((prev) => (prev === msg ? null : prev)), 2500);
+  }, []);
+
+  const handleBookmarkCurrentWord = useCallback(async () => {
+    const currentWord = activeDoc.words[currentWordIndex];
+    if (!currentWord || !currentWord.raw) return;
+
+    // Find sentence context window around active word
+    const start = Math.max(0, currentWordIndex - 8);
+    const end = Math.min(activeDoc.words.length, currentWordIndex + 12);
+    const sentence = activeDoc.words.slice(start, end).map((w) => w.raw).join(' ');
+
+    const item = await addVocabularyItem(currentWord.raw, sentence, activeDoc.title);
+    setVocabularyItems(loadVocabularyItems());
+    showToast(`Saved "${item.cleanWord}" to Vocabulary Vault!`);
+  }, [activeDoc, currentWordIndex, showToast]);
+
+  const handleApplySyncState = useCallback((payload: CloudlessSyncPayload) => {
+    if (payload.wpm) setWpm(payload.wpm);
+    if (payload.currentWordIndex !== undefined) setCurrentWordIndex(payload.currentWordIndex);
+    if (payload.bookmarks && payload.bookmarks.length > 0) {
+      setBookmarks(payload.bookmarks);
+    }
+    if (payload.vocabulary && payload.vocabulary.length > 0) {
+      setVocabularyItems(payload.vocabulary);
+    }
+    showToast(`Synced from device: "${payload.activeDocumentTitle}"`);
+  }, [showToast]);
 
   // User Accounts & Cookie Break Place States
   const [currentUser, setCurrentUser] = useState<UserAccount | null>(() => getCurrentUser());
@@ -695,6 +736,24 @@ export default function App() {
           }
           break;
 
+        case 'KeyD':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            if (e.shiftKey) {
+              setIsVocabularyOpen(true);
+            } else {
+              handleBookmarkCurrentWord();
+            }
+          }
+          break;
+
+        case 'KeyY':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            setIsSyncOpen((prev) => !prev);
+          }
+          break;
+
         case 'Escape':
           setIsSettingsOpen(false);
           setIsShortcutsOpen(false);
@@ -704,6 +763,9 @@ export default function App() {
           setIsEyeRestOpen(false);
           setIsSaveStateOpen(false);
           setIsContextPeekOpen(false);
+          setIsVocabularyOpen(false);
+          setIsWebClipperOpen(false);
+          setIsSyncOpen(false);
           setIsZenMode(false);
           if (window.document.fullscreenElement) {
             window.document.exitFullscreen().catch(() => null);
@@ -717,7 +779,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [togglePlay, jumpPrevSentence, stepWords, resetPlayback, cycleTheme, cycleReticleStyle, cycleChunkSize, toggleFullscreen]);
+  }, [togglePlay, jumpPrevSentence, stepWords, resetPlayback, cycleTheme, cycleReticleStyle, cycleChunkSize, toggleFullscreen, handleBookmarkCurrentWord]);
 
   useEffect(() => {
     const onFsChange = () => {
@@ -1239,6 +1301,9 @@ export default function App() {
             onOpenSaveStates={() => setIsSaveStateOpen(true)}
             chunkSize={typography.chunkSize || 1}
             onCycleChunkSize={cycleChunkSize}
+            onOpenVocabulary={() => setIsVocabularyOpen(true)}
+            onOpenWebClipper={() => setIsWebClipperOpen(true)}
+            onOpenSync={() => setIsSyncOpen(true)}
           />
         </div>
       </main>
@@ -1256,11 +1321,13 @@ export default function App() {
           <div className="hidden sm:flex items-center gap-3 text-[11px] flex-wrap">
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Space</kbd> Play/Pause</span>
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">K</kbd> Save State</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">D</kbd> Vocab</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Y</kbd> Device Sync</span>
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">V</kbd> Read-Aloud</span>
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">M</kbd> Metronome</span>
-            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">S</kbd> Reticle Style</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">W</kbd> Chunk</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">S</kbd> Reticle</span>
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">B</kbd> Bookshelf</span>
-            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Z</kbd> Zen</span>
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">C</kbd> Context</span>
           </div>
 
@@ -1270,6 +1337,21 @@ export default function App() {
             <span>Drop file anywhere</span>
           </div>
         </footer>
+      )}
+
+      {/* Toast Notification Banner */}
+      {toastMessage && (
+        <div
+          className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl text-xs font-semibold shadow-2xl border backdrop-blur-md animate-fadeIn flex items-center gap-2 select-none"
+          style={{
+            backgroundColor: `${currentTheme.surface}f0`,
+            borderColor: currentTheme.accent,
+            color: currentTheme.textBright,
+          }}
+        >
+          <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: currentTheme.accent }} />
+          <span>{toastMessage}</span>
+        </div>
       )}
 
       {/* 5. Drawers & Modals */}
@@ -1323,9 +1405,39 @@ export default function App() {
         theme={currentTheme}
       />
 
+      {/* Open Ebook Catalog & OPDS Streamer */}
       <FreeBooksModal
         isOpen={isFreeBooksOpen}
         onClose={() => setIsFreeBooksOpen(false)}
+        onSelectBook={(doc) => handleSelectDocument(doc, 0)}
+        theme={currentTheme}
+      />
+
+      {/* Vocabulary Vault & SM-2 Spaced Repetition */}
+      <VocabularyModal
+        isOpen={isVocabularyOpen}
+        onClose={() => setIsVocabularyOpen(false)}
+        theme={currentTheme}
+      />
+
+      {/* Instant Web Clipper & Readability */}
+      <WebClipperModal
+        isOpen={isWebClipperOpen}
+        onClose={() => setIsWebClipperOpen(false)}
+        onImportDocument={(doc) => handleSelectDocument(doc, 0)}
+        theme={currentTheme}
+      />
+
+      {/* Cloudless Device Sync & QR Mirror */}
+      <CloudlessSyncModal
+        isOpen={isSyncOpen}
+        onClose={() => setIsSyncOpen(false)}
+        activeDoc={activeDoc}
+        currentWordIndex={currentWordIndex}
+        wpm={wpm}
+        bookmarks={bookmarks}
+        vocabulary={vocabularyItems}
+        onApplySyncState={handleApplySyncState}
         theme={currentTheme}
       />
 

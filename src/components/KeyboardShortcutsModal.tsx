@@ -18,6 +18,9 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
   const shortcuts = [
     { key: 'Space', desc: 'Play / Pause reading flow' },
     { key: 'K', desc: 'Save States & Cookie Places (Take a Break)' },
+    { key: 'D', desc: 'Add active word to Vocabulary Vault (Shift+D to open vault)' },
+    { key: 'Y', desc: 'Cloudless Device Sync & QR mirror' },
+    { key: 'W', desc: 'Cycle saccadic chunk size (1w, 2w, 3w)' },
     { key: 'V', desc: 'Toggle Read-Aloud Web Speech synthesis' },
     { key: 'M', desc: 'Toggle Audio Metronome Cadence Ticker' },
     { key: 'S', desc: 'Cycle Reticle style (Line, Highlighter, Spotlight, etc.)' },
