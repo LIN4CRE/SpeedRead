@@ -90,3 +90,45 @@ export interface SavedBookmark {
   wpm: number;
   lastReadTimestamp: number;
 }
+
+export interface ReadingSession {
+  id: string;
+  timestamp: number;
+  dateStr: string;
+  durationSeconds: number;
+  wordsRead: number;
+  avgWpm: number;
+  peakWpm: number;
+  bookTitle: string;
+}
+
+export interface ReadingInsightsData {
+  totalWordsRead: number;
+  totalReadingSeconds: number;
+  peakWpmEver: number;
+  sessions: ReadingSession[];
+}
+
+export interface SpeechRecognitionState {
+  isSupported: boolean;
+  isListening: boolean;
+  mode: 'commands' | 'cadence';
+  lastHeardCommand: string | null;
+  lastCommandTimestamp: number;
+  detectedCadenceWpm: number | null;
+}
+
+export interface PomodoroSettings {
+  focusDurationMinutes: number; // default 25
+  breakDurationMinutes: number; // default 5
+  soundEnabled: boolean;
+  autoPauseOnBreak: boolean;
+}
+
+export interface PomodoroState {
+  mode: 'focus' | 'break';
+  secondsRemaining: number;
+  streakCount: number;
+  isActive: boolean;
+}
+

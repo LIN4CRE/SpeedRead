@@ -7,23 +7,29 @@ import {
   Minimize, 
   Sun, 
   Moon, 
-  Upload,
-  FileText,
-  Sparkles,
-  Zap,
-  Loader2,
-  Globe,
-  PanelLeft,
-  EyeOff,
-  Eye,
-  Check
+  Upload, 
+  FileText, 
+  Sparkles, 
+  Zap, 
+  Loader2, 
+  Globe, 
+  PanelLeft, 
+  EyeOff, 
+  Eye, 
+  Check, 
+  TrendingUp, 
+  Mic, 
+  MicOff, 
+  Flame, 
+  Clock 
 } from 'lucide-react';
 import { 
   DocumentSource, 
   TypographySettings, 
   ThemeColors, 
   PacingConfig, 
-  SavedBookmark 
+  SavedBookmark, 
+  ReadingInsightsData 
 } from './types/reader';
 import { computeWordDelay, tokenizeText } from './utils/orp';
 import { parsePdfFile } from './utils/pdfParser';
@@ -35,14 +41,16 @@ import {
   loadThemeId, 
   saveThemeId, 
   loadPacing, 
-  savePacing,
-  loadBookmarks,
-  saveBookmark,
-  removeBookmark,
-  loadCustomAccent,
-  saveCustomAccent,
-  DEFAULT_TYPOGRAPHY,
-  DEFAULT_PACING
+  savePacing, 
+  loadBookmarks, 
+  saveBookmark, 
+  removeBookmark, 
+  loadCustomAccent, 
+  saveCustomAccent, 
+  loadReadingInsights, 
+  recordReadingSession, 
+  DEFAULT_TYPOGRAPHY, 
+  DEFAULT_PACING 
 } from './utils/storage';
 import { SAMPLE_LIBRARY, createDocumentFromSample } from './utils/sampleTexts';
 import { ReticleDisplay } from './components/ReticleDisplay';
@@ -53,6 +61,9 @@ import { DocumentDrawer } from './components/DocumentDrawer';
 import { ContextPeek } from './components/ContextPeek';
 import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
 import { FreeBooksModal } from './components/FreeBooksModal';
+import { ReadingInsightsModal } from './components/ReadingInsightsModal';
+import { EyeRestModal } from './components/EyeRestModal';
+import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 
 export default function App() {
   // 1. Settings & Persistence State
@@ -85,13 +96,25 @@ export default function App() {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isFreeBooksOpen, setIsFreeBooksOpen] = useState<boolean>(false);
   const [isZenMode, setIsZenMode] = useState<boolean>(false);
+  const [isInsightsOpen, setIsInsightsOpen] = useState<boolean>(false);
+  const [isEyeRestOpen, setIsEyeRestOpen] = useState<boolean>(false);
 
-  // 4. Drag & Drop state for effortless book addition
+  // 4. Reading Insights & Session Analytics
+  const [insights, setInsights] = useState<ReadingInsightsData>(() => loadReadingInsights());
+  const sessionStartWordIndex = useRef<number>(0);
+  const sessionStartTime = useRef<number>(0);
+  const sessionPeakWpm = useRef<number>(wpm);
+
+  // 5. Pomodoro 25-Minute Reading Timer & 5-Minute Eye Break
+  const [pomodoroFocusSeconds, setPomodoroFocusSeconds] = useState<number>(0);
+  const [pomodoroStreak, setPomodoroStreak] = useState<number>(0);
+
+  // 6. Drag & Drop state for effortless book addition
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
   const [isDroppingAndParsing, setIsDroppingAndParsing] = useState<boolean>(false);
   const [dropStatus, setDropStatus] = useState<string>('');
 
-  // 5. Timer Reference
+  // 7. Timer Reference
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const currentTheme: ThemeColors = THEMES[themeId] || THEMES.oled;
 
@@ -144,6 +167,21 @@ export default function App() {
 
   // Handle document switch
   const handleSelectDocument = (newDoc: DocumentSource, startWordIndex = 0) => {
+    if (isPlaying) {
+      const wordsRead = Math.max(0, currentWordIndex - sessionStartWordIndex.current);
+      const duration = Math.max(1, Math.round((Date.now() - sessionStartTime.current) / 1000));
+      if (wordsRead >= 5) {
+        recordReadingSession({
+          durationSeconds: duration,
+          wordsRead,
+          avgWpm: wpm,
+          peakWpm: Math.max(sessionPeakWpm.current, wpm),
+          bookTitle: activeDoc.title,
+        });
+        setInsights(loadReadingInsights());
+      }
+    }
+
     setIsPlaying(false);
     if (timerRef.current) clearTimeout(timerRef.current);
     
@@ -165,10 +203,27 @@ export default function App() {
       setIsPlaying(false);
       if (timerRef.current) clearTimeout(timerRef.current);
       recordBookmark(activeDoc, currentWordIndex, wpm);
+
+      // Record reading session for Insights analytics
+      const wordsRead = Math.max(0, currentWordIndex - sessionStartWordIndex.current);
+      const duration = Math.max(1, Math.round((Date.now() - sessionStartTime.current) / 1000));
+      if (wordsRead >= 5) {
+        recordReadingSession({
+          durationSeconds: duration,
+          wordsRead,
+          avgWpm: wpm,
+          peakWpm: Math.max(sessionPeakWpm.current, wpm),
+          bookTitle: activeDoc.title,
+        });
+        setInsights(loadReadingInsights());
+      }
     } else {
       if (currentWordIndex >= activeDoc.words.length - 1) {
         setCurrentWordIndex(0);
       }
+      sessionStartWordIndex.current = currentWordIndex;
+      sessionStartTime.current = Date.now();
+      sessionPeakWpm.current = wpm;
       setIsPlaying(true);
     }
   }, [activeDoc, isPlaying, currentWordIndex, wpm, recordBookmark]);
@@ -197,6 +252,61 @@ export default function App() {
     const newIndex = target > 0 ? target + 1 : 0;
     setCurrentWordIndex(newIndex);
   }, [currentWordIndex, activeDoc.words]);
+
+  // Speech Recognition hook integration
+  const handleVoiceAdjustWpm = useCallback((delta: number) => {
+    setWpm((prev) => Math.min(1200, Math.max(100, prev + delta)));
+  }, []);
+
+  const handleVoiceSetWpm = useCallback((targetWpm: number) => {
+    setWpm(Math.min(1200, Math.max(100, targetWpm)));
+  }, []);
+
+  const handleVoicePause = useCallback(() => {
+    setIsPlaying(false);
+  }, []);
+
+  const handleVoiceResume = useCallback(() => {
+    setIsPlaying(true);
+  }, []);
+
+  const {
+    isSupported: isSpeechSupported,
+    isListening: isSpeechListening,
+    mode: speechMode,
+    setMode: setSpeechMode,
+    toggleListening: toggleSpeechListening,
+    feedbackToast: speechToast,
+  } = useSpeechRecognition({
+    onAdjustWpm: handleVoiceAdjustWpm,
+    onSetWpm: handleVoiceSetWpm,
+    onTogglePlay: () => togglePlay(),
+    onPause: handleVoicePause,
+    onResume: handleVoiceResume,
+    onRewind: jumpPrevSentence,
+    currentWpm: wpm,
+  });
+
+  // Pomodoro Continuous Reading Timer (25 min focus -> 5 min eye rest break)
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const interval = setInterval(() => {
+      setPomodoroFocusSeconds((prev) => {
+        const next = prev + 1;
+        // 25 minutes = 1500 seconds
+        if (next >= 25 * 60) {
+          setIsPlaying(false);
+          setPomodoroStreak((s) => s + 1);
+          setIsEyeRestOpen(true);
+          return 0;
+        }
+        return next;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isPlaying]);
 
   // Reset to beginning
   const resetPlayback = useCallback(() => {
@@ -502,8 +612,62 @@ export default function App() {
             </div>
           </div>
 
-          {/* Right: Free Books, Zen, Theme, Shortcuts, Settings */}
+          {/* Right: Insights, Voice Control, Pomodoro, Free Books, Zen, Theme, Shortcuts, Settings */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Reading Insights Dashboard */}
+            <button
+              onClick={() => {
+                setInsights(loadReadingInsights());
+                setIsInsightsOpen(true);
+              }}
+              className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-sky-400 border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20"
+              title="Reading Insights & Analytics (Speed History, Words Read, Time Remaining)"
+            >
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Insights</span>
+            </button>
+
+            {/* Voice Control (Speech Recognition) */}
+            {isSpeechSupported && (
+              <button
+                onClick={toggleSpeechListening}
+                className={`px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm ${
+                  isSpeechListening
+                    ? 'bg-rose-500/20 text-rose-400 border-rose-500/40 animate-pulse'
+                    : 'hover:opacity-100 opacity-80'
+                }`}
+                style={{
+                  backgroundColor: isSpeechListening ? undefined : currentTheme.surface,
+                  borderColor: isSpeechListening ? undefined : currentTheme.border,
+                  color: isSpeechListening ? undefined : currentTheme.textDim,
+                }}
+                title={
+                  isSpeechListening 
+                    ? 'Voice Control Active - Say "faster", "slower", "pause", "resume", "600"' 
+                    : 'Enable Voice Speed & Cadence Control (Microphone)'
+                }
+              >
+                {isSpeechListening ? <Mic className="w-3.5 h-3.5 text-rose-400" /> : <MicOff className="w-3.5 h-3.5" />}
+                <span className="hidden md:inline">{isSpeechListening ? 'Listening...' : 'Voice'}</span>
+              </button>
+            )}
+
+            {/* Pomodoro Focus Timer Status */}
+            <button
+              onClick={() => setIsEyeRestOpen(true)}
+              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 text-xs rounded-xl border transition-all active:scale-95"
+              style={{
+                backgroundColor: currentTheme.surface,
+                borderColor: pomodoroFocusSeconds >= 1200 ? '#f43f5e' : currentTheme.border,
+                color: pomodoroFocusSeconds >= 1200 ? '#f43f5e' : currentTheme.textDim,
+              }}
+              title="Pomodoro 25-Min Eye Care Timer. Click to start a 5-minute eye-rest break now."
+            >
+              <Flame className={`w-3.5 h-3.5 ${isPlaying ? 'text-amber-400 animate-pulse' : 'text-slate-400'}`} />
+              <span>Focus: {Math.floor(pomodoroFocusSeconds / 60)}/25m</span>
+            </button>
+
+            {/* Free Books Link */}
             <button
               onClick={() => setIsFreeBooksOpen(true)}
               className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
@@ -570,6 +734,17 @@ export default function App() {
         </header>
       )}
 
+      {/* Floating Voice Control Feedback Toast */}
+      {speechToast && (
+        <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 animate-fadeIn pointer-events-none">
+          <div className="px-4 py-2 rounded-2xl bg-black/90 border border-rose-500/40 text-white shadow-2xl backdrop-blur-md flex items-center gap-2.5 text-xs">
+            <div className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
+            <span className="font-semibold text-rose-300">{speechToast.action}</span>
+            <span className="text-white/60">({speechToast.message})</span>
+          </div>
+        </div>
+      )}
+
       {/* 3. Main Center Stage */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col justify-center items-center gap-5 sm:gap-6">
         {/* Quick Reading Starters Bar (Hidden in Zen Mode) */}
@@ -592,6 +767,7 @@ export default function App() {
               <span>600 WPM Video Drill</span>
             </button>
 
+            {/* Harry Potter and the Sorcerer's Stone */}
             <button
               onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[1]), 0)}
               className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
@@ -605,7 +781,25 @@ export default function App() {
                 color: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.textBright,
               }}
             >
-              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <Sparkles className="w-3.5 h-3.5 shrink-0 text-amber-400" />
+              <span>Harry Potter (Ch. 1-4)</span>
+            </button>
+
+            {/* Alice in Wonderland */}
+            <button
+              onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[2]), 0)}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === SAMPLE_LIBRARY[2].id
+                  ? 'font-bold ring-2 shadow-sm'
+                  : 'opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: activeDoc.id === SAMPLE_LIBRARY[2].id ? currentTheme.surfaceHover : currentTheme.surface,
+                borderColor: activeDoc.id === SAMPLE_LIBRARY[2].id ? currentTheme.accent : currentTheme.border,
+                color: activeDoc.id === SAMPLE_LIBRARY[2].id ? currentTheme.accent : currentTheme.textBright,
+              }}
+            >
+              <BookOpen className="w-3.5 h-3.5 shrink-0" />
               <span>Alice in Wonderland</span>
             </button>
 
@@ -758,6 +952,30 @@ export default function App() {
       <FreeBooksModal
         isOpen={isFreeBooksOpen}
         onClose={() => setIsFreeBooksOpen(false)}
+        theme={currentTheme}
+      />
+
+      {/* Reading Insights Dashboard */}
+      <ReadingInsightsModal
+        isOpen={isInsightsOpen}
+        onClose={() => setIsInsightsOpen(false)}
+        insights={insights}
+        activeDoc={activeDoc}
+        currentWordIndex={currentWordIndex}
+        currentWpm={wpm}
+        theme={currentTheme}
+      />
+
+      {/* 25-Min Pomodoro Eye-Rest Break Modal */}
+      <EyeRestModal
+        isOpen={isEyeRestOpen}
+        onClose={() => setIsEyeRestOpen(false)}
+        onResumeReading={() => {
+          setIsEyeRestOpen(false);
+          setIsPlaying(true);
+        }}
+        streakCount={pomodoroStreak}
+        breakDurationMinutes={5}
         theme={currentTheme}
       />
     </div>
