@@ -12,7 +12,8 @@ import {
   FileText,
   Sparkles,
   Zap,
-  Loader2
+  Loader2,
+  Globe
 } from 'lucide-react';
 import { 
   DocumentSource, 
@@ -47,6 +48,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { DocumentDrawer } from './components/DocumentDrawer';
 import { ContextPeek } from './components/ContextPeek';
 import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
+import { FreeBooksModal } from './components/FreeBooksModal';
 
 export default function App() {
   // 1. Settings & Persistence State
@@ -61,7 +63,7 @@ export default function App() {
   const [pacing, setPacing] = useState<PacingConfig>(() => loadPacing());
   const [bookmarks, setBookmarks] = useState<SavedBookmark[]>(() => loadBookmarks());
 
-  // 2. Document & Playback State - starts with Harry Potter & 600 WPM
+  // 2. Document & Playback State - starts with 600 WPM
   const [activeDoc, setActiveDoc] = useState<DocumentSource>(() => {
     return createDocumentFromSample(SAMPLE_LIBRARY[0]);
   });
@@ -76,6 +78,7 @@ export default function App() {
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [isContextPeekOpen, setIsContextPeekOpen] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isFreeBooksOpen, setIsFreeBooksOpen] = useState<boolean>(false);
 
   // 4. Drag & Drop state for effortless book addition
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
@@ -463,8 +466,18 @@ export default function App() {
           </div>
         </div>
 
-        {/* Top Actions: Add Book, Shortcuts, Theme, Settings */}
+        {/* Top Actions: Free Books, Add Book, Shortcuts, Theme, Settings */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <button
+            onClick={() => setIsFreeBooksOpen(true)}
+            className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
+            title="Browse 70,000+ Free Ebooks & EPUBs"
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Get Free Books</span>
+            <span className="sm:hidden">Free</span>
+          </button>
+
           <button
             onClick={() => setIsLibraryOpen(true)}
             className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-white"
@@ -535,8 +548,8 @@ export default function App() {
               color: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.textBright,
             }}
           >
-            <Sparkles className="w-3.5 h-3.5 shrink-0" />
-            <span>Harry Potter (Ch. 1)</span>
+            <Zap className="w-3.5 h-3.5 shrink-0" />
+            <span>600 WPM Video Drill</span>
           </button>
 
           <button
@@ -552,8 +565,8 @@ export default function App() {
               color: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.textBright,
             }}
           >
-            <Zap className="w-3.5 h-3.5 shrink-0" />
-            <span>600 WPM Video Drill</span>
+            <Sparkles className="w-3.5 h-3.5 shrink-0" />
+            <span>Alice in Wonderland</span>
           </button>
 
           <button
@@ -566,7 +579,15 @@ export default function App() {
             }}
           >
             <Upload className="w-3.5 h-3.5 shrink-0" />
-            <span>+ Upload PDF / ePub</span>
+            <span>+ Upload (PDF/ePub)</span>
+          </button>
+
+          <button
+            onClick={() => setIsFreeBooksOpen(true)}
+            className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
+          >
+            <Globe className="w-3.5 h-3.5 shrink-0" />
+            <span>Free Books (70k+)</span>
           </button>
         </div>
 
@@ -666,12 +687,19 @@ export default function App() {
         currentWordIndex={currentWordIndex}
         bookmarks={bookmarks}
         onRemoveBookmark={handleRemoveBookmark}
+        onOpenFreeBooks={() => setIsFreeBooksOpen(true)}
         theme={currentTheme}
       />
 
       <KeyboardShortcutsModal
         isOpen={isShortcutsOpen}
         onClose={() => setIsShortcutsOpen(false)}
+        theme={currentTheme}
+      />
+
+      <FreeBooksModal
+        isOpen={isFreeBooksOpen}
+        onClose={() => setIsFreeBooksOpen(false)}
         theme={currentTheme}
       />
     </div>

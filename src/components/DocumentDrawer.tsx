@@ -29,6 +29,7 @@ interface DocumentDrawerProps {
   currentWordIndex: number;
   bookmarks: SavedBookmark[];
   onRemoveBookmark: (docId: string) => void;
+  onOpenFreeBooks?: () => void;
   theme: ThemeColors;
 }
 
@@ -41,6 +42,7 @@ export const DocumentDrawer: React.FC<DocumentDrawerProps> = ({
   currentWordIndex,
   bookmarks,
   onRemoveBookmark,
+  onOpenFreeBooks,
   theme,
 }) => {
   const [activeTab, setActiveTab] = useState<'upload' | 'paste' | 'samples' | 'bookmarks' | 'chapters'>('upload');
@@ -328,26 +330,59 @@ export const DocumentDrawer: React.FC<DocumentDrawerProps> = ({
                 )}
               </div>
 
+              {/* Free Books Directory Banner */}
+              {onOpenFreeBooks && (
+                <div
+                  className="p-3.5 rounded-xl border flex items-center justify-between gap-3 text-xs"
+                  style={{
+                    backgroundColor: `${theme.accent}12`,
+                    borderColor: `${theme.accent}40`,
+                  }}
+                >
+                  <div className="min-w-0">
+                    <div className="font-semibold flex items-center gap-1.5" style={{ color: theme.textBright }}>
+                      <span>Looking for books to read?</span>
+                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded font-bold" style={{ backgroundColor: theme.accent, color: '#fff' }}>
+                        70k+ Free
+                      </span>
+                    </div>
+                    <p className="text-[11px] mt-0.5" style={{ color: theme.textDim }}>
+                      Browse Standard Ebooks, Project Gutenberg, & Open Library for free EPUB and PDF downloads.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      onClose();
+                      onOpenFreeBooks();
+                    }}
+                    className="px-3.5 py-2 rounded-xl text-xs font-semibold text-white shrink-0 shadow-sm transition-transform active:scale-95"
+                    style={{ backgroundColor: theme.accent }}
+                  >
+                    Find Books
+                  </button>
+                </div>
+              )}
+
               {/* Instant Book Starters */}
-              <div className="pt-2">
+              <div className="pt-1">
                 <div className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: theme.textDim }}>
-                  Or Start Instantly with a Book:
+                  Or Start Instantly with a Free Classic:
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <button
-                    onClick={() => handleSelectSample('sample-harry-potter-ch1')}
+                    onClick={() => handleSelectSample('sample-alice-in-wonderland')}
                     className="p-3.5 rounded-xl border flex items-center justify-between text-left transition-all hover:scale-[1.01]"
                     style={{ backgroundColor: theme.bg, borderColor: theme.accent }}
                   >
                     <div>
                       <div className="flex items-center gap-1.5 text-xs font-bold" style={{ color: theme.accent }}>
-                        <span>⚡ Featured Book</span>
+                        <span>⚡ Classic Fantasy</span>
                       </div>
                       <div className="font-semibold text-sm mt-0.5" style={{ color: theme.textBright }}>
-                        Harry Potter & Sorcerer's Stone
+                        Alice in Wonderland
                       </div>
                       <div className="text-xs opacity-70" style={{ color: theme.textDim }}>
-                        Chapter 1: The Boy Who Lived
+                        Chapter 1 & 2: Down the Rabbit Hole
                       </div>
                     </div>
                     <div className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white shrink-0 ml-2" style={{ backgroundColor: theme.accent }}>

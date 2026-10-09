@@ -11,44 +11,6 @@ export interface SampleBookDef {
 
 export const SAMPLE_LIBRARY: SampleBookDef[] = [
   {
-    id: 'sample-harry-potter-ch1',
-    title: "Harry Potter & the Sorcerer's Stone",
-    author: 'J.K. Rowling',
-    category: 'Featured Fantasy Book',
-    chapters: [
-      {
-        title: 'Chapter 1: The Boy Who Lived (Part 1 - Privet Drive)',
-        text: `Mr. and Mrs. Dursley, of number four, Privet Drive, were proud to say that they were perfectly normal, thank you very much. They were the last people you'd expect to be involved in anything strange or mysterious, because they just didn't hold with such nonsense.
-
-Mr. Dursley was the director of a firm called Grunnings, which made drills. He was a big, beefy man with hardly any neck, although he did have a very large mustache. Mrs. Dursley was thin and blonde and had nearly twice the usual amount of neck, which came in very useful as she spent so much of her time craning over garden fences, spying on the neighbors.
-
-The Dursleys had a small son called Dudley and in their opinion there was no finer boy anywhere. The Dursleys had everything they wanted, but they also had a secret, and their greatest fear was that somebody would discover it. They didn't think they could bear it if anyone found out about the Potters.
-
-Mrs. Potter was Mrs. Dursley's sister, but they hadn't met for several years; in fact, Mrs. Dursley pretended she didn't have a sister, because her sister and her good-for-nothing husband were as unDursleyish as it was possible to be.`
-      },
-      {
-        title: 'Chapter 1: The Boy Who Lived (Part 2 - The Cat on the Wall)',
-        text: `When Mr. and Mrs. Dursley woke up on the dull, gray Tuesday our story starts, there was nothing about the cloudy sky outside to suggest that strange and mysterious things would soon be happening all over the country.
-
-Mr. Dursley hummed as he picked out his most boring tie for work, and Mrs. Dursley gossiped away happily as she wrestled a screaming Dudley into his high chair. None of them noticed a large, tawny owl flutter past the window.
-
-At half past eight, Mr. Dursley picked up his briefcase, pecked Mrs. Dursley on the cheek, and tried to kiss Dudley good-bye but missed, because Dudley was now having a tantrum and throwing his cereal at the walls. "Little tyke," chortled Mr. Dursley as he left the house. He got into his car and backed out of number four's drive.
-
-It was on the corner of the street that he noticed the first sign of something peculiar—a cat reading a map. For a second, Mr. Dursley didn't realize what he had seen—then he jerked his head around to look again. There was a tabby cat standing on the corner of Privet Drive, but there wasn't a map in sight. What could he have been thinking of? It must have been a trick of the light.`
-      },
-      {
-        title: 'Chapter 1: The Boy Who Lived (Part 3 - Albus Dumbledore)',
-        text: `A man appeared on the corner the cat had been watching, appeared so suddenly and silently you'd have thought he'd just popped out of the ground. The cat's tail twitched and its eyes narrowed.
-
-Nothing like this man had ever been seen on Privet Drive. He was tall, thin, and very old, judging by the silver of his hair and beard, which were both long enough to tuck into his belt. He was wearing long robes, a purple cloak that swept the ground, and high-heeled, buckled boots. His blue eyes were light, bright, and sparkling behind half-moon spectacles and his nose was very long and crooked, as though it had been broken at least twice. This man's name was Albus Dumbledore.
-
-Albus Dumbledore didn't seem to realize that he had just arrived in a street where everything from his name to his boots was unwelcome. He was busy rummaging in his cloak, looking for something. But he did seem to realize he was being watched, because he looked up suddenly at the cat, which was still staring at him from the other end of the street. For some reason, the sight of the cat seemed to amuse him. He chuckled and muttered, "I should have known."
-
-He had found what he was looking for in his inside pocket. It seemed to be a silver cigarette lighter. He flicked it open, held it up in the air, and clicked it. The nearest street lamp went out with a little pop. He clicked it again; the next lamp flickered into darkness. Twelve times he clicked the Put-Outer, until the only lights left on the whole street were two tiny pinpricks in the distance, which were the eyes of the cat watching him.`
-      }
-    ]
-  },
-  {
     id: 'sample-video-speed-challenge',
     title: 'The 600 WPM Speed Reader Drill (From the Video)',
     author: 'RSVP Perception Coach',
@@ -76,29 +38,38 @@ Notice how quiet your inner voice gets. That inner voice is called subvocalizati
 
 Once you let go of vocalizing, reading feels like direct neural streaming. You don't read words—you absorb pure ideas, imagery, and narrative. 
 
-Stick with this rhythm, and reading full books like Harry Potter will become effortless.`
+Stick with this rhythm, and reading full books from start to finish will become second nature.`
       }
     ]
   },
   {
-    id: 'sample-speed-reading-science',
-    title: 'The Neuroscience of RSVP & ORP',
-    author: 'Cognitive Science Research Group',
-    category: 'Science & Speed Reading',
+    id: 'sample-alice-in-wonderland',
+    title: "Alice's Adventures in Wonderland",
+    author: 'Lewis Carroll',
+    category: 'Classic Fantasy Novel',
     chapters: [
       {
-        title: 'Chapter 1: The Anatomy of an Eye Fixation',
-        text: `Traditional reading feels smooth and continuous, but in reality, our eyes make erratic, jerky jumps known as saccades. During typical reading, your eyes fixate on a cluster of letters for roughly two hundred to two hundred and fifty milliseconds before jumping to the next word.
+        title: 'Chapter 1: Down the Rabbit-Hole',
+        text: `Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, "and what is the use of a book," thought Alice "without pictures or conversations?"
 
-Crucially, roughly twenty percent of reading time is wasted on involuntary regression—unconscious backward skips where your eyes re-scan words they just processed. 
+So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.
 
-Rapid Serial Visual Presentation, or RSVP, completely eliminates eye saccades. By flashing words sequentially at a single designated physical coordinate, your fovea centralis—the high-acuity core of your retina—remains completely stationary. When cognitive energy is liberated from physical ocular motion, your brain can redirect its full computational bandwidth toward semantics, synthesis, and comprehension.`
+There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit say to itself, "Oh dear! Oh dear! I shall be late!" but when the Rabbit actually took a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it pop down a large rabbit-hole under the hedge.
+
+In another moment down went Alice after it, never once considering how in the world she was to get out again.`
       },
       {
-        title: 'Chapter 2: The Optimal Recognition Point (ORP)',
-        text: `Every printed word possesses a physiological focal center known as the Optimal Recognition Point (ORP). Decades of psycholinguistic research reveal that when the eye lands approximately one-third of the way into a word—usually the second or third letter—the visual cortex identifies the entire word in a fraction of the time.
+        title: 'Chapter 2: The Pool of Tears',
+        text: `"Curiouser and curiouser!" cried Alice (she was so much surprised, that for the moment she quite forgot how to speak good English); "now I'm opening out like the largest telescope that ever was! Good-bye, feet!" (for when she looked down at her feet, they seemed to be almost out of sight, they were getting so far off). "Oh, my poor little feet, I wonder who will put on your shoes and stockings for you now, dears? I'm sure I shan't be able! I shall be a great deal too far off to trouble myself about you: you must manage the best way you can;—but I must be kind to them," thought Alice, "or perhaps they won't walk the way I want to go! Let me see: I'll give them a new pair of boots every Christmas."
 
-By calculating the mathematical ORP for every incoming word and aligning that specific character against a fixed visual reticle, the eye stays in a state of frictionless kinetic focus. The brain absorbs vocabulary at speeds exceeding six hundred to eight hundred words per minute without fatigue.`
+And she went on planning to herself how she would manage it. "They must go by the carrier," she thought; "and how funny it'll seem, sending presents to one's own feet! And how odd the directions will look!
+
+Alice's Right Foot, Esq.
+Hearthrug,
+near the Fender,
+(with Alice's love).
+
+Oh dear, what nonsense I'm talking!"`
       }
     ]
   },
@@ -116,7 +87,39 @@ By calculating the mathematical ORP for every incoming word and aligning that sp
 
 "Is not that rather a large thing to expect us to begin upon?" said Filby, an argumentative person with red hair.
 
-"I do not mean to ask you to accept anything without reasonable ground for it. You will soon admit as much as I need from you. You know of course that a mathematical line, a line of thickness nil, has no real existence. Nor has a mathematical plane. These things are mere abstractions."`
+"I do not mean to ask you to accept anything without reasonable ground for it. You will soon admit as much as I need from you. You know of course that a mathematical line, a line of thickness nil, has no real existence. They taught you that? Nor has a mathematical plane. These things are mere abstractions."`
+      }
+    ]
+  },
+  {
+    id: 'sample-sherlock-holmes',
+    title: 'A Scandal in Bohemia',
+    author: 'Arthur Conan Doyle',
+    category: 'Mystery Classic',
+    chapters: [
+      {
+        title: 'Chapter 1: The Woman',
+        text: `To Sherlock Holmes she is always the woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind.
+
+He was, I take it, the most perfect reasoning and observing machine that the world has seen, but as a lover he would have placed himself in a false position. He never spoke of the softer passions, save with a gibe and a sneer. They were admirable things for the observer—excellent for drawing the veil from men's motives and actions. But for the trained reasoner to admit such intrusions into his own delicate and finely adjusted temperament was to introduce a distracting factor which might throw a doubt upon all his mental results.
+
+Grit in a sensitive instrument, or a crack in one of his own high-power lenses, would not be more disturbing than a strong emotion in a nature such as his. And yet there was but one woman to him, and that woman was the late Irene Adler, of dubious and questionable memory.`
+      }
+    ]
+  },
+  {
+    id: 'sample-speed-reading-science',
+    title: 'The Neuroscience of RSVP & ORP',
+    author: 'Cognitive Science Research Group',
+    category: 'Science & Speed Reading',
+    chapters: [
+      {
+        title: 'Chapter 1: The Anatomy of an Eye Fixation',
+        text: `Traditional reading feels smooth and continuous, but in reality, our eyes make erratic, jerky jumps known as saccades. During typical reading, your eyes fixate on a cluster of letters for roughly two hundred to two hundred and fifty milliseconds before jumping to the next word.
+
+Crucially, roughly twenty percent of reading time is wasted on involuntary regression—unconscious backward skips where your eyes re-scan words they just processed. 
+
+Rapid Serial Visual Presentation, or RSVP, completely eliminates eye saccades. By flashing words sequentially at a single designated physical coordinate, your fovea centralis—the high-acuity core of your retina—remains completely stationary. When cognitive energy is liberated from physical ocular motion, your brain can redirect its full computational bandwidth toward semantics, synthesis, and comprehension.`
       }
     ]
   }
