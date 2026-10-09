@@ -1,7 +1,7 @@
 # 🗺️ SpeedRead: Product & Engineering Roadmap
 
 **Project:** SpeedRead (Kinetic RSVP Speed Reader Pro)  
-**Current Release:** v1.0.0 (Production Verified · 34 Unit Tests Passing · Zero-Jitter ORP Engine)  
+**Current Release:** v1.3.0 (Production Verified · 75 Unit Tests Passing · Adaptive Surprisal Pacing · Retention Engine)  
 **Architecture:** 100% Client-Side React 19 + TypeScript + Vite + Web Audio API
 
 ---
@@ -89,27 +89,28 @@ flowchart TD
 
 ---
 
-## 📍 Phase 3: Adaptive AI & Bio-Sensory Pacing (v2.1+)
-*Target: Q2 2027+ · Focus: Linguistic Surprisal Modeling and Computer Vision*
+## 📍 Phase 3: Adaptive AI & Retention Engine (v1.3.0+)
+*Status: 3.1 & 3.2 Shipped & Live · 75 Tests Passing · Surprisal Pacing · Comprehension Retention · Tab Auto-Pause*
 
-### 3.1 Local LLM Semantic Density & Surprisal Pacing (Transformers.js / WebLLM)
-- **Problem:** Current pacing relies on static multipliers (commas, sentence ends, length). However, a simple sentence like *"The cat sat on the mat"* requires vastly less cognitive processing than *"The epistemological ramifications were profound"*.
-- **Implementation:**
-  - Run lightweight in-browser language models (e.g., SmolLM / Gemma 2 2B via WebGPU).
-  - Calculate per-token **Information Surprisal** and semantic density.
-  - Automatically dial down speed during dense conceptual passages and accelerate through transitional prose.
+### 3.1 Information Surprisal & Lexical Density Adaptive Pacing — ✅ Completed
+- Cognitive linguistics algorithm modulating word dwell times in `src/utils/orp.ts`.
+- High-frequency stop words (*the, and, of, in*) accelerated (~0.88x) to prevent ocular stall.
+- Dense polysyllabic, hyphenated, and acronym terms (*epistemological, NASA*) dwell extended (~1.10x–1.20x) to protect working memory.
+- Dynamic toggle in Settings under Intelligent Pacing.
 
-### 3.2 Automated Post-Chapter Comprehension Quizzes
-- **Implementation:**
-  - Generate 3-question multiple-choice retention checks at the conclusion of each chapter using local client inference.
-  - Track true Effective Reading Speed: $\text{True WPM} = \text{Raw WPM} \times \text{Comprehension \%}$.
-  - Plot longitudinal retention-vs-speed curves in Reading Insights.
+### 3.2 Automated Post-Chapter Comprehension Quizzes & True WPM — ✅ Completed
+- Dynamic 3-question retention verification engine (`src/utils/comprehension.ts`, `ComprehensionQuizModal.tsx`).
+- Tests Cloze blank recall, contextual vocabulary, and sequence themes derived from read sections.
+- Tracks Effective Reading Speed: $\text{True WPM} = \text{Raw WPM} \times \text{Retention Score}$.
+- Integrated with Reading Insights session dashboard and accessible via header button or hotkey <kbd>Q</kbd>.
 
-### 3.3 Webcam Gaze & Blink Detection (WebGaze.js)
-- **Implementation:**
-  - Optional zero-latency computer vision tracking running 100% locally via WebAssembly.
-  - **Auto-Pause on Gaze Drift:** If user glances away from the screen, RSVP immediately pauses.
-  - **Blink Synchronization:** Micro-pause (60ms) scheduled precisely during natural biological blinks to prevent missed words.
+### 3.3 Ergonomic Auto-Pause & URL Query Launcher — ✅ Completed
+- Browser `visibilitychange` listener automatically pauses RSVP flow when tab is hidden or minimized.
+- URL query parameters (`?clip=1`, `?text=...`, `?wpm=...`) and localStorage bookmarklet ingestion.
+
+### 3.4 Webcam Gaze & Blink Detection (Future v2.0)
+- Optional zero-latency computer vision tracking running 100% locally via WebAssembly.
+- Auto-pause on gaze drift and micro-pause synchronization during biological blinks.
 
 ---
 

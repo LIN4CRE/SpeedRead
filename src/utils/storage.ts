@@ -4,7 +4,8 @@ import {
   SavedBookmark, 
   ReadingInsightsData, 
   ReadingSession, 
-  PomodoroSettings 
+  PomodoroSettings,
+  ComprehensionAttempt
 } from '../types/reader';
 
 const STORAGE_KEYS = {
@@ -39,6 +40,7 @@ export const DEFAULT_PACING: PacingConfig = {
   longWordMultiplier: 1.25,
   numberMultiplier: 1.3,
   paragraphPauseMultiplier: 2.2,
+  enableSurprisal: true,
 };
 
 export function loadSettings(): TypographySettings {
@@ -265,4 +267,19 @@ export function recordReadingSession(sessionData: {
     console.error('Failed to record reading session', e);
   }
 }
+
+export function recordComprehensionAttempt(attempt: ComprehensionAttempt): void {
+  try {
+    const current = loadReadingInsights();
+    const attempts = [attempt, ...(current.comprehensionAttempts || [])].slice(0, 30);
+    const updatedInsights: ReadingInsightsData = {
+      ...current,
+      comprehensionAttempts: attempts,
+    };
+    localStorage.setItem(STORAGE_KEYS.INSIGHTS, JSON.stringify(updatedInsights));
+  } catch (e) {
+    console.error('Failed to record comprehension attempt', e);
+  }
+}
+
 

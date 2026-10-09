@@ -551,6 +551,27 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 />
               </div>
 
+              {/* Lexical Density & Surprisal Pacing */}
+              <div className="pt-3 border-t space-y-2" style={{ borderColor: theme.border }}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs uppercase font-mono tracking-wider font-semibold block" style={{ color: theme.textBright }}>
+                      Adaptive Surprisal Pacing
+                    </label>
+                    <p className="text-[11px]" style={{ color: theme.textDim }}>
+                      Accelerates stop words (~0.88x) and extends dwell on dense polysyllabic terms (~1.15x).
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={pacing.enableSurprisal !== false}
+                    onChange={(e) => onUpdatePacing({ ...pacing, enableSurprisal: e.target.checked })}
+                    className="w-4 h-4 cursor-pointer"
+                    style={{ accentColor: theme.accent }}
+                  />
+                </div>
+              </div>
+
               {/* Audio Metronome Cadence Ticker */}
               <div className="pt-3 border-t space-y-3" style={{ borderColor: theme.border }}>
                 <div className="flex items-center justify-between">

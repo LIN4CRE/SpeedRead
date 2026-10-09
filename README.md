@@ -14,7 +14,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.x-646cff.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-38bdf8.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Tests-63%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
+[![Vitest](https://img.shields.io/badge/Tests-75%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
 [![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-blueviolet.svg?logo=pwa&logoColor=white)](#offline-pwa-support)
 [![Formats](https://img.shields.io/badge/Formats-PDF%20%7C%20ePub%20%7C%20TXT%20%7C%20Web-emerald.svg)](#supported-formats)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-rose.svg)](#privacy--security)
@@ -117,13 +117,24 @@ Toggle between customizable visual focal guides to suit your cognitive tracking 
 - **9 Focal Accent Swatches:** Crimson Neon, Sunset Coral, Amber Gold, Emerald Mint, Electric Cyan, Cobalt Blue, Vibrant Violet, Hot Magenta, and Optic White.
 - **6 Typefaces:** *Merriweather* (book serif), *JetBrains Mono*, *Fira Code*, *Space Mono*, *Inter*, and *Atkinson Hyperlegible* (engineered by the Braille Institute for high character distinction and dyslexia).
 
-### 🧠 Intelligent Pacing Engine
+### 🧠 Intelligent Pacing & Information Surprisal Engine
 Reading speed isn't robotic—the brain needs microscopic pauses to synthesize clauses:
+- **Information Surprisal Multiplier:** High-frequency functional stop words (*the, and, of, in*) are accelerated (~0.88x), while polysyllabic, hyphenated, and acronym terms (*epistemological, NASA*) dwell longer (~1.10x–1.20x) to protect working memory.
 - **Sentence End Pause (. ! ?):** Configurable 2.5x multiplier.
 - **Clause Pause (, ; : —):** Configurable 1.7x multiplier.
 - **Long Word Modifier (>8 chars):** Micro-delay for complex morphological decoding.
 - **Numeric Sequences:** Delay multiplier for numbers and currency.
 - **Paragraph Transition Pause:** Pacing cushion between paragraphs.
+
+### 📝 Interactive Retention & Comprehension Quiz (<kbd>Q</kbd> Key)
+Verify reading retention and diagnose cognitive overload:
+- **3-Question Verification:** Generates Cloze fill-in-the-blank questions, contextual vocabulary checks, and thematic sequence recall directly from your read section.
+- **True Effective Reading Speed:** Calculates $\text{True WPM} = \text{Raw WPM} \times \text{Retention Score}$ to benchmark genuine comprehension vs. passive scanning.
+- **Personalized Coaching:** Diagnostic recommendations (Grades A+ through D) with 1-click pacing calibration.
+
+### 🛡️ Ergonomic Safety: Tab Visibility Auto-Pause
+- Never lose your place when switching windows: RSVP playback automatically pauses whenever the browser tab is minimized or hidden.
+- Automatically records bookmark state and cookie break place upon tab switch.
 
 ### 🔍 Synchronized Context Peek (<kbd>C</kbd> Key)
 Lost your train of thought? Toggle the **Context Peek window** to view the active paragraph in real-time with your current word highlighted, and click any word to seek immediately.
@@ -135,7 +146,11 @@ Lost your train of thought? Toggle the **Context Peek window** to view the activ
 | Shortcut | Action |
 |:---|:---|
 | <kbd>Space</kbd> | Play / Pause reading flow |
+| <kbd>Q</kbd> | Interactive retention & comprehension quiz (True WPM) |
 | <kbd>K</kbd> | Save States & Cookie Places / Take a Break |
+| <kbd>D</kbd> | Bookmark word to Vocabulary Vault (<kbd>Shift</kbd>+<kbd>D</kbd> opens vault) |
+| <kbd>Y</kbd> | Cloudless device sync & QR code mirror |
+| <kbd>W</kbd> | Cycle saccadic chunk size (1w, 2w, 3w) |
 | <kbd>V</kbd> | Toggle Read-Aloud Web Speech audio mode |
 | <kbd>M</kbd> | Toggle Audio Metronome Cadence Ticker |
 | <kbd>S</kbd> | Cycle Reticle tracking style (Line, Highlighter, Spotlight, Underline, etc.) |

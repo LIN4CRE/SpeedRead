@@ -29,7 +29,8 @@ import {
   Coffee,
   User,
   X,
-  Activity
+  Activity,
+  Brain
 } from 'lucide-react';
 import { 
   DocumentSource, 
@@ -81,6 +82,7 @@ import { SaveStateModal } from './components/SaveStateModal';
 import { VocabularyModal } from './components/VocabularyModal';
 import { WebClipperModal } from './components/WebClipperModal';
 import { CloudlessSyncModal } from './components/CloudlessSyncModal';
+import { ComprehensionQuizModal } from './components/ComprehensionQuizModal';
 import { addVocabularyItem, loadVocabularyItems } from './utils/vocabulary';
 import { CloudlessSyncPayload, VocabularyItem } from './types/reader';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
@@ -123,6 +125,7 @@ export default function App() {
   const [isVocabularyOpen, setIsVocabularyOpen] = useState<boolean>(false);
   const [isWebClipperOpen, setIsWebClipperOpen] = useState<boolean>(false);
   const [isSyncOpen, setIsSyncOpen] = useState<boolean>(false);
+  const [isQuizOpen, setIsQuizOpen] = useState<boolean>(false);
   const [vocabularyItems, setVocabularyItems] = useState<VocabularyItem[]>(() => loadVocabularyItems());
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -498,6 +501,87 @@ export default function App() {
     setCurrentWordIndex(0);
   }, []);
 
+  // Ergonomic Safety: Auto-pause playback when user minimizes browser or switches tabs
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && isPlaying) {
+        setIsPlaying(false);
+        if (timerRef.current) clearTimeout(timerRef.current);
+        recordBookmark(activeDoc, currentWordIndex, wpm);
+        showToast('Auto-paused on tab switch to preserve your place');
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isPlaying, activeDoc, currentWordIndex, wpm, recordBookmark, showToast]);
+
+  // Handle launch-time URL query parameters (?clip=1, ?text=..., ?wpm=...) & pending bookmarklet clips
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+
+      // ?wpm=750
+      const queryWpm = params.get('wpm');
+      if (queryWpm) {
+        const parsedWpm = parseInt(queryWpm, 10);
+        if (!isNaN(parsedWpm) && parsedWpm >= 100 && parsedWpm <= 1500) {
+          setWpm(parsedWpm);
+        }
+      }
+
+      // ?clip=1 opens the Web Clipper modal immediately
+      if (params.get('clip') === '1') {
+        setIsWebClipperOpen(true);
+      }
+
+      // ?text=...&title=... Ingest custom text directly via URL query parameter
+      const queryText = params.get('text');
+      if (queryText && queryText.trim().length > 0) {
+        const queryTitle = params.get('title') || 'Web Snippet';
+        const words = tokenizeText(queryText);
+        const doc: DocumentSource = {
+          id: `url-${Date.now()}`,
+          title: decodeURIComponent(queryTitle),
+          type: 'paste',
+          totalWords: words.length,
+          chapters: [{ id: '1', title: 'Imported Snippet', startWordIndex: 0, wordCount: words.length }],
+          rawText: queryText,
+          words,
+          dateAdded: Date.now(),
+        };
+        handleSelectDocument(doc, 0);
+        showToast(`Loaded "${doc.title}" from URL parameter`);
+      }
+
+      // Bookmarklet payload auto-ingestion from localStorage
+      const pendingClip = localStorage.getItem('speedread_pending_clip');
+      if (pendingClip) {
+        localStorage.removeItem('speedread_pending_clip');
+        const parsed = JSON.parse(pendingClip);
+        if (parsed.text) {
+          const words = tokenizeText(parsed.text);
+          const doc: DocumentSource = {
+            id: `clip-${Date.now()}`,
+            title: parsed.title || 'Clipped Article',
+            type: 'paste',
+            totalWords: words.length,
+            chapters: [{ id: '1', title: 'Clipped Article', startWordIndex: 0, wordCount: words.length }],
+            rawText: parsed.text,
+            words,
+            dateAdded: Date.now(),
+          };
+          handleSelectDocument(doc, 0);
+          showToast(`Ingested clipped article: "${doc.title}"`);
+        }
+      }
+    } catch (e) {
+      console.warn('Error reading URL parameters or pending clip:', e);
+    }
+  }, []);
+
   // Main RSVP loop execution
   useEffect(() => {
     if (!isPlaying) {
@@ -754,6 +838,15 @@ export default function App() {
           }
           break;
 
+        case 'KeyQ':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            setIsPlaying(false);
+            if (timerRef.current) clearTimeout(timerRef.current);
+            setIsQuizOpen((prev) => !prev);
+          }
+          break;
+
         case 'Escape':
           setIsSettingsOpen(false);
           setIsShortcutsOpen(false);
@@ -766,6 +859,7 @@ export default function App() {
           setIsVocabularyOpen(false);
           setIsWebClipperOpen(false);
           setIsSyncOpen(false);
+          setIsQuizOpen(false);
           setIsZenMode(false);
           if (window.document.fullscreenElement) {
             window.document.exitFullscreen().catch(() => null);
@@ -959,6 +1053,20 @@ export default function App() {
             >
               <TrendingUp className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Insights</span>
+            </button>
+
+            {/* Comprehension Retention Quiz (Q) */}
+            <button
+              onClick={() => {
+                setIsPlaying(false);
+                if (timerRef.current) clearTimeout(timerRef.current);
+                setIsQuizOpen(true);
+              }}
+              className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-purple-400 border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20"
+              title="Test Working Memory & True Reading Speed with 3-Question Retention Quiz (Q)"
+            >
+              <Brain className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Quiz</span>
             </button>
 
             {/* Voice Control (Speech Recognition) */}
@@ -1450,6 +1558,19 @@ export default function App() {
         currentWordIndex={currentWordIndex}
         currentWpm={wpm}
         theme={currentTheme}
+        onOpenQuiz={() => setIsQuizOpen(true)}
+      />
+
+      {/* Comprehension Retention & True WPM Quiz Modal */}
+      <ComprehensionQuizModal
+        isOpen={isQuizOpen}
+        onClose={() => setIsQuizOpen(false)}
+        activeDoc={activeDoc}
+        currentWordIndex={currentWordIndex}
+        currentWpm={wpm}
+        theme={currentTheme}
+        onAdjustWpm={(newWpm) => setWpm(newWpm)}
+        onRefreshInsights={() => setInsights(loadReadingInsights())}
       />
 
       {/* 25-Min Pomodoro Eye-Rest Break Modal */}

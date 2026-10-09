@@ -56,6 +56,7 @@ export interface PacingConfig {
   longWordMultiplier: number;      // default 1.25x (words > 8 chars)
   numberMultiplier: number;        // default 1.3x
   paragraphPauseMultiplier: number;// default 2.2x
+  enableSurprisal?: boolean;       // Lexical density & information surprisal pacing
 }
 
 export interface ParsedWord {
@@ -115,11 +116,32 @@ export interface ReadingSession {
   bookTitle: string;
 }
 
+export interface ComprehensionAttempt {
+  id: string;
+  timestamp: number;
+  documentTitle: string;
+  rawWpm: number;
+  trueWpm: number;
+  score: number; // 0 to 3
+  totalQuestions: number;
+  percentage: number;
+}
+
+export interface ComprehensionQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  type: 'cloze' | 'vocabulary' | 'theme';
+}
+
 export interface ReadingInsightsData {
   totalWordsRead: number;
   totalReadingSeconds: number;
   peakWpmEver: number;
   sessions: ReadingSession[];
+  comprehensionAttempts?: ComprehensionAttempt[];
 }
 
 export interface SpeechRecognitionState {

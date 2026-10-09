@@ -1,5 +1,5 @@
 // SpeedRead PWA Offline Service Worker
-const CACHE_NAME = 'speedread-cache-v1';
+const CACHE_NAME = 'speedread-cache-v2';
 
 const STATIC_ASSETS = [
   './',

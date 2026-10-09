@@ -10,7 +10,8 @@ import {
   Flame, 
   Sparkles,
   Calendar,
-  CheckCircle2
+  CheckCircle2,
+  Brain
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -33,6 +34,7 @@ interface ReadingInsightsModalProps {
   currentWordIndex: number;
   currentWpm: number;
   theme: ThemeColors;
+  onOpenQuiz?: () => void;
 }
 
 export const ReadingInsightsModal: React.FC<ReadingInsightsModalProps> = ({
@@ -43,6 +45,7 @@ export const ReadingInsightsModal: React.FC<ReadingInsightsModalProps> = ({
   currentWordIndex,
   currentWpm,
   theme,
+  onOpenQuiz,
 }) => {
   const [activeChartTab, setActiveChartTab] = useState<'velocity' | 'volume'>('velocity');
 
@@ -311,6 +314,49 @@ export const ReadingInsightsModal: React.FC<ReadingInsightsModalProps> = ({
                 )}
               </ResponsiveContainer>
             </div>
+          </div>
+
+          {/* Comprehension Retention & True WPM Verification Card */}
+          <div
+            className="p-4 rounded-2xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+            style={{ backgroundColor: `${theme.accent}10`, borderColor: `${theme.accent}30` }}
+          >
+            <div className="flex items-center gap-3">
+              <div 
+                className="p-2.5 rounded-xl shrink-0" 
+                style={{ backgroundColor: `${theme.accent}20`, color: theme.accent }}
+              >
+                <Brain className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-sm flex items-center gap-2">
+                  <span>Comprehension & True WPM Verification</span>
+                  {insights.comprehensionAttempts && insights.comprehensionAttempts.length > 0 && (
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
+                      {insights.comprehensionAttempts[0].trueWpm} True WPM ({insights.comprehensionAttempts[0].percentage}%)
+                    </span>
+                  )}
+                </h4>
+                <p className="text-xs mt-0.5" style={{ color: theme.textDim }}>
+                  {insights.comprehensionAttempts && insights.comprehensionAttempts.length > 0
+                    ? `Last test: ${insights.comprehensionAttempts[0].score}/${insights.comprehensionAttempts[0].totalQuestions} correct on "${insights.comprehensionAttempts[0].documentTitle}"`
+                    : 'Verify cognitive retention at your current speed with a rapid 3-question check.'}
+                </p>
+              </div>
+            </div>
+
+            {onOpenQuiz && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenQuiz();
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-transform active:scale-95 shadow-sm"
+                style={{ backgroundColor: theme.accent, color: '#ffffff' }}
+              >
+                Test Retention Now
+              </button>
+            )}
           </div>
 
           {/* 3. Current Book Completion & Speed Savings Matrix */}

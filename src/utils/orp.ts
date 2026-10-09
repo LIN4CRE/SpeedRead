@@ -109,6 +109,56 @@ export function splitWordAtORP(word: string, orpIdx: number): {
   };
 }
 
+// Common English functional stop words
+const COMMON_STOP_WORDS = new Set([
+  'a', 'about', 'all', 'also', 'an', 'and', 'any', 'are', 'as', 'at', 'be', 'been',
+  'but', 'by', 'can', 'do', 'down', 'even', 'for', 'from', 'get', 'had', 'has',
+  'have', 'he', 'her', 'here', 'him', 'his', 'how', 'i', 'if', 'in', 'into', 'is',
+  'it', 'its', 'just', 'like', 'me', 'more', 'my', 'no', 'not', 'now', 'of', 'on',
+  'one', 'only', 'or', 'other', 'our', 'out', 'over', 'said', 'she', 'so', 'some',
+  'than', 'that', 'the', 'their', 'them', 'then', 'there', 'these', 'they', 'this',
+  'time', 'to', 'two', 'up', 'us', 'was', 'we', 'were', 'what', 'when', 'which',
+  'who', 'will', 'with', 'would', 'you', 'your'
+]);
+
+/**
+ * Calculates estimated lexical surprisal / cognitive decoding multiplier.
+ * Stop words have near-zero surprisal and are processed rapidly (~0.88x delay).
+ * Polysyllabic, rare, or dense words require longer dwell (~1.10x - 1.25x delay).
+ */
+export function calculateLexicalSurprisal(rawWord: string): number {
+  if (!rawWord) return 1.0;
+  const word = rawWord.toLowerCase().replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
+  if (!word) return 1.0;
+
+  // Acronym check (e.g. NASA, DNA, RSVP, LLM, PWA)
+  if (rawWord.length >= 2 && rawWord === rawWord.toUpperCase() && /^[A-Z]+$/.test(rawWord)) {
+    return 1.20;
+  }
+
+  // Hyphenated compound check (e.g. state-of-the-art)
+  if (rawWord.includes('-') && rawWord.length >= 6) {
+    return 1.15;
+  }
+
+  // High-frequency functional stop words
+  if (COMMON_STOP_WORDS.has(word)) {
+    return 0.88;
+  }
+
+  // Syllable count estimation
+  const cleanVowels = word.replace(/e$/i, '').match(/[aeiouy]{1,2}/gi);
+  const syllables = cleanVowels ? cleanVowels.length : 1;
+
+  if (syllables >= 4 || word.length >= 11) {
+    return 1.20;
+  } else if (syllables >= 3 || word.length >= 8) {
+    return 1.10;
+  }
+
+  return 1.0;
+}
+
 /**
  * Compute the delay in milliseconds for a specific word given WPM and pacing settings.
  */
@@ -121,6 +171,7 @@ export function computeWordDelay(
     longWordMultiplier: number;
     numberMultiplier: number;
     paragraphPauseMultiplier: number;
+    enableSurprisal?: boolean;
   }
 ): number {
   if (wpm <= 0) return 200;
@@ -148,6 +199,18 @@ export function computeWordDelay(
   // Number modifier (brain needs slightly longer to decode numeric sequences)
   if (word.isNumber) {
     delay *= pacing.numberMultiplier;
+  }
+
+  // Lexical Surprisal & Complexity-Adaptive Pacing
+  if (pacing.enableSurprisal !== false) {
+    if (!word.isSentenceEnd && !word.isClauseEnd && !word.isParagraphEnd && !word.isNumber) {
+      const surprisal = calculateLexicalSurprisal(word.clean || word.raw);
+      if (word.charCount <= 2 && surprisal < 1.0) {
+        delay *= 0.96;
+      } else {
+        delay *= surprisal;
+      }
+    }
   }
 
   return Math.round(delay);

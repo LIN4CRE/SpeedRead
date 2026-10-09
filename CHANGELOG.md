@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-10-09
+
+### Added
+- **Information Surprisal & Lexical Density Adaptive Pacing Engine (`orp.ts`):** Cognitive linguistics pacing algorithm that modulates word dwell times. High-frequency stop words (*the, and, of, in*) are accelerated (~0.88x), while dense polysyllabic, hyphenated, and acronym terms (*epistemological, NASA*) receive adaptive cognitive dwell expansion (~1.10x–1.20x). Configurable toggle in Settings under Intelligent Pacing.
+- **Interactive Retention & Comprehension Quiz (`comprehension.ts`, `ComprehensionQuizModal.tsx`):** Dynamic 3-question retention verification engine (Cloze recall, vocabulary detail, sequence theme) with immediate scoring, diagnostic feedback (Grades A+ to D), and **True Reading Speed** calculation ($\text{True WPM} = \text{Raw WPM} \times \text{Retention Score}$). Accessible via header button, Reading Insights modal, and hotkey <kbd>Q</kbd>.
+- **Ergonomic Tab Visibility Auto-Pause:** Listens to browser `visibilitychange` events to automatically pause RSVP playback when the user minimizes the window or switches tabs, preventing missed reading content.
+- **URL Launch Parameters & Bookmarklet Auto-Ingestion:** Ingests external reading requests via query parameters (`?clip=1` opens web clipper, `?text=...&title=...` creates document, `?wpm=...` sets speed) and auto-consumes pending bookmarklet clips from `localStorage`.
+- **Expanded Test Suite:** Added `tests/comprehension.test.ts` and extended `tests/orp.test.ts` with surprisal tests, bringing coverage to 13 test files and 75 unit tests (100% passing).
+
+---
+
 ## [1.2.0] - 2026-10-09
 
 ### Added

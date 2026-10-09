@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateORP, splitWordAtORP, tokenizeText, computeWordDelay } from '../src/utils/orp';
+import { calculateORP, splitWordAtORP, tokenizeText, computeWordDelay, calculateLexicalSurprisal } from '../src/utils/orp';
 import { PacingConfig } from '../src/types/reader';
 
 const testPacing: PacingConfig = {
@@ -146,3 +146,47 @@ describe('tokenizeText', () => {
     expect(rawTokens).toContain('fraîche.');
   });
 });
+
+describe('calculateLexicalSurprisal', () => {
+  it('discounts common functional stop words for rapid cadence', () => {
+    expect(calculateLexicalSurprisal('the')).toBe(0.88);
+    expect(calculateLexicalSurprisal('and')).toBe(0.88);
+    expect(calculateLexicalSurprisal('with')).toBe(0.88);
+    expect(calculateLexicalSurprisal('their')).toBe(0.88);
+  });
+
+  it('dwells longer on acronyms and all-caps sequences', () => {
+    expect(calculateLexicalSurprisal('NASA')).toBe(1.20);
+    expect(calculateLexicalSurprisal('RSVP')).toBe(1.20);
+  });
+
+  it('dwells longer on dense polysyllabic content words', () => {
+    // 'epistemological' has >= 4 syllables / >= 11 chars
+    expect(calculateLexicalSurprisal('epistemological')).toBe(1.20);
+    // 'fantastic' has 3 syllables / 9 chars (< 11)
+    expect(calculateLexicalSurprisal('fantastic')).toBe(1.10);
+  });
+
+  it('keeps baseline 1.0 for normal moderate vocabulary', () => {
+    expect(calculateLexicalSurprisal('green')).toBe(1.0);
+    expect(calculateLexicalSurprisal('chair')).toBe(1.0);
+  });
+
+  it('modulates computeWordDelay when enableSurprisal is toggled', () => {
+    const tokens = tokenizeText('the epistemological');
+    const stopWord = tokens[0]; // 'the'
+    const denseWord = tokens[1]; // 'epistemological'
+
+    // With surprisal enabled (default)
+    const stopDelay = computeWordDelay(stopWord, 300, testPacing);
+    const denseDelay = computeWordDelay(denseWord, 300, testPacing);
+
+    expect(denseDelay).toBeGreaterThan(stopDelay);
+
+    // With surprisal disabled
+    const pacingNoSurprisal = { ...testPacing, enableSurprisal: false };
+    const stopDelayRaw = computeWordDelay(stopWord, 300, pacingNoSurprisal);
+    expect(stopDelayRaw).toBeGreaterThan(stopDelay);
+  });
+});
+

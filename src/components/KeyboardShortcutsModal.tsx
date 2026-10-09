@@ -18,6 +18,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
   const shortcuts = [
     { key: 'Space', desc: 'Play / Pause reading flow' },
     { key: 'K', desc: 'Save States & Cookie Places (Take a Break)' },
+    { key: 'Q', desc: 'Interactive retention & comprehension check (True WPM)' },
     { key: 'D', desc: 'Add active word to Vocabulary Vault (Shift+D to open vault)' },
     { key: 'Y', desc: 'Cloudless Device Sync & QR mirror' },
     { key: 'W', desc: 'Cycle saccadic chunk size (1w, 2w, 3w)' },
