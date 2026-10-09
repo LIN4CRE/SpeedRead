@@ -6,7 +6,7 @@
 
 **Read full books at 600+ WPM with frictionless Rapid Serial Visual Presentation (RSVP) & Optimal Recognition Point (ORP) tracking.**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-speedread--rsvp.surge.sh-brightgreen.svg?style=for-the-badge&logo=fastapi)](https://speedread-rsvp.surge.sh)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-speedread--rsvp.surge.sh-brightgreen.svg?style=for-the-badge&logo=fastapi)](https://speedread-rsvp-1791551209.surge.sh)
 
 [![CI](https://github.com/LIN4CRE/SpeedRead/actions/workflows/ci.yml/badge.svg)](https://github.com/LIN4CRE/SpeedRead/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -19,7 +19,7 @@
 [![Formats](https://img.shields.io/badge/Formats-PDF%20%7C%20ePub%20%7C%20TXT-emerald.svg)](#supported-formats)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-rose.svg)](#privacy--security)
 
-[🚀 Live Demo](https://speedread-rsvp.surge.sh) · [✨ Features](#key-features) · [🔬 The Science](#the-science-of-rsvp) · [⌨️ Shortcuts](#keyboard-shortcuts) · [📚 Free Ebooks](#free-ebooks-directory) · [🗺️ Roadmap](ROADMAP.md) · [🛠️ Installation](#getting-started) · [🤝 Contributing](CONTRIBUTING.md)
+[🚀 Live Demo](https://speedread-rsvp-1791551209.surge.sh) · [✨ Features](#key-features) · [🔬 The Science](#the-science-of-rsvp) · [⌨️ Shortcuts](#keyboard-shortcuts) · [📚 Free Ebooks](#free-ebooks-directory) · [🗺️ Roadmap](ROADMAP.md) · [🛠️ Installation](#getting-started) · [🤝 Contributing](CONTRIBUTING.md)
 
 </div>
 
