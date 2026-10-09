@@ -428,7 +428,7 @@ export const ReticleDisplay: React.FC<ReticleDisplayProps> = ({
             className="absolute top-0 bottom-0 left-0 right-[60%] flex items-center justify-end whitespace-pre select-none pointer-events-none"
             style={{
               color: isVideoSlot ? '#f1f5f9' : theme.textBright,
-              paddingRight: '0.28ch',
+              paddingRight: '0.5ch',
             }}
           >
             {left}
@@ -440,7 +440,7 @@ export const ReticleDisplay: React.FC<ReticleDisplayProps> = ({
             style={{
               color: typography.highlightColor,
               textShadow: isPlaying ? `0 0 16px ${typography.highlightColor}66` : 'none',
-              minWidth: '0.6ch',
+              width: '1ch',
             }}
           >
             {focal}
@@ -458,7 +458,7 @@ export const ReticleDisplay: React.FC<ReticleDisplayProps> = ({
             className="absolute top-0 bottom-0 left-[40%] right-0 flex items-center justify-start whitespace-pre select-none pointer-events-none"
             style={{
               color: isVideoSlot ? '#f1f5f9' : theme.textBright,
-              paddingLeft: '0.28ch',
+              paddingLeft: '0.5ch',
             }}
           >
             {right}

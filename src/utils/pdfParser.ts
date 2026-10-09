@@ -2,14 +2,16 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { DocumentSource, DocumentChapter, ParsedWord } from '../types/reader';
 import { tokenizeText } from './orp';
 
-// Initialize PDF.js worker
+// Initialize PDF.js worker with local bundled asset and CDN fallback
 if (typeof window !== 'undefined' && pdfjsLib.GlobalWorkerOptions) {
   try {
-    // Use a reliable CDN worker URL matched with pdfjs-dist
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version || '4.10.38'}/build/pdf.worker.min.mjs`;
+    // Vite bundles this as an asset, enabling 100% offline PDF parsing
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+      'pdfjs-dist/build/pdf.worker.min.mjs',
+      import.meta.url
+    ).toString();
   } catch {
-    // Fallback if needed
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version || '4.10.38'}/build/pdf.worker.min.mjs`;
   }
 }
 

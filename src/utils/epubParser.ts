@@ -9,7 +9,7 @@ export interface EPubParseProgress {
   status: string;
 }
 
-function normalizeZipPath(baseDir: string, relativeHref: string): string {
+export function normalizeZipPath(baseDir: string, relativeHref: string): string {
   const cleanHref = relativeHref.split('#')[0].split('?')[0];
   const combined = baseDir ? `${baseDir}/${cleanHref}` : cleanHref;
   const parts = decodeURIComponent(combined).replace(/\\/g, '/').split('/');

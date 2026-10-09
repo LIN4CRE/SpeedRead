@@ -542,6 +542,19 @@ export default function App() {
     }
   };
 
+  // Fullscreen toggle
+  const toggleFullscreen = useCallback(() => {
+    if (!window.document.fullscreenElement) {
+      window.document.documentElement.requestFullscreen().then(() => {
+        setIsFullscreen(true);
+      }).catch(() => null);
+    } else {
+      window.document.exitFullscreen().then(() => {
+        setIsFullscreen(false);
+      }).catch(() => null);
+    }
+  }, []);
+
   // Keyboard navigation listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -658,6 +671,11 @@ export default function App() {
           setIsSettingsOpen(false);
           setIsShortcutsOpen(false);
           setIsFreeBooksOpen(false);
+          setIsSidebarOpen(false);
+          setIsInsightsOpen(false);
+          setIsEyeRestOpen(false);
+          setIsSaveStateOpen(false);
+          setIsContextPeekOpen(false);
           setIsZenMode(false);
           if (window.document.fullscreenElement) {
             window.document.exitFullscreen().catch(() => null);
@@ -671,20 +689,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [togglePlay, jumpPrevSentence, stepWords, resetPlayback, cycleTheme]);
-
-  // Fullscreen toggle
-  const toggleFullscreen = () => {
-    if (!window.document.fullscreenElement) {
-      window.document.documentElement.requestFullscreen().then(() => {
-        setIsFullscreen(true);
-      }).catch(() => null);
-    } else {
-      window.document.exitFullscreen().then(() => {
-        setIsFullscreen(false);
-      }).catch(() => null);
-    }
-  };
+  }, [togglePlay, jumpPrevSentence, stepWords, resetPlayback, cycleTheme, cycleReticleStyle, toggleFullscreen]);
 
   useEffect(() => {
     const onFsChange = () => {

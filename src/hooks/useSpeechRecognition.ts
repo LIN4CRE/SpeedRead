@@ -28,6 +28,7 @@ export function useSpeechRecognition({
 }: SpeechRecognitionHookProps) {
   const [isSupported, setIsSupported] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const isListeningRef = useRef(false);
   const [mode, setMode] = useState<'commands' | 'cadence'>('commands');
   const [feedbackToast, setFeedbackToast] = useState<{
     message: string;
@@ -43,6 +44,17 @@ export function useSpeechRecognition({
     const win = window as unknown as IWindow;
     const SpeechRecognition = win.SpeechRecognition || win.webkitSpeechRecognition;
     setIsSupported(Boolean(SpeechRecognition));
+
+    return () => {
+      if (silenceTimer.current) clearTimeout(silenceTimer.current);
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.abort();
+        } catch {
+          // ignore
+        }
+      }
+    };
   }, []);
 
   const showToast = useCallback((message: string, action: string) => {
@@ -185,6 +197,7 @@ export function useSpeechRecognition({
       recognition.lang = 'en-US';
 
       recognition.onstart = () => {
+        isListeningRef.current = true;
         setIsListening(true);
         showToast('Microphone Active', mode === 'commands' ? 'Say "faster", "slower", "pause", "600"' : 'Reading Aloud Cadence Syncing');
       };
@@ -200,6 +213,7 @@ export function useSpeechRecognition({
       recognition.onerror = (event: any) => {
         console.warn('Speech recognition error:', event.error);
         if (event.error === 'not-allowed') {
+          isListeningRef.current = false;
           setIsListening(false);
           showToast('Microphone access denied', 'Check browser permissions');
         }
@@ -207,13 +221,15 @@ export function useSpeechRecognition({
 
       recognition.onend = () => {
         // If user didn't explicitly stop it, restart to keep listening
-        if (isListening) {
+        if (isListeningRef.current) {
           try {
             recognition.start();
           } catch {
+            isListeningRef.current = false;
             setIsListening(false);
           }
         } else {
+          isListeningRef.current = false;
           setIsListening(false);
         }
       };
@@ -222,12 +238,14 @@ export function useSpeechRecognition({
       recognition.start();
     } catch (err) {
       console.error('Failed to start speech recognition:', err);
+      isListeningRef.current = false;
       setIsListening(false);
     }
-  }, [isListening, mode, processTranscript, showToast]);
+  }, [mode, processTranscript, showToast]);
 
   // Stop Speech Recognition
   const stopListening = useCallback(() => {
+    isListeningRef.current = false;
     setIsListening(false);
     if (silenceTimer.current) clearTimeout(silenceTimer.current);
     if (recognitionRef.current) {

@@ -14,7 +14,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.x-646cff.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-38bdf8.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Tests-26%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
+[![Vitest](https://img.shields.io/badge/Tests-34%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
 [![Formats](https://img.shields.io/badge/Formats-PDF%20%7C%20ePub%20%7C%20TXT-emerald.svg)](#supported-formats)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-rose.svg)](#privacy--security)
 
