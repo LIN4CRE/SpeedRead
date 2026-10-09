@@ -32,6 +32,9 @@ export interface TypographySettings {
   reticleWidth: 'compact' | 'normal' | 'wide';
   showOrpMarker: boolean;
   highlightColor: string; // focal letter color hex
+  chunkSize: ChunkSize; // 1, 2, or 3 words
+  bionicReading: boolean; // Bionic reading syllable bolding in context preview
+  dyslexiaRuler: boolean; // High-contrast horizontal focus ruler guide
 }
 
 export interface ThemeColors {

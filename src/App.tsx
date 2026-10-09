@@ -168,6 +168,16 @@ export default function App() {
     });
   }, []);
 
+  const cycleChunkSize = useCallback(() => {
+    setTypography((prev) => {
+      const current = prev.chunkSize || 1;
+      const nextSize = current === 1 ? 2 : current === 2 ? 3 : 1;
+      const updated = { ...prev, chunkSize: nextSize as 1 | 2 | 3 };
+      saveSettings(updated);
+      return updated;
+    });
+  }, []);
+
   const selectReticleStyle = useCallback((newStyle: ReticleStyle) => {
     setTypography((prev) => {
       const updated = { ...prev, reticleStyle: newStyle };
@@ -460,26 +470,37 @@ export default function App() {
       return;
     }
 
-    const currentWord = activeDoc.words[currentWordIndex];
-    const delay = computeWordDelay(currentWord, wpm, pacing);
+    const effectiveChunkSize = typography.chunkSize || 1;
+    const chunkWords = activeDoc.words.slice(currentWordIndex, currentWordIndex + effectiveChunkSize);
+    const currentWord = chunkWords[0];
+
+    let delay = 0;
+    if (effectiveChunkSize === 1 || chunkWords.length === 1) {
+      delay = computeWordDelay(currentWord, wpm, pacing);
+    } else {
+      const sumDelay = chunkWords.reduce((sum, w) => sum + computeWordDelay(w, wpm, pacing), 0);
+      delay = Math.round(sumDelay * (effectiveChunkSize === 2 ? 0.90 : 0.85));
+    }
 
     // Audio Metronome Pacer cadence ticker
     if (isAudioPacer && currentWord) {
-      audioPacer.playTick(currentWord.isSentenceEnd || currentWord.isParagraphEnd);
+      const hasEnd = chunkWords.some((w) => w.isSentenceEnd || w.isParagraphEnd);
+      audioPacer.playTick(hasEnd);
     }
 
     // Read-Aloud Web Speech API multi-sensory synthesis
     if (isReadAloud && currentWord) {
-      speakWord(currentWord.clean || currentWord.raw);
+      const chunkPhrase = chunkWords.map((w) => w.clean || w.raw).join(' ');
+      speakWord(chunkPhrase);
     }
 
     timerRef.current = setTimeout(() => {
       setCurrentWordIndex((prev) => {
-        const next = prev + 1;
+        const next = prev + effectiveChunkSize;
         if (next >= activeDoc.words.length) {
           setIsPlaying(false);
-          recordBookmark(activeDoc, next, wpm);
-          return prev;
+          recordBookmark(activeDoc, activeDoc.words.length - 1, wpm);
+          return Math.max(0, activeDoc.words.length - 1);
         }
         return next;
       });
@@ -488,7 +509,7 @@ export default function App() {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [isPlaying, currentWordIndex, activeDoc, wpm, pacing, recordBookmark]);
+  }, [isPlaying, currentWordIndex, activeDoc, wpm, pacing, typography.chunkSize, recordBookmark, isAudioPacer, isReadAloud, speakWord]);
 
   // Drag and Drop anywhere on screen
   const handleDragOver = (e: React.DragEvent) => {
@@ -632,6 +653,13 @@ export default function App() {
           }
           break;
 
+        case 'KeyW':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            cycleChunkSize();
+          }
+          break;
+
         case 'KeyZ':
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
@@ -689,7 +717,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [togglePlay, jumpPrevSentence, stepWords, resetPlayback, cycleTheme, cycleReticleStyle, toggleFullscreen]);
+  }, [togglePlay, jumpPrevSentence, stepWords, resetPlayback, cycleTheme, cycleReticleStyle, cycleChunkSize, toggleFullscreen]);
 
   useEffect(() => {
     const onFsChange = () => {
@@ -1141,11 +1169,25 @@ export default function App() {
             typography={typography}
             theme={currentTheme}
             wpm={wpm}
+            chunkSize={typography.chunkSize || 1}
+            chunkWords={activeDoc.words.slice(currentWordIndex, currentWordIndex + (typography.chunkSize || 1))}
             documentTitle={activeDoc.title}
             onBoxClick={togglePlay}
             isReadAloudActive={isReadAloud}
             onToggleReticleStyle={cycleReticleStyle}
             onSelectReticleStyle={selectReticleStyle}
+            onSwipeLeft={() => stepWords(-10)}
+            onSwipeRight={() => stepWords(10)}
+            onSwipeUp={() => setWpm((prev) => Math.min(1200, prev + 25))}
+            onSwipeDown={() => setWpm((prev) => Math.max(100, prev - 25))}
+            onPinchScale={(delta) => {
+              setTypography((prev) => {
+                const nextSize = Math.max(32, Math.min(80, prev.fontSize + delta));
+                const updated = { ...prev, fontSize: nextSize };
+                saveSettings(updated);
+                return updated;
+              });
+            }}
           />
         </div>
 
@@ -1157,6 +1199,7 @@ export default function App() {
           currentWordIndex={currentWordIndex}
           onSelectWord={(idx) => setCurrentWordIndex(idx)}
           theme={currentTheme}
+          bionicReading={typography.bionicReading}
         />
 
         {/* Reading Playback Controls Bar */}
@@ -1194,6 +1237,8 @@ export default function App() {
             }}
             onToggleReticleStyle={cycleReticleStyle}
             onOpenSaveStates={() => setIsSaveStateOpen(true)}
+            chunkSize={typography.chunkSize || 1}
+            onCycleChunkSize={cycleChunkSize}
           />
         </div>
       </main>

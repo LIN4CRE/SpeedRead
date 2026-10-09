@@ -12,11 +12,17 @@ interface ReticleDisplayProps {
   theme: ThemeColors;
   wpm: number;
   chunkSize?: number;
+  chunkWords?: ParsedWord[];
   onBoxClick?: () => void;
   documentTitle?: string;
   isReadAloudActive?: boolean;
   onToggleReticleStyle?: () => void;
   onSelectReticleStyle?: (style: ReticleStyle) => void;
+  onSwipeLeft?: () => void;
+  onSwipeRight?: () => void;
+  onSwipeUp?: () => void;
+  onSwipeDown?: () => void;
+  onPinchScale?: (delta: number) => void;
 }
 
 export const RETICLE_STYLE_OPTIONS: { id: ReticleStyle; label: string; iconLabel: string }[] = [
@@ -41,15 +47,112 @@ export const ReticleDisplay: React.FC<ReticleDisplayProps> = ({
   theme,
   wpm,
   chunkSize = 1,
+  chunkWords,
   onBoxClick,
   documentTitle,
   isReadAloudActive = false,
   onToggleReticleStyle,
   onSelectReticleStyle,
+  onSwipeLeft,
+  onSwipeRight,
+  onSwipeUp,
+  onSwipeDown,
+  onPinchScale,
 }) => {
+  const effectiveChunkSize = typography.chunkSize || chunkSize || 1;
   const wordText = currentWord?.raw || (isPlaying ? '' : 'Ready');
   const orpIdx = currentWord ? currentWord.orpIndex : Math.min(1, wordText.length - 1);
   const { left, focal, right } = splitWordAtORP(wordText, orpIdx);
+
+  // Mobile Touch Gestures
+  const touchStartRef = React.useRef<{ x: number; y: number; time: number; touches: number; dist?: number } | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      touchStartRef.current = {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
+        time: Date.now(),
+        touches: 2,
+        dist,
+      };
+    } else if (e.touches.length === 1) {
+      touchStartRef.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+        time: Date.now(),
+        touches: 1,
+      };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    if (touchStartRef.current.touches === 2 && e.touches.length === 2 && touchStartRef.current.dist) {
+      const currentDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const diff = currentDist - touchStartRef.current.dist;
+      if (Math.abs(diff) > 30) {
+        onPinchScale?.(diff > 0 ? 2 : -2);
+        touchStartRef.current.dist = currentDist;
+        if (typeof navigator !== 'undefined' && navigator.vibrate) {
+          navigator.vibrate(10);
+        }
+      }
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const start = touchStartRef.current;
+    const elapsed = Date.now() - start.time;
+
+    if (start.touches === 2 && elapsed < 400) {
+      onBoxClick?.();
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(20);
+      }
+      touchStartRef.current = null;
+      return;
+    }
+
+    if (start.touches === 1 && e.changedTouches.length > 0) {
+      const endTouch = e.changedTouches[0];
+      const deltaX = endTouch.clientX - start.x;
+      const deltaY = endTouch.clientY - start.y;
+
+      if (elapsed < 500) {
+        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4) {
+          if (deltaX > 0) {
+            onSwipeRight?.();
+          } else {
+            onSwipeLeft?.();
+          }
+          if (typeof navigator !== 'undefined' && navigator.vibrate) {
+            navigator.vibrate(20);
+          }
+        } else if (Math.abs(deltaY) > 40 && Math.abs(deltaY) > Math.abs(deltaX) * 1.4) {
+          if (deltaY < 0) {
+            onSwipeUp?.();
+          } else {
+            onSwipeDown?.();
+          }
+          if (typeof navigator !== 'undefined' && navigator.vibrate) {
+            navigator.vibrate(15);
+          }
+        } else if (Math.abs(deltaX) < 15 && Math.abs(deltaY) < 15) {
+          onBoxClick?.();
+        }
+      }
+    }
+    touchStartRef.current = null;
+  };
 
   // Width classes
   const widthClasses = {
@@ -131,9 +234,21 @@ export const ReticleDisplay: React.FC<ReticleDisplayProps> = ({
         </button>
       </div>
 
+      {/* Dyslexia High-Contrast Focus Ruler Band */}
+      {typography.dyslexiaRuler && (
+        <div className="pointer-events-none fixed inset-0 z-0 flex flex-col justify-between">
+          <div className="h-[calc(50vh-100px)] bg-black/55 backdrop-blur-[0.5px] transition-all" />
+          <div className="h-48 border-y-2 border-amber-400/30 bg-amber-400/[0.04] transition-all" />
+          <div className="h-[calc(50vh-100px)] bg-black/55 backdrop-blur-[0.5px] transition-all" />
+        </div>
+      )}
+
       {/* Main Reticle Reading Box */}
       <div
         onClick={onBoxClick}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         className={`relative w-full ${widthClasses} mx-auto flex items-center justify-center select-none cursor-pointer transition-all duration-150 group ${
           isVideoSlot
             ? 'border-y-2 py-8 sm:py-12 bg-black'
@@ -409,61 +524,142 @@ export const ReticleDisplay: React.FC<ReticleDisplayProps> = ({
           </>
         )}
 
-        {/* --- MAIN RSVP TEXT DISPLAY (Zero-Jitter ORP Fixed Focal Layout) --- */}
-        <div
-          className={`w-full relative z-10 select-none ${transformClass}`}
-          style={{
-            fontFamily: fontFamilyCss,
-            fontSize: isExtraLongWord
-              ? `clamp(24px, 5.5vw, ${typography.fontSize * 0.85}px)`
-              : `clamp(30px, 7.5vw, ${typography.fontSize}px)`,
-            fontWeight: typography.fontWeight,
-            letterSpacing: `${typography.letterSpacing}px`,
-            lineHeight: 1,
-            height: '1.3em',
-          }}
-        >
-          {/* Left Segment: right-aligned up to the 40% focal axis */}
+        {/* --- MAIN RSVP TEXT DISPLAY --- */}
+        {effectiveChunkSize === 2 && chunkWords && chunkWords.length >= 2 ? (
           <div
-            className="absolute top-0 bottom-0 left-0 right-[60%] flex items-center justify-end whitespace-pre select-none pointer-events-none"
+            className={`w-full relative z-10 select-none flex items-center justify-center gap-4 ${transformClass}`}
             style={{
-              color: isVideoSlot ? '#f1f5f9' : theme.textBright,
-              paddingRight: '0.5ch',
+              fontFamily: fontFamilyCss,
+              fontSize: `clamp(22px, 5.5vw, ${typography.fontSize * 0.82}px)`,
+              fontWeight: typography.fontWeight,
+              letterSpacing: `${typography.letterSpacing}px`,
+              lineHeight: 1,
+              height: '1.4em',
             }}
           >
-            {left}
-          </div>
+            {/* Word 1 */}
+            {(() => {
+              const w1 = chunkWords[0];
+              const s1 = splitWordAtORP(w1.raw, w1.orpIndex);
+              return (
+                <span className="inline-flex items-baseline">
+                  <span>{s1.left}</span>
+                  <span className="font-bold px-[0.05ch]" style={{ color: typography.highlightColor }}>
+                    {s1.focal}
+                  </span>
+                  <span>{s1.right}</span>
+                </span>
+              );
+            })()}
 
-          {/* Focal ORP Character: Locked exactly on the 40% vertical axis */}
+            {/* Word 2 */}
+            {(() => {
+              const w2 = chunkWords[1];
+              const s2 = splitWordAtORP(w2.raw, w2.orpIndex);
+              return (
+                <span className="inline-flex items-baseline opacity-90">
+                  <span>{s2.left}</span>
+                  <span
+                    className="font-bold underline decoration-2 decoration-current px-[0.05ch]"
+                    style={{ color: typography.highlightColor }}
+                  >
+                    {s2.focal}
+                  </span>
+                  <span>{s2.right}</span>
+                </span>
+              );
+            })()}
+          </div>
+        ) : effectiveChunkSize === 3 && chunkWords && chunkWords.length >= 3 ? (
           <div
-            className="absolute top-0 bottom-0 left-[40%] -translate-x-1/2 flex items-center justify-center font-bold whitespace-pre transition-colors duration-100 z-10 pointer-events-none"
+            className={`w-full relative z-10 select-none flex items-center justify-center gap-3.5 ${transformClass}`}
             style={{
-              color: typography.highlightColor,
-              textShadow: isPlaying ? `0 0 16px ${typography.highlightColor}66` : 'none',
-              width: '1ch',
+              fontFamily: fontFamilyCss,
+              fontSize: `clamp(18px, 4.5vw, ${typography.fontSize * 0.70}px)`,
+              fontWeight: typography.fontWeight,
+              letterSpacing: `${typography.letterSpacing}px`,
+              lineHeight: 1,
+              height: '1.4em',
             }}
           >
-            {focal}
-            {/* Additional Underline style highlight below focal letter */}
-            {style === 'underline' && (
-              <span
-                className="absolute left-0 right-0 -bottom-1 h-[2.5px] rounded-full pointer-events-none"
-                style={{ backgroundColor: typography.highlightColor }}
-              />
-            )}
-          </div>
+            {/* Left Flank Word 1 */}
+            <span className="opacity-70 truncate max-w-[28%]">{chunkWords[0].raw}</span>
 
-          {/* Right Segment: left-aligned starting from the focal axis */}
+            {/* Center Focus Word 2 */}
+            {(() => {
+              const w2 = chunkWords[1];
+              const s2 = splitWordAtORP(w2.raw, w2.orpIndex);
+              return (
+                <span className="inline-flex items-baseline font-bold scale-105">
+                  <span>{s2.left}</span>
+                  <span className="font-bold px-[0.05ch]" style={{ color: typography.highlightColor }}>
+                    {s2.focal}
+                  </span>
+                  <span>{s2.right}</span>
+                </span>
+              );
+            })()}
+
+            {/* Right Flank Word 3 */}
+            <span className="opacity-70 truncate max-w-[28%]">{chunkWords[2].raw}</span>
+          </div>
+        ) : (
+          /* Standard 1-Word Zero-Jitter ORP Fixed Focal Layout */
           <div
-            className="absolute top-0 bottom-0 left-[40%] right-0 flex items-center justify-start whitespace-pre select-none pointer-events-none"
+            className={`w-full relative z-10 select-none ${transformClass}`}
             style={{
-              color: isVideoSlot ? '#f1f5f9' : theme.textBright,
-              paddingLeft: '0.5ch',
+              fontFamily: fontFamilyCss,
+              fontSize: isExtraLongWord
+                ? `clamp(24px, 5.5vw, ${typography.fontSize * 0.85}px)`
+                : `clamp(30px, 7.5vw, ${typography.fontSize}px)`,
+              fontWeight: typography.fontWeight,
+              letterSpacing: `${typography.letterSpacing}px`,
+              lineHeight: 1,
+              height: '1.3em',
             }}
           >
-            {right}
+            {/* Left Segment: right-aligned up to the 40% focal axis */}
+            <div
+              className="absolute top-0 bottom-0 left-0 right-[60%] flex items-center justify-end whitespace-pre select-none pointer-events-none"
+              style={{
+                color: isVideoSlot ? '#f1f5f9' : theme.textBright,
+                paddingRight: '0.5ch',
+              }}
+            >
+              {left}
+            </div>
+
+            {/* Focal ORP Character: Locked exactly on the 40% vertical axis */}
+            <div
+              className="absolute top-0 bottom-0 left-[40%] -translate-x-1/2 flex items-center justify-center font-bold whitespace-pre transition-colors duration-100 z-10 pointer-events-none"
+              style={{
+                color: typography.highlightColor,
+                textShadow: isPlaying ? `0 0 16px ${typography.highlightColor}66` : 'none',
+                width: '1ch',
+              }}
+            >
+              {focal}
+              {/* Additional Underline style highlight below focal letter */}
+              {style === 'underline' && (
+                <span
+                  className="absolute left-0 right-0 -bottom-1 h-[2.5px] rounded-full pointer-events-none"
+                  style={{ backgroundColor: typography.highlightColor }}
+                />
+              )}
+            </div>
+
+            {/* Right Segment: left-aligned starting from the focal axis */}
+            <div
+              className="absolute top-0 bottom-0 left-[40%] right-0 flex items-center justify-start whitespace-pre select-none pointer-events-none"
+              style={{
+                color: isVideoSlot ? '#f1f5f9' : theme.textBright,
+                paddingLeft: '0.5ch',
+              }}
+            >
+              {right}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Play / Pause Touch Overlay when paused */}
         {!isPlaying && (

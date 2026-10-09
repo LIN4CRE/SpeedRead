@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-10-09
+
+### Added
+- **Multi-Word Saccadic Chunking (1, 2, 3 Words):** Support for reading 1, 2, or 3 words simultaneously. Word pairs render with dual focal markers; trios render with stationary center anchoring. Pacing delays automatically scale (0.90x for 2w, 0.85x for 3w) for enhanced cognitive throughput. Includes quick cycle toolbar button and <kbd>W</kbd> keyboard shortcut.
+- **Offline PWA Service Worker:** `public/sw.js` with Cache-First strategy for Google Web Fonts, Stale-While-Revalidate for JS/CSS chunks, and offline navigation fallback.
+- **Mobile Touch Gesture Navigation:**
+  - Horizontal swipe left/right (±10 words).
+  - Vertical edge drag (±25 WPM) with haptic vibration feedback (`navigator.vibrate`).
+  - Pinch-to-scale font size dynamically on the reader letterbox.
+  - Two-finger tap to toggle playback without covering text.
+- **Dyslexia Focus Ruler:** High-contrast reading highlight band in typography settings to eliminate visual line drift.
+- **Bionic Reading Preview:** Fixation character bolding in synchronized Context Peek (`partitionBionicWord`) to accelerate peripheral context absorption.
+- **Expanded Test Suite:** Added unit test suites `tests/bionic.test.ts` and `tests/chunking.test.ts`, raising total test coverage to 48 passing tests.
+
+---
+
 ## [1.0.0] - 2026-10-09
 
 ### Added

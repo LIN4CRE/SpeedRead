@@ -41,35 +41,28 @@ flowchart TD
 
 ---
 
-## 📍 Phase 1: Cognitive Ergonomics & Mobile Polish (v1.1 – v1.2)
-*Target: Q2 – Q3 2026 · Focus: Micro-typography, Touch Ergonomics, and Offline PWA*
+## 📍 Phase 1: Cognitive Ergonomics & Mobile Polish (v1.1.0) — ✅ COMPLETED
+*Status: Shipped & Verified · 48 Tests Passing · Multi-word Chunking · Offline PWA · Touch Gestures · Dyslexia Focus*
 
-### 1.1 Multi-Word Saccadic Chunking (2 & 3 Word Modes)
-- **Problem:** Beyond 800 WPM, processing single words sequentially can cause visual flicker fatigue for advanced speed readers.
-- **Implementation:**
-  - Introduce configurable chunk size: `ChunkSize = 1 | 2 | 3`.
-  - In 2-word mode: Display phrase pairs with secondary focal indicators, enabling saccadic grouping.
-  - Dynamically scale reticle width and spacing based on chunk token lengths.
+### 1.1 Multi-Word Saccadic Chunking (1, 2, & 3 Word Modes) — ✅ Completed
+- Configurable chunk size (`chunkSize: 1 | 2 | 3`) via toolbar quick button or <kbd>W</kbd> keyboard shortcut.
+- Visual pair fixation with secondary focal underline markers, and trio fixation centered on the stationary axis.
+- Saccadic delay compression (0.90x for 2-word, 0.85x for 3-word chunks) for enhanced cognitive throughput.
+- Unit tests added in `tests/chunking.test.ts`.
 
-### 1.2 Full Progressive Web App (PWA) with Service Worker
-- **Problem:** Currently requires an active browser connection on first load; users want to read on flights and subways without connectivity.
-- **Implementation:**
-  - Integrate `vite-plugin-pwa` with `Workbox` caching strategy (`CacheFirst` for static assets and bundled fonts).
-  - Pre-cache default sample classics (*Frankenstein*, *Alice in Wonderland*, *Peter Pan*).
-  - Support mobile "Add to Home Screen" with native standalone display mode and custom splash screens.
+### 1.2 Full Progressive Web App (PWA) with Service Worker — ✅ Completed
+- Offline Service Worker (`public/sw.js`) implementing Cache-First caching for Google Fonts, Stale-While-Revalidate for static bundles, and offline fallback for navigation.
+- Registered in production in `src/main.tsx` with mobile standalone web app manifest (`manifest.json`).
 
-### 1.3 Mobile Touch Gesture Navigation
-- **Implementation:**
-  - **Swipe Left / Right:** Instantly step 10 words forward/backward.
-  - **Two-Finger Tap:** Toggle play/pause without obscuring the reticle.
-  - **Vertical Edge Drag:** Increase or decrease WPM velocity smoothly with haptic vibration feedback (via `navigator.vibrate`).
-  - **Pinch-to-Scale:** Dynamically enlarge or shrink typography font size.
+### 1.3 Mobile Touch Gesture Navigation — ✅ Completed
+- **Swipe Left / Right:** Instantly step 10 words forward/backward.
+- **Two-Finger Tap:** Toggle play/pause without obscuring the reticle.
+- **Vertical Edge Drag:** Increase or decrease WPM velocity smoothly with haptic vibration feedback (`navigator.vibrate`).
+- **Pinch-to-Scale:** Dynamically enlarge or shrink typography font size directly on the reticle display.
 
-### 1.4 Dyslexia & Specialized Typography Mode
-- **Implementation:**
-  - Bundle **OpenDyslexic 3** as an offline font option alongside *Atkinson Hyperlegible*.
-  - Configurable weighted bottom stems to reduce character rotation illusions.
-  - Bionic reading preview toggle in Context Peek (bold initial syllables of surrounding context).
+### 1.4 Dyslexia & Specialized Typography Mode — ✅ Completed
+- High-contrast Dyslexia Focus Ruler band framing the reticle letterbox.
+- Bionic Reading syllable fixation bolding toggle in Context Peek (`partitionBionicWord`) with unit tests in `tests/bionic.test.ts`.
 
 ---
 

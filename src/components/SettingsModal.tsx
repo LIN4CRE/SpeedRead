@@ -290,17 +290,88 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2">
-                <label className="text-xs uppercase font-mono tracking-wider font-semibold cursor-pointer" style={{ color: theme.textDim }}>
-                  Display ORP Alignment Markers
-                </label>
-                <input
-                  type="checkbox"
-                  checked={typography.showOrpMarker}
-                  onChange={(e) => onUpdateTypography({ ...typography, showOrpMarker: e.target.checked })}
-                  className="w-4 h-4 cursor-pointer"
-                  style={{ accentColor: theme.accent }}
-                />
+              {/* Chunk Size Selector */}
+              <div className="space-y-2 pt-2 border-t" style={{ borderColor: theme.border }}>
+                <div className="flex justify-between items-center text-xs font-mono" style={{ color: theme.textDim }}>
+                  <span className="font-semibold uppercase tracking-wider">SACCADIC CHUNK SIZE</span>
+                  <span className="font-bold" style={{ color: theme.accent }}>
+                    {typography.chunkSize || 1} Word{(typography.chunkSize || 1) > 1 ? 's' : ''} at a time
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {([1, 2, 3] as const).map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => onUpdateTypography({ ...typography, chunkSize: size })}
+                      className={`p-2.5 rounded-xl border text-xs font-medium text-center transition-all ${
+                        (typography.chunkSize || 1) === size ? 'ring-2 font-bold' : 'opacity-70 hover:opacity-100'
+                      }`}
+                      style={{
+                        backgroundColor: (typography.chunkSize || 1) === size ? theme.surfaceHover : theme.bg,
+                        borderColor: (typography.chunkSize || 1) === size ? theme.accent : theme.border,
+                        color: (typography.chunkSize || 1) === size ? theme.accent : theme.textBright,
+                      }}
+                    >
+                      {size === 1 ? '1 Word (Standard)' : size === 2 ? '2 Words (Pairs)' : '3 Words (Trio)'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Accessibility & Focus Features */}
+              <div className="space-y-3 pt-3 border-t" style={{ borderColor: theme.border }}>
+                <span className="block text-xs uppercase font-mono tracking-wider font-semibold" style={{ color: theme.textDim }}>
+                  ACCESSIBILITY & FOCUS
+                </span>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-medium cursor-pointer block" style={{ color: theme.textBright }}>
+                      Display ORP Alignment Markers
+                    </label>
+                    <span className="text-[11px] opacity-60 block">Show focal ticks framing optimal recognition letters</span>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={typography.showOrpMarker}
+                    onChange={(e) => onUpdateTypography({ ...typography, showOrpMarker: e.target.checked })}
+                    className="w-4 h-4 cursor-pointer"
+                    style={{ accentColor: theme.accent }}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-medium cursor-pointer block" style={{ color: theme.textBright }}>
+                      Dyslexia Focus Ruler
+                    </label>
+                    <span className="text-[11px] opacity-60 block">High-contrast center band dimming peripheral screen clutter</span>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(typography.dyslexiaRuler)}
+                    onChange={(e) => onUpdateTypography({ ...typography, dyslexiaRuler: e.target.checked })}
+                    className="w-4 h-4 cursor-pointer"
+                    style={{ accentColor: theme.accent }}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="text-xs font-medium cursor-pointer block" style={{ color: theme.textBright }}>
+                      Bionic Reading in Context Peek
+                    </label>
+                    <span className="text-[11px] opacity-60 block">Bolds initial word syllables to accelerate peripheral scanning</span>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={Boolean(typography.bionicReading)}
+                    onChange={(e) => onUpdateTypography({ ...typography, bionicReading: e.target.checked })}
+                    className="w-4 h-4 cursor-pointer"
+                    style={{ accentColor: theme.accent }}
+                  />
+                </div>
               </div>
             </div>
           )}

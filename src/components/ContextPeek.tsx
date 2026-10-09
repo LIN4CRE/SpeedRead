@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ParsedWord, ThemeColors } from '../types/reader';
 import { Eye, X, CornerDownRight } from 'lucide-react';
+import { partitionBionicWord } from '../utils/bionic';
 
 interface ContextPeekProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface ContextPeekProps {
   currentWordIndex: number;
   onSelectWord: (index: number) => void;
   theme: ThemeColors;
+  bionicReading?: boolean;
 }
 
 export const ContextPeek: React.FC<ContextPeekProps> = ({
@@ -18,6 +20,7 @@ export const ContextPeek: React.FC<ContextPeekProps> = ({
   currentWordIndex,
   onSelectWord,
   theme,
+  bionicReading = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const activeWordRef = useRef<HTMLSpanElement>(null);
@@ -80,6 +83,8 @@ export const ContextPeek: React.FC<ContextPeekProps> = ({
 
           {visibleWords.map((word) => {
             const isCurrent = word.id === currentWordIndex;
+            const bionic = bionicReading ? partitionBionicWord(word.raw) : null;
+
             return (
               <span
                 key={word.id}
@@ -97,7 +102,16 @@ export const ContextPeek: React.FC<ContextPeekProps> = ({
                   boxShadow: isCurrent ? `0 0 10px ${theme.accent}44` : undefined,
                 }}
               >
-                {word.raw}
+                {bionic ? (
+                  <>
+                    {bionic.leadingPunct}
+                    <strong className="font-extrabold opacity-100">{bionic.boldPart}</strong>
+                    <span className="opacity-80 font-normal">{bionic.normalPart}</span>
+                    {bionic.trailingPunct}
+                  </>
+                ) : (
+                  word.raw
+                )}
               </span>
             );
           })}

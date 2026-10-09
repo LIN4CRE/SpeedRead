@@ -14,7 +14,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.x-646cff.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-38bdf8.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Tests-34%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
+[![Vitest](https://img.shields.io/badge/Tests-48%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
+[![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-blueviolet.svg?logo=pwa&logoColor=white)](#offline-pwa-support)
 [![Formats](https://img.shields.io/badge/Formats-PDF%20%7C%20ePub%20%7C%20TXT-emerald.svg)](#supported-formats)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-rose.svg)](#privacy--security)
 
@@ -43,6 +44,22 @@ When reading a physical book or standard screen, your eyes don't glide smoothly�
 ---
 
 ## ✨ Key Features
+
+### 👁️ Multi-Word Saccadic Chunking (1, 2, & 3 Word Modes)
+- **Fluid Word Grouping (<kbd>W</kbd> Key):** Switch between single-word RSVP, 2-word pairs with dual focal markers, or 3-word saccadic trios centered on the stationary axis.
+- **Cognitive Absorption Pacing:** Chunk delays automatically scale to provide the cognitive throughput speedup expected from saccadic absorption without mental overload.
+
+### 📱 Full Offline PWA & Mobile Touch Gestures
+- **Offline Service Worker:** Full offline caching for application assets, sample classics, and Google Web Fonts. Installable to home screens on iOS and Android.
+- **Touch Gesture Navigation:** 
+  - **Horizontal Swipe:** Jump forward or back by 10 words.
+  - **Vertical Edge Drag:** Smoothly ramp WPM up or down by ±25 with haptic vibration feedback.
+  - **Pinch-to-Scale:** Zoom font size dynamically directly on the reticle letterbox.
+  - **Two-Finger Tap:** Instant play/pause toggle.
+
+### 📖 Dyslexia Focus Ruler & Bionic Reading
+- **Dyslexia Focus Ruler:** High-contrast reading band highlighting the reticle letterbox to prevent line jumping and visual wandering.
+- **Bionic Reading Preview:** Bolded initial syllable fixation characters in the synchronized Context Peek to anchor peripheral saccades.
 
 ### 🎬 Cinematic Video-Style Reticle (As Seen on Speed Reading Challenges)
 - **Letterbox Slot Mode:** Pitch black OLED background (`#000000`) framed by top and bottom guidelines.

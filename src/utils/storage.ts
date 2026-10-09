@@ -28,6 +28,9 @@ export const DEFAULT_TYPOGRAPHY: TypographySettings = {
   reticleWidth: 'normal',
   showOrpMarker: true,
   highlightColor: '#ff3b30',
+  chunkSize: 1,
+  bionicReading: false,
+  dyslexiaRuler: false,
 };
 
 export const DEFAULT_PACING: PacingConfig = {

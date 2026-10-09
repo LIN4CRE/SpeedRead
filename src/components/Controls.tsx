@@ -46,6 +46,8 @@ interface ControlsProps {
   onToggleAudioPacer?: () => void;
   onToggleReticleStyle?: () => void;
   onOpenSaveStates?: () => void;
+  chunkSize?: 1 | 2 | 3;
+  onCycleChunkSize?: () => void;
 }
 
 export const Controls: React.FC<ControlsProps> = ({
@@ -72,6 +74,8 @@ export const Controls: React.FC<ControlsProps> = ({
   onToggleAudioPacer,
   onToggleReticleStyle,
   onOpenSaveStates,
+  chunkSize = 1,
+  onCycleChunkSize,
 }) => {
   const progressPercent = totalWords > 0 ? (currentWordIndex / totalWords) * 100 : 0;
   const wordsRemaining = Math.max(0, totalWords - currentWordIndex);
@@ -261,6 +265,22 @@ export const Controls: React.FC<ControlsProps> = ({
               }}
             >
               <Sparkles className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Quick Chunk Size (1w, 2w, 3w) Toggle */}
+          {onCycleChunkSize && (
+            <button
+              onClick={onCycleChunkSize}
+              title={`Chunk Size: ${chunkSize} word${chunkSize > 1 ? 's' : ''} at a time (W)`}
+              className="px-2.5 py-1.5 rounded-xl border text-xs font-mono font-bold transition-all active:scale-95 flex items-center justify-center"
+              style={{
+                backgroundColor: chunkSize > 1 ? `${theme.accent}22` : theme.bg,
+                borderColor: chunkSize > 1 ? theme.accent : theme.border,
+                color: chunkSize > 1 ? theme.accent : theme.textDim,
+              }}
+            >
+              {chunkSize}w
             </button>
           )}
 
