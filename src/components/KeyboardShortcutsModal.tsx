@@ -17,14 +17,16 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
 
   const shortcuts = [
     { key: 'Space', desc: 'Play / Pause reading flow' },
+    { key: 'B', desc: 'Toggle Bookshelf & Table of Contents Sidebar' },
+    { key: 'Z', desc: 'Toggle Zen Focus Mode' },
     { key: '←  /  →', desc: 'Step back / forward 10 words' },
     { key: 'Shift + ←', desc: 'Jump back to start of current sentence' },
     { key: '↑  /  ↓', desc: 'Adjust reading speed (±25 WPM)' },
-    { key: 'R', desc: 'Restart document from beginning' },
     { key: 'C', desc: 'Toggle paragraph context peek window' },
-    { key: 'F', desc: 'Toggle full-screen zen reading mode' },
+    { key: 'F', desc: 'Toggle full-screen reading mode' },
     { key: 'T', desc: 'Cycle next color theme' },
-    { key: 'Esc', desc: 'Close open dialogs & menus' },
+    { key: 'R', desc: 'Restart book from beginning' },
+    { key: 'Esc', desc: 'Close open dialogs & menus / Exit Zen' },
   ];
 
   return (

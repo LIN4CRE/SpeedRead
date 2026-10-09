@@ -11,9 +11,8 @@ import {
   Sliders,
   Maximize,
   Minimize,
-  BookOpen,
   Eye,
-  FileText
+  Zap
 } from 'lucide-react';
 import { ThemeColors } from '../types/reader';
 
@@ -53,47 +52,44 @@ export const Controls: React.FC<ControlsProps> = ({
   isFullscreen,
   onToggleFullscreen,
   onOpenSettings,
-  onOpenLibrary,
   onToggleContextPeek,
   isContextPeekOpen,
   disabled = false,
 }) => {
   const progressPercent = totalWords > 0 ? (currentWordIndex / totalWords) * 100 : 0;
-
-  // Calculate estimated reading time remaining
   const wordsRemaining = Math.max(0, totalWords - currentWordIndex);
-  const minutesRemaining = wpm > 0 ? (wordsRemaining / wpm).toFixed(1) : '0';
+  const minutesRemaining = wpm > 0 ? (wordsRemaining / wpm).toFixed(0) : '0';
 
   const WPM_PRESETS = [300, 360, 450, 600, 900];
 
   return (
     <div
-      className="w-full max-w-2xl mx-auto rounded-2xl border p-5 sm:p-6 transition-all duration-200 shadow-xl flex flex-col gap-5"
+      className="w-full max-w-2xl mx-auto rounded-2xl border p-4 sm:p-5 transition-all duration-200 shadow-2xl flex flex-col gap-4 select-none backdrop-blur-md"
       style={{
-        backgroundColor: theme.surface,
+        backgroundColor: `${theme.surface}f0`,
         borderColor: theme.border,
       }}
     >
-      {/* 1. Progress Scrubber with Word Counters & Time Left */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between text-xs font-mono" style={{ color: theme.textDim }}>
-          <div className="flex items-center gap-2">
-            <span className="font-semibold" style={{ color: theme.textBright }}>
+      {/* 1. Timeline Scrubber */}
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between text-[11px] font-mono" style={{ color: theme.textDim }}>
+          <div className="flex items-center gap-1.5">
+            <span className="font-semibold text-xs" style={{ color: theme.textBright }}>
               {currentWordIndex.toLocaleString()}
             </span>
             <span>/</span>
-            <span>{totalWords.toLocaleString()} words</span>
+            <span>{totalWords.toLocaleString()} w</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span>{progressPercent.toFixed(1)}%</span>
+          <div className="flex items-center gap-1.5">
+            <span className="font-semibold" style={{ color: theme.textBright }}>{progressPercent.toFixed(1)}%</span>
             <span>·</span>
             <span>~{minutesRemaining}m left</span>
           </div>
         </div>
 
-        {/* Range Scrubber */}
-        <div className="relative flex items-center group">
+        {/* Range Scrubber with gradient track */}
+        <div className="relative flex items-center group py-0.5">
           <input
             type="range"
             min={0}
@@ -101,7 +97,7 @@ export const Controls: React.FC<ControlsProps> = ({
             value={currentWordIndex}
             disabled={disabled || totalWords === 0}
             onChange={(e) => onSeek(parseInt(e.target.value, 10))}
-            className="w-full h-2 rounded-lg appearance-none cursor-pointer transition-all disabled:opacity-40"
+            className="w-full h-1.5 rounded-lg appearance-none cursor-pointer transition-all disabled:opacity-40"
             style={{
               accentColor: theme.accent,
               background: `linear-gradient(to right, ${theme.accent} 0%, ${theme.accent} ${progressPercent}%, ${theme.border} ${progressPercent}%, ${theme.border} 100%)`,
@@ -110,15 +106,15 @@ export const Controls: React.FC<ControlsProps> = ({
         </div>
       </div>
 
-      {/* 2. Primary Playback Bar */}
-      <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
-        {/* Left Actions: Jump backward */}
+      {/* 2. Main Playback Control Bar */}
+      <div className="flex items-center justify-between gap-2">
+        {/* Left: Rewind Sentence & Rewind 10 */}
         <div className="flex items-center gap-1.5">
           <button
             onClick={onPrevSentence}
             disabled={disabled || currentWordIndex === 0}
-            title="Rewind to previous sentence (Shift+Left)"
-            className="p-2 sm:px-3 sm:py-2 text-xs font-medium rounded-lg border flex items-center gap-1 transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+            title="Jump back 1 sentence (Shift + Left)"
+            className="px-2.5 py-2 text-xs font-medium rounded-xl border flex items-center gap-1 transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
             style={{
               backgroundColor: theme.bg,
               borderColor: theme.border,
@@ -126,14 +122,14 @@ export const Controls: React.FC<ControlsProps> = ({
             }}
           >
             <ChevronLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Sentence</span>
+            <span className="hidden sm:inline">Sent</span>
           </button>
 
           <button
             onClick={() => onStep(-10)}
             disabled={disabled || currentWordIndex === 0}
             title="Back 10 words (Left Arrow)"
-            className="p-2 sm:px-3 sm:py-2 text-xs font-medium rounded-lg border flex items-center gap-1 transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+            className="px-2.5 py-2 text-xs font-mono font-medium rounded-xl border transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
             style={{
               backgroundColor: theme.bg,
               borderColor: theme.border,
@@ -144,13 +140,13 @@ export const Controls: React.FC<ControlsProps> = ({
           </button>
         </div>
 
-        {/* Center: Main Play / Pause Button */}
-        <div className="flex items-center gap-3">
+        {/* Center: Reset & Big Tactile Play/Pause Button */}
+        <div className="flex items-center gap-2.5">
           <button
             onClick={onReset}
             disabled={disabled || currentWordIndex === 0}
-            title="Restart Document (R)"
-            className="p-3 rounded-xl border transition-all active:scale-90 disabled:opacity-30 disabled:pointer-events-none"
+            title="Restart Book (R)"
+            className="p-2.5 rounded-xl border transition-all active:scale-90 disabled:opacity-30 disabled:pointer-events-none"
             style={{
               backgroundColor: theme.bg,
               borderColor: theme.border,
@@ -163,10 +159,10 @@ export const Controls: React.FC<ControlsProps> = ({
           <button
             onClick={onTogglePlay}
             disabled={disabled || totalWords === 0}
-            className="px-7 py-3 rounded-xl font-semibold text-sm flex items-center gap-2.5 shadow-lg transition-all duration-150 active:scale-95 disabled:opacity-40 disabled:pointer-events-none text-white"
+            className="px-8 py-3 rounded-2xl font-bold text-sm tracking-wide flex items-center gap-2.5 shadow-xl transition-all duration-150 active:scale-95 disabled:opacity-40 disabled:pointer-events-none text-white"
             style={{
               backgroundColor: theme.accent,
-              boxShadow: `0 8px 24px ${theme.accent}40`,
+              boxShadow: isPlaying ? `0 0 24px ${theme.accent}60` : `0 4px 16px ${theme.accent}30`,
             }}
           >
             {isPlaying ? (
@@ -186,7 +182,7 @@ export const Controls: React.FC<ControlsProps> = ({
             onClick={() => onStep(10)}
             disabled={disabled || currentWordIndex >= totalWords - 1}
             title="Forward 10 words (Right Arrow)"
-            className="p-2 sm:px-3 sm:py-2 text-xs font-medium rounded-lg border flex items-center gap-1 transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+            className="px-2.5 py-2 text-xs font-mono font-medium rounded-xl border transition-all active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
             style={{
               backgroundColor: theme.bg,
               borderColor: theme.border,
@@ -197,7 +193,7 @@ export const Controls: React.FC<ControlsProps> = ({
           </button>
         </div>
 
-        {/* Right Actions: Context Peek, Settings & Library */}
+        {/* Right: Context Peek, Settings, Fullscreen */}
         <div className="flex items-center gap-1.5">
           <button
             onClick={onToggleContextPeek}
@@ -216,7 +212,7 @@ export const Controls: React.FC<ControlsProps> = ({
 
           <button
             onClick={onOpenSettings}
-            title="Typography & Theme Settings"
+            title="Typography & Pacing Settings"
             className="p-2.5 rounded-xl border transition-all active:scale-95 flex items-center justify-center"
             style={{
               backgroundColor: theme.bg,
@@ -229,8 +225,8 @@ export const Controls: React.FC<ControlsProps> = ({
 
           <button
             onClick={onToggleFullscreen}
-            title="Toggle Fullscreen Zen Mode (F)"
-            className="p-2.5 rounded-xl border transition-all active:scale-95 flex items-center justify-center"
+            title="Toggle Fullscreen (F)"
+            className="p-2.5 rounded-xl border transition-all active:scale-95 hidden sm:flex items-center justify-center"
             style={{
               backgroundColor: theme.bg,
               borderColor: theme.border,
@@ -242,51 +238,64 @@ export const Controls: React.FC<ControlsProps> = ({
         </div>
       </div>
 
-      {/* 3. WPM Speed Slider & Presets */}
+      {/* 3. Velocity Bar with Video Speed Presets */}
       <div
-        className="pt-3 border-t flex flex-col gap-2.5"
+        className="pt-3 border-t flex flex-col gap-2"
         style={{ borderColor: theme.border }}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Gauge className="w-4 h-4" style={{ color: theme.accent }} />
-            <span className="text-xs uppercase font-mono tracking-wider font-semibold" style={{ color: theme.textDim }}>
-              Velocity:
+            <Gauge className="w-3.5 h-3.5" style={{ color: theme.accent }} />
+            <span className="font-mono text-xs font-bold" style={{ color: theme.textBright }}>
+              {wpm} <span className="text-[10px] font-normal" style={{ color: theme.textDim }}>WPM</span>
             </span>
-            <span className="font-mono text-base font-bold" style={{ color: theme.textBright }}>
-              {wpm} <span className="text-xs font-normal" style={{ color: theme.textDim }}>WPM</span>
-            </span>
+            {wpm >= 600 && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-red-500/15 text-red-400 border border-red-500/20">
+                <Zap className="w-2.5 h-2.5" />
+                FLOW
+              </span>
+            )}
           </div>
 
-          {/* Quick Preset Buttons */}
+          {/* Quick Preset Buttons (Matching the video) */}
           <div className="flex items-center gap-1">
-            {WPM_PRESETS.map((preset) => (
-              <button
-                key={preset}
-                onClick={() => onWpmChange(preset)}
-                className={`px-2 py-0.5 text-[11px] font-mono rounded transition-colors ${
-                  wpm === preset ? 'font-bold' : 'opacity-70 hover:opacity-100'
-                }`}
-                style={{
-                  backgroundColor: wpm === preset ? theme.accent : theme.bg,
-                  color: wpm === preset ? '#ffffff' : theme.textDim,
-                }}
-              >
-                {preset}
-              </button>
-            ))}
+            {WPM_PRESETS.map((preset) => {
+              const isActive = wpm === preset;
+              const is600 = preset === 600;
+              return (
+                <button
+                  key={preset}
+                  onClick={() => onWpmChange(preset)}
+                  className={`px-2 py-0.5 text-[11px] font-mono rounded-lg transition-all ${
+                    isActive
+                      ? 'font-bold text-white shadow-sm'
+                      : is600
+                      ? 'border font-semibold opacity-90 hover:opacity-100'
+                      : 'opacity-70 hover:opacity-100'
+                  }`}
+                  style={{
+                    backgroundColor: isActive ? theme.accent : theme.bg,
+                    borderColor: is600 && !isActive ? `${theme.accent}60` : theme.border,
+                    color: isActive ? '#ffffff' : is600 ? theme.accent : theme.textDim,
+                  }}
+                >
+                  {preset}
+                  {is600 && !isActive ? '★' : ''}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Speed Slider with -/+ Step Buttons */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <button
             onClick={() => onWpmChange(Math.max(100, wpm - 25))}
-            className="p-1 rounded border transition-colors hover:bg-opacity-80 active:scale-95"
+            className="p-1 rounded-lg border transition-colors hover:bg-opacity-80 active:scale-95"
             style={{ backgroundColor: theme.bg, borderColor: theme.border, color: theme.textDim }}
             title="Decrease 25 WPM (Down Arrow)"
           >
-            <Minus className="w-3.5 h-3.5" />
+            <Minus className="w-3 h-3" />
           </button>
 
           <input
@@ -304,11 +313,11 @@ export const Controls: React.FC<ControlsProps> = ({
 
           <button
             onClick={() => onWpmChange(Math.min(1200, wpm + 25))}
-            className="p-1 rounded border transition-colors hover:bg-opacity-80 active:scale-95"
+            className="p-1 rounded-lg border transition-colors hover:bg-opacity-80 active:scale-95"
             style={{ backgroundColor: theme.bg, borderColor: theme.border, color: theme.textDim }}
             title="Increase 25 WPM (Up Arrow)"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3 h-3" />
           </button>
         </div>
       </div>

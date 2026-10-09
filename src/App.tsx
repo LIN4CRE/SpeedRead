@@ -8,12 +8,15 @@ import {
   Sun, 
   Moon, 
   Upload,
-  FileUp,
   FileText,
   Sparkles,
   Zap,
   Loader2,
-  Globe
+  Globe,
+  PanelLeft,
+  EyeOff,
+  Eye,
+  Check
 } from 'lucide-react';
 import { 
   DocumentSource, 
@@ -44,6 +47,7 @@ import {
 import { SAMPLE_LIBRARY, createDocumentFromSample } from './utils/sampleTexts';
 import { ReticleDisplay } from './components/ReticleDisplay';
 import { Controls } from './components/Controls';
+import { Sidebar } from './components/Sidebar';
 import { SettingsModal } from './components/SettingsModal';
 import { DocumentDrawer } from './components/DocumentDrawer';
 import { ContextPeek } from './components/ContextPeek';
@@ -72,13 +76,15 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [wpm, setWpm] = useState<number>(600); // 600 WPM default matching the video & user goal
 
-  // 3. UI Dialog States
+  // 3. UI Dialog & Sidebar States
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [isLibraryOpen, setIsLibraryOpen] = useState<boolean>(false);
   const [isShortcutsOpen, setIsShortcutsOpen] = useState<boolean>(false);
   const [isContextPeekOpen, setIsContextPeekOpen] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isFreeBooksOpen, setIsFreeBooksOpen] = useState<boolean>(false);
+  const [isZenMode, setIsZenMode] = useState<boolean>(false);
 
   // 4. Drag & Drop state for effortless book addition
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
@@ -160,7 +166,6 @@ export default function App() {
       if (timerRef.current) clearTimeout(timerRef.current);
       recordBookmark(activeDoc, currentWordIndex, wpm);
     } else {
-      // If at end, wrap to start
       if (currentWordIndex >= activeDoc.words.length - 1) {
         setCurrentWordIndex(0);
       }
@@ -323,6 +328,20 @@ export default function App() {
           setWpm((prev) => Math.max(100, prev - 25));
           break;
 
+        case 'KeyB':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            setIsSidebarOpen((prev) => !prev);
+          }
+          break;
+
+        case 'KeyZ':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            setIsZenMode((prev) => !prev);
+          }
+          break;
+
         case 'KeyR':
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
@@ -355,6 +374,8 @@ export default function App() {
           setIsSettingsOpen(false);
           setIsLibraryOpen(false);
           setIsShortcutsOpen(false);
+          setIsFreeBooksOpen(false);
+          setIsZenMode(false);
           if (window.document.fullscreenElement) {
             window.document.exitFullscreen().catch(() => null);
           }
@@ -406,9 +427,9 @@ export default function App() {
         color: currentTheme.textBright,
       }}
     >
-      {/* Drag & Drop Overlay */}
+      {/* 1. Global Drag & Drop Overlay */}
       {isDraggingOver && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md border-4 border-dashed border-red-500/80 flex flex-col items-center justify-center p-6 text-center animate-fadeIn pointer-events-none">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md border-4 border-dashed border-red-500/80 flex flex-col items-center justify-center p-6 text-center animate-fadeIn pointer-events-none">
           <Upload className="w-16 h-16 text-red-500 mb-4 animate-bounce" />
           <h2 className="text-2xl font-bold text-white mb-2">Drop Your Book to Start Reading</h2>
           <p className="text-sm text-neutral-300 max-w-md">
@@ -426,172 +447,192 @@ export default function App() {
         </div>
       )}
 
-      {/* 1. Header Bar */}
-      <header
-        className={`w-full border-b px-3 sm:px-8 py-3 flex items-center justify-between transition-all ${
-          isFullscreen && isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'
-        }`}
-        style={{
-          borderColor: currentTheme.border,
-          backgroundColor: `${currentTheme.surface}99`,
-          backdropFilter: 'blur(12px)',
-        }}
-      >
-        {/* Brand & Book Title */}
-        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-          <div
-            className="w-8 h-8 rounded-xl shrink-0 flex items-center justify-center font-bold text-xs tracking-wider"
-            style={{
-              backgroundColor: `${typography.highlightColor}22`,
-              color: typography.highlightColor,
-              border: `1px solid ${typography.highlightColor}44`,
-            }}
+      {/* Floating Zen Mode Exit Button */}
+      {isZenMode && (
+        <div className="fixed top-4 right-4 z-50 animate-fadeIn">
+          <button
+            onClick={() => setIsZenMode(false)}
+            className="px-3 py-1.5 rounded-full text-xs font-mono font-medium border bg-black/80 text-white/70 hover:text-white border-white/20 backdrop-blur-md flex items-center gap-1.5 shadow-lg"
           >
-            ORP
-          </div>
-          <div className="min-w-0">
-            <h1 className="font-semibold text-xs sm:text-sm tracking-tight flex items-center gap-1.5 truncate">
-              <span className="truncate">Kinetic RSVP</span>
-              <span className="text-[9px] sm:text-[10px] font-mono px-1 py-0.2 rounded border shrink-0" style={{ borderColor: currentTheme.border, color: currentTheme.textDim }}>
-                {wpm} WPM
+            <Eye className="w-3.5 h-3.5" />
+            <span>Exit Zen (Z)</span>
+          </button>
+        </div>
+      )}
+
+      {/* 2. Top Navigation Bar (Hidden in Zen mode) */}
+      {!isZenMode && (
+        <header
+          className={`w-full border-b px-3 sm:px-6 py-2.5 flex items-center justify-between transition-all duration-200 ${
+            isFullscreen && isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'
+          }`}
+          style={{
+            borderColor: currentTheme.border,
+            backgroundColor: `${currentTheme.surface}cc`,
+            backdropFilter: 'blur(16px)',
+          }}
+        >
+          {/* Left: Bookshelf Sidebar Toggle & Title */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <button
+              onClick={() => setIsSidebarOpen((prev) => !prev)}
+              className={`p-2 rounded-xl border transition-all active:scale-95 flex items-center gap-1.5 ${
+                isSidebarOpen ? 'ring-2 font-semibold' : ''
+              }`}
+              style={{
+                backgroundColor: currentTheme.surface,
+                borderColor: isSidebarOpen ? currentTheme.accent : currentTheme.border,
+                color: isSidebarOpen ? currentTheme.accent : currentTheme.textBright,
+              }}
+              title="Toggle Bookshelf & Table of Contents (B)"
+            >
+              <PanelLeft className="w-4 h-4" />
+              <span className="text-xs hidden md:inline">Bookshelf</span>
+            </button>
+
+            <div className="h-5 w-[1px] bg-slate-700/40 hidden sm:block" />
+
+            <div className="min-w-0 flex items-center gap-2">
+              <h1 className="font-semibold text-xs sm:text-sm tracking-tight truncate flex items-center gap-1.5">
+                <span className="truncate">{activeDoc.title}</span>
+              </h1>
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded border uppercase shrink-0" style={{ borderColor: currentTheme.border, color: currentTheme.textDim }}>
+                {activeDoc.type}
               </span>
-            </h1>
-            <div className="flex items-center gap-1.5 text-[11px] truncate" style={{ color: currentTheme.textDim }}>
-              <span className="truncate max-w-[140px] sm:max-w-xs font-medium" style={{ color: currentTheme.textBright }}>
-                {activeDoc.title}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span className="uppercase font-mono text-[10px] shrink-0">{activeDoc.type}</span>
             </div>
           </div>
-        </div>
 
-        {/* Top Actions: Free Books, Add Book, Shortcuts, Theme, Settings */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          <button
-            onClick={() => setIsFreeBooksOpen(true)}
-            className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
-            title="Browse 70,000+ Free Ebooks & EPUBs"
-          >
-            <Globe className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Get Free Books</span>
-            <span className="sm:hidden">Free</span>
-          </button>
+          {/* Right: Free Books, Zen, Theme, Shortcuts, Settings */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <button
+              onClick={() => setIsFreeBooksOpen(true)}
+              className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
+              title="Browse 70,000+ Free Ebooks & EPUBs"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Free Books</span>
+              <span className="sm:hidden">Free</span>
+            </button>
 
-          <button
-            onClick={() => setIsLibraryOpen(true)}
-            className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-white"
-            style={{
-              backgroundColor: currentTheme.accent,
-              borderColor: currentTheme.accent,
-            }}
-          >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Add Book</span>
-          </button>
+            <button
+              onClick={() => setIsZenMode(true)}
+              className="p-2 rounded-xl border transition-all active:scale-95 text-xs flex items-center gap-1"
+              style={{
+                backgroundColor: currentTheme.surface,
+                borderColor: currentTheme.border,
+                color: currentTheme.textDim,
+              }}
+              title="Enter Pure Zen Focus Mode (Z)"
+            >
+              <EyeOff className="w-4 h-4" />
+              <span className="hidden lg:inline text-xs">Zen</span>
+            </button>
 
-          <button
-            onClick={cycleTheme}
-            className="p-2 rounded-xl border transition-all active:scale-95"
-            style={{
-              backgroundColor: currentTheme.surface,
-              borderColor: currentTheme.border,
-              color: currentTheme.textDim,
-            }}
-            title="Cycle Next Theme (T)"
-          >
-            {currentTheme.isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
+            <button
+              onClick={cycleTheme}
+              className="p-2 rounded-xl border transition-all active:scale-95"
+              style={{
+                backgroundColor: currentTheme.surface,
+                borderColor: currentTheme.border,
+                color: currentTheme.textDim,
+              }}
+              title="Cycle Theme (T)"
+            >
+              {currentTheme.isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
 
-          <button
-            onClick={() => setIsShortcutsOpen(true)}
-            className="p-2 rounded-xl border transition-all active:scale-95 hidden md:flex"
-            style={{
-              backgroundColor: currentTheme.surface,
-              borderColor: currentTheme.border,
-              color: currentTheme.textDim,
-            }}
-            title="Keyboard Shortcuts (?)"
-          >
-            <Keyboard className="w-4 h-4" />
-          </button>
+            <button
+              onClick={() => setIsShortcutsOpen(true)}
+              className="p-2 rounded-xl border transition-all active:scale-95 hidden md:flex"
+              style={{
+                backgroundColor: currentTheme.surface,
+                borderColor: currentTheme.border,
+                color: currentTheme.textDim,
+              }}
+              title="Keyboard Shortcuts (?)"
+            >
+              <Keyboard className="w-4 h-4" />
+            </button>
 
-          <button
-            onClick={() => setIsSettingsOpen(true)}
-            className="p-2 rounded-xl border transition-all active:scale-95"
-            style={{
-              backgroundColor: currentTheme.surface,
-              borderColor: currentTheme.border,
-              color: currentTheme.textDim,
-            }}
-            title="Typography & Settings"
-          >
-            <Sliders className="w-4 h-4" />
-          </button>
-        </div>
-      </header>
+            <button
+              onClick={() => setIsSettingsOpen(true)}
+              className="p-2 rounded-xl border transition-all active:scale-95"
+              style={{
+                backgroundColor: currentTheme.surface,
+                borderColor: currentTheme.border,
+                color: currentTheme.textDim,
+              }}
+              title="Typography & Settings"
+            >
+              <Sliders className="w-4 h-4" />
+            </button>
+          </div>
+        </header>
+      )}
 
-      {/* 2. Main Center Stage */}
+      {/* 3. Main Center Stage */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col justify-center items-center gap-5 sm:gap-6">
-        {/* Quick Reading Material Switcher (Dead simple 1-tap book starters!) */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap text-xs select-none w-full">
-          <button
-            onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[0]), 0)}
-            className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
-              activeDoc.id === SAMPLE_LIBRARY[0].id
-                ? 'font-bold ring-2 shadow-sm'
-                : 'opacity-70 hover:opacity-100'
-            }`}
-            style={{
-              backgroundColor: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.surfaceHover : currentTheme.surface,
-              borderColor: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.border,
-              color: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.textBright,
-            }}
-          >
-            <Zap className="w-3.5 h-3.5 shrink-0" />
-            <span>600 WPM Video Drill</span>
-          </button>
+        {/* Quick Reading Starters Bar (Hidden in Zen Mode) */}
+        {!isZenMode && (
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap text-xs select-none w-full">
+            <button
+              onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[0]), 0)}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === SAMPLE_LIBRARY[0].id
+                  ? 'font-bold ring-2 shadow-sm'
+                  : 'opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.surfaceHover : currentTheme.surface,
+                borderColor: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.border,
+                color: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.textBright,
+              }}
+            >
+              <Zap className="w-3.5 h-3.5 shrink-0" />
+              <span>600 WPM Video Drill</span>
+            </button>
 
-          <button
-            onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[1]), 0)}
-            className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
-              activeDoc.id === SAMPLE_LIBRARY[1].id
-                ? 'font-bold ring-2 shadow-sm'
-                : 'opacity-70 hover:opacity-100'
-            }`}
-            style={{
-              backgroundColor: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.surfaceHover : currentTheme.surface,
-              borderColor: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.border,
-              color: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.textBright,
-            }}
-          >
-            <Sparkles className="w-3.5 h-3.5 shrink-0" />
-            <span>Alice in Wonderland</span>
-          </button>
+            <button
+              onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[1]), 0)}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === SAMPLE_LIBRARY[1].id
+                  ? 'font-bold ring-2 shadow-sm'
+                  : 'opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.surfaceHover : currentTheme.surface,
+                borderColor: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.border,
+                color: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.textBright,
+              }}
+            >
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <span>Alice in Wonderland</span>
+            </button>
 
-          <button
-            onClick={() => setIsLibraryOpen(true)}
-            className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 opacity-80 hover:opacity-100 text-xs"
-            style={{
-              backgroundColor: currentTheme.surface,
-              borderColor: currentTheme.border,
-              color: currentTheme.textDim,
-            }}
-          >
-            <Upload className="w-3.5 h-3.5 shrink-0" />
-            <span>+ Upload (PDF/ePub)</span>
-          </button>
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 opacity-80 hover:opacity-100 text-xs"
+              style={{
+                backgroundColor: currentTheme.surface,
+                borderColor: currentTheme.border,
+                color: currentTheme.textDim,
+              }}
+            >
+              <Upload className="w-3.5 h-3.5 shrink-0" />
+              <span>+ Upload (PDF/ePub)</span>
+            </button>
 
-          <button
-            onClick={() => setIsFreeBooksOpen(true)}
-            className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
-          >
-            <Globe className="w-3.5 h-3.5 shrink-0" />
-            <span>Free Books (70k+)</span>
-          </button>
-        </div>
+            <button
+              onClick={() => setIsFreeBooksOpen(true)}
+              className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
+            >
+              <Globe className="w-3.5 h-3.5 shrink-0" />
+              <span>Free Books (70k+)</span>
+            </button>
+          </div>
+        )}
 
-        {/* Kinetic RSVP Reticle (Exact Video Style Support) */}
+        {/* The RSVP Kinetic Reticle (Exact Video Letterbox Slot) */}
         <div className="w-full">
           <ReticleDisplay
             currentWord={activeWord}
@@ -616,8 +657,8 @@ export default function App() {
           theme={currentTheme}
         />
 
-        {/* Reading Playback Control Panel */}
-        <div className="w-full">
+        {/* Reading Playback Controls Bar */}
+        <div className={`w-full transition-opacity duration-200 ${isZenMode && isPlaying ? 'opacity-20 hover:opacity-100' : 'opacity-100'}`}>
           <Controls
             isPlaying={isPlaying}
             onTogglePlay={togglePlay}
@@ -633,7 +674,7 @@ export default function App() {
             isFullscreen={isFullscreen}
             onToggleFullscreen={toggleFullscreen}
             onOpenSettings={() => setIsSettingsOpen(true)}
-            onOpenLibrary={() => setIsLibraryOpen(true)}
+            onOpenLibrary={() => setIsSidebarOpen(true)}
             onToggleContextPeek={() => setIsContextPeekOpen((prev) => !prev)}
             isContextPeekOpen={isContextPeekOpen}
             disabled={activeDoc.words.length === 0}
@@ -641,30 +682,47 @@ export default function App() {
         </div>
       </main>
 
-      {/* 3. Footer Bar with Hotkey & Device Cues */}
-      <footer
-        className="w-full border-t px-4 sm:px-6 py-2 flex items-center justify-between text-xs font-mono select-none"
-        style={{
-          borderColor: currentTheme.border,
-          color: currentTheme.textDim,
-          backgroundColor: `${currentTheme.surface}66`,
-        }}
-      >
-        <div className="hidden sm:flex items-center gap-4">
-          <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Space / Tap</kbd> Play/Pause</span>
-          <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">← / →</kbd> ±10 Words</span>
-          <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">↑ / ↓</kbd> ±25 WPM</span>
-          <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">C</kbd> Context Peek</span>
-        </div>
+      {/* 4. Bottom Footer (Hidden in Zen Mode) */}
+      {!isZenMode && (
+        <footer
+          className="w-full border-t px-4 sm:px-6 py-2 flex items-center justify-between text-xs font-mono select-none"
+          style={{
+            borderColor: currentTheme.border,
+            color: currentTheme.textDim,
+            backgroundColor: `${currentTheme.surface}66`,
+          }}
+        >
+          <div className="hidden sm:flex items-center gap-4 text-[11px]">
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Space</kbd> Play/Pause</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">B</kbd> Bookshelf</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Z</kbd> Zen Mode</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">C</kbd> Context</span>
+          </div>
 
-        <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3 text-[11px]">
-          <span>Velocity: <strong style={{ color: currentTheme.accent }}>{wpm} WPM</strong></span>
-          <span aria-hidden="true">·</span>
-          <span>Drop any file to read</span>
-        </div>
-      </footer>
+          <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-3 text-[11px]">
+            <span>Velocity: <strong style={{ color: currentTheme.accent }}>{wpm} WPM</strong></span>
+            <span aria-hidden="true">·</span>
+            <span>Drop file anywhere</span>
+          </div>
+        </footer>
+      )}
 
-      {/* Modals & Drawers */}
+      {/* 5. Drawers & Modals */}
+      {/* Bookshelf & Chapters Sidebar */}
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        activeDoc={activeDoc}
+        onSelectDocument={handleSelectDocument}
+        currentWordIndex={currentWordIndex}
+        onJumpToWord={(idx) => setCurrentWordIndex(idx)}
+        bookmarks={bookmarks}
+        onRemoveBookmark={handleRemoveBookmark}
+        onOpenFreeBooks={() => setIsFreeBooksOpen(true)}
+        theme={currentTheme}
+        wpm={wpm}
+      />
+
       <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}

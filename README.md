@@ -76,14 +76,16 @@ Lost your train of thought? Toggle the **Context Peek window** to view the activ
 | Shortcut | Action |
 |:---|:---|
 | <kbd>Space</kbd> | Play / Pause reading flow |
+| <kbd>B</kbd> | Toggle Bookshelf & Table of Contents Sidebar |
+| <kbd>Z</kbd> | Toggle Zen Focus Mode (pure distraction-free stream) |
 | <kbd>←</kbd> / <kbd>→</kbd> | Step backward / forward 10 words |
 | <kbd>Shift</kbd> + <kbd>←</kbd> | Jump back to the beginning of current sentence |
 | <kbd>↑</kbd> / <kbd>↓</kbd> | Increase / decrease speed by 25 WPM |
 | <kbd>C</kbd> | Toggle synchronized paragraph Context Peek |
-| <kbd>F</kbd> | Toggle full-screen Zen reading mode |
+| <kbd>F</kbd> | Toggle full-screen mode |
 | <kbd>T</kbd> | Cycle next color theme |
-| <kbd>R</kbd> | Restart document from the beginning |
-| <kbd>Esc</kbd> | Close modals / exit fullscreen |
+| <kbd>R</kbd> | Restart book from the beginning |
+| <kbd>Esc</kbd> | Close open dialogs / exit Zen mode |
 
 ---
 
