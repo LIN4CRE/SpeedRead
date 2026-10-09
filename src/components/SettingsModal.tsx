@@ -58,7 +58,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   ];
 
   const reticleStyles: { id: ReticleStyle; label: string }[] = [
-    { id: 'videoSlot', label: 'Video Slot (From Video)' },
+    { id: 'videoSlot', label: 'Cinema Notch (Video)' },
+    { id: 'line', label: 'Standard Line' },
+    { id: 'highlighter', label: 'Highlighter' },
+    { id: 'spotlight', label: 'Spotlight' },
+    { id: 'underline', label: 'Underline' },
     { id: 'ticks', label: 'Classic Ticks' },
     { id: 'crosshairs', label: 'Crosshairs' },
     { id: 'bracket', label: 'Brackets' },

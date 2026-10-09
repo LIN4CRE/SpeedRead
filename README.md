@@ -52,6 +52,22 @@ When reading a physical book or standard screen, your eyes don't glide smoothly�
 - **Clipboard Paste:** Paste essays, articles, or news snippets with instant word count analysis.
 - **Persistent Bookmarks:** Automatically saves your reading position, chapter, and speed in `localStorage` so you can finish full novels over multiple sessions.
 
+### 🎧 'Read-Aloud' Multi-Sensory Audio Mode (`V` Key)
+- **Web Speech API Integration:** Synthesizes audio for the active reticle text in real time.
+- **Auditory + Visual Reinforcement:** Listen while reading to anchor comprehension and accelerate reading fluency.
+- **Dynamic Rate Scaling:** Automatically matches audio pitch and rate to your current reading speed up to maximum speech rates.
+- **Toggle Anytime:** Activate with `V` or the speaker button in the header/controls.
+
+### 🎯 Multi-Style Reticle Tracking System (`S` Key)
+Toggle between customizable visual focal guides to suit your cognitive tracking style:
+- **Standard Line:** Vertical alignment guideline passing through the Optimal Recognition Point (ORP).
+- **Highlighter:** Translucent colored ambient glow box highlighting the word and focal point.
+- **Spotlight:** Radial illumination target focusing attention on the focal character while fading distractions.
+- **Underline:** Kinetic underline tracking beneath the current word with an ORP anchor marker.
+- **Cinema Notch:** Letterbox drill notch ticks as seen in speed reading drills.
+- **Classic Ticks:** Dual vertical ticks at the 40% focal axis.
+- **Crosshairs, Brackets, Laser Beam, & Minimal Dot.**
+
 ### 🎨 Custom Themes & Visual Customization
 - **8 Themes:** Void Obsidian, OLED Pure Black, Warm Parchment (traditional book paper), Solarized Dark, Solarized Cream, Nordic Frost, Midnight Emerald, and Clean Studio White.
 - **9 Focal Accent Swatches:** Crimson Neon, Sunset Coral, Amber Gold, Emerald Mint, Electric Cyan, Cobalt Blue, Vibrant Violet, Hot Magenta, and Optic White.
@@ -76,6 +92,8 @@ Lost your train of thought? Toggle the **Context Peek window** to view the activ
 | Shortcut | Action |
 |:---|:---|
 | <kbd>Space</kbd> | Play / Pause reading flow |
+| <kbd>V</kbd> | Toggle Read-Aloud Web Speech audio mode |
+| <kbd>S</kbd> | Cycle Reticle tracking style (Line, Highlighter, Spotlight, Underline, etc.) |
 | <kbd>B</kbd> | Toggle Bookshelf & Table of Contents Sidebar |
 | <kbd>Z</kbd> | Toggle Zen Focus Mode (pure distraction-free stream) |
 | <kbd>←</kbd> / <kbd>→</kbd> | Step backward / forward 10 words |

@@ -6,7 +6,17 @@ export type FontFamily =
   | 'Atkinson Hyperlegible'
   | 'Merriweather';
 
-export type ReticleStyle = 'videoSlot' | 'ticks' | 'crosshairs' | 'bracket' | 'laser' | 'minimal';
+export type ReticleStyle = 
+  | 'videoSlot' 
+  | 'ticks' 
+  | 'line' 
+  | 'highlighter' 
+  | 'spotlight' 
+  | 'underline' 
+  | 'crosshairs' 
+  | 'bracket' 
+  | 'laser' 
+  | 'minimal';
 
 export type TextTransform = 'none' | 'uppercase' | 'lowercase';
 
@@ -130,5 +140,47 @@ export interface PomodoroState {
   secondsRemaining: number;
   streakCount: number;
   isActive: boolean;
+}
+
+export interface CookieBreakPlace {
+  documentId: string;
+  documentTitle: string;
+  wordIndex: number;
+  totalWords: number;
+  chapterIndex?: number;
+  chapterTitle?: string;
+  wpm: number;
+  timestamp: number;
+  dateStr: string;
+}
+
+export interface UserAccount {
+  id: string;
+  username: string;
+  displayName: string;
+  avatarColor: string;
+  createdAt: number;
+  lastActive: number;
+}
+
+export interface SaveState {
+  id: string;
+  userId: string;
+  name: string;
+  note?: string;
+  documentId: string;
+  documentTitle: string;
+  documentType: string;
+  wordIndex: number;
+  totalWords: number;
+  chapterTitle?: string;
+  wpm: number;
+  reticleStyle?: ReticleStyle;
+  fontSize?: number;
+  fontFamily?: FontFamily;
+  highlightColor?: string;
+  excerptPreview?: string;
+  createdAt: number;
+  updatedAt: number;
 }
 

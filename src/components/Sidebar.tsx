@@ -16,7 +16,11 @@ import {
   Clock,
   CheckCircle2,
   Layers,
-  ArrowRight
+  ArrowRight,
+  Cookie,
+  Save,
+  Coffee,
+  Heart
 } from 'lucide-react';
 import { DocumentSource, DocumentChapter, SavedBookmark, ThemeColors } from '../types/reader';
 import { SAMPLE_LIBRARY, createDocumentFromSample } from '../utils/sampleTexts';
@@ -34,6 +38,7 @@ interface SidebarProps {
   bookmarks: SavedBookmark[];
   onRemoveBookmark: (docId: string) => void;
   onOpenFreeBooks: () => void;
+  onOpenSaveStates?: () => void;
   theme: ThemeColors;
   wpm: number;
 }
@@ -48,10 +53,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   bookmarks,
   onRemoveBookmark,
   onOpenFreeBooks,
+  onOpenSaveStates,
   theme,
   wpm,
 }) => {
   const [activeTab, setActiveTab] = useState<'chapters' | 'library' | 'history'>('chapters');
+  const [libraryFilter, setLibraryFilter] = useState<'all' | 'beginner' | 'classics'>('all');
   const [isParsing, setIsParsing] = useState(false);
   const [parseStatus, setDropStatus] = useState('');
   const [showPasteBox, setShowPasteBox] = useState(false);
@@ -219,6 +226,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <span>{wpm} WPM</span>
               </div>
             </div>
+
+            {/* Quick Save State / Break Trigger */}
+            {onOpenSaveStates && (
+              <button
+                onClick={onOpenSaveStates}
+                className="mt-1 w-full py-1.5 px-2.5 rounded-lg border text-[11px] font-medium flex items-center justify-center gap-1.5 transition-all hover:opacity-90 active:scale-95"
+                style={{ backgroundColor: `${theme.accent}12`, borderColor: `${theme.accent}30`, color: theme.accent }}
+              >
+                <Save className="w-3.5 h-3.5" />
+                <span>Save State / Cookie Break</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -387,32 +406,113 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
               {/* Curated Classic Books */}
               <div>
-                <span className="block text-[10px] font-mono uppercase tracking-wider font-semibold mb-2" style={{ color: theme.textDim }}>
-                  Curated Starters & Drills
-                </span>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono uppercase tracking-wider font-semibold" style={{ color: theme.textDim }}>
+                    Free Books & Speed Drills
+                  </span>
+                  <span className="text-[10px] font-mono opacity-60" style={{ color: theme.textDim }}>
+                    {SAMPLE_LIBRARY.length} Titles
+                  </span>
+                </div>
+
+                {/* Filter Chips */}
+                <div className="flex gap-1 mb-2.5">
+                  <button
+                    onClick={() => setLibraryFilter('all')}
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
+                      libraryFilter === 'all' ? 'font-bold' : 'opacity-60'
+                    }`}
+                    style={{
+                      backgroundColor: libraryFilter === 'all' ? `${theme.accent}25` : theme.bg,
+                      color: libraryFilter === 'all' ? theme.accent : theme.textDim,
+                    }}
+                  >
+                    All
+                  </button>
+                  <button
+                    onClick={() => setLibraryFilter('beginner')}
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
+                      libraryFilter === 'beginner' ? 'font-bold' : 'opacity-60'
+                    }`}
+                    style={{
+                      backgroundColor: libraryFilter === 'beginner' ? `${theme.accent}25` : theme.bg,
+                      color: libraryFilter === 'beginner' ? theme.accent : theme.textDim,
+                    }}
+                  >
+                    Beginner & Kids
+                  </button>
+                  <button
+                    onClick={() => setLibraryFilter('classics')}
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
+                      libraryFilter === 'classics' ? 'font-bold' : 'opacity-60'
+                    }`}
+                    style={{
+                      backgroundColor: libraryFilter === 'classics' ? `${theme.accent}25` : theme.bg,
+                      color: libraryFilter === 'classics' ? theme.accent : theme.textDim,
+                    }}
+                  >
+                    Drills & Sci-Fi
+                  </button>
+                </div>
+
                 <div className="space-y-1.5">
-                  {SAMPLE_LIBRARY.map((sample) => (
-                    <button
-                      key={sample.id}
-                      onClick={() => onSelectDocument(createDocumentFromSample(sample), 0)}
-                      className={`w-full text-left p-2.5 rounded-xl border flex items-center justify-between transition-all ${
-                        activeDoc.id === sample.id ? 'ring-2 font-semibold' : 'hover:opacity-90'
-                      }`}
-                      style={{
-                        backgroundColor: activeDoc.id === sample.id ? theme.surfaceHover : theme.bg,
-                        borderColor: activeDoc.id === sample.id ? theme.accent : theme.border,
-                        color: activeDoc.id === sample.id ? theme.accent : theme.textBright,
-                      }}
-                    >
-                      <div className="min-w-0 pr-2">
-                        <div className="text-[10px] font-mono opacity-60">{sample.category}</div>
-                        <div className="truncate font-medium text-xs">{sample.title}</div>
-                      </div>
-                      <div className="shrink-0 text-[10px] font-mono opacity-60">
-                        {sample.author}
-                      </div>
-                    </button>
-                  ))}
+                  {SAMPLE_LIBRARY.filter((sample) => {
+                    if (libraryFilter === 'beginner') {
+                      return sample.category.toLowerCase().includes('beginner') || sample.category.toLowerCase().includes('children');
+                    }
+                    if (libraryFilter === 'classics') {
+                      return !sample.category.toLowerCase().includes('beginner') && !sample.category.toLowerCase().includes('children');
+                    }
+                    return true;
+                  }).map((sample) => {
+                    const isBeginner = sample.category.toLowerCase().includes('beginner') || sample.category.toLowerCase().includes('children');
+                    const isSelected = activeDoc.id === sample.id;
+
+                    return (
+                      <button
+                        key={sample.id}
+                        onClick={() => onSelectDocument(createDocumentFromSample(sample), 0)}
+                        className={`w-full text-left p-2.5 rounded-xl border flex flex-col gap-1 transition-all group ${
+                          isSelected ? 'ring-2 font-semibold shadow-sm' : 'hover:opacity-95'
+                        }`}
+                        style={{
+                          backgroundColor: isSelected ? theme.surfaceHover : theme.bg,
+                          borderColor: isSelected ? theme.accent : theme.border,
+                          color: isSelected ? theme.accent : theme.textBright,
+                        }}
+                      >
+                        <div className="flex items-start justify-between gap-1 w-full">
+                          <div className="min-w-0 pr-1">
+                            <div className="flex items-center gap-1.5">
+                              {isBeginner && (
+                                <span 
+                                  className="text-[8px] uppercase font-mono px-1 py-0.1 rounded font-bold"
+                                  style={{ backgroundColor: `${theme.accent}20`, color: theme.accent }}
+                                >
+                                  Beginner
+                                </span>
+                              )}
+                              <span className="text-[9px] font-mono opacity-60 truncate">
+                                {sample.chapters.length} {sample.chapters.length === 1 ? 'Chapter' : 'Chapters'}
+                              </span>
+                            </div>
+                            <div className="truncate font-semibold text-xs mt-0.5">
+                              {sample.title}
+                            </div>
+                          </div>
+                          <div className="shrink-0 text-[10px] font-mono opacity-60 text-right">
+                            {sample.author}
+                          </div>
+                        </div>
+
+                        {sample.description && (
+                          <p className="text-[10px] line-clamp-1 opacity-70" style={{ color: theme.textDim }}>
+                            {sample.description}
+                          </p>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -420,8 +520,40 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           {/* TAB 3: BOOKMARKS & HISTORY */}
           {activeTab === 'history' && (
-            <div className="space-y-2">
-              <span className="block text-[10px] font-mono uppercase tracking-wider font-semibold mb-1" style={{ color: theme.textDim }}>
+            <div className="space-y-3">
+              {/* Save States & Cookie Places Banner in History */}
+              {onOpenSaveStates && (
+                <div 
+                  className="p-3 rounded-xl border flex items-center justify-between gap-2"
+                  style={{ backgroundColor: theme.bg, borderColor: `${theme.accent}40` }}
+                >
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="p-1.5 rounded-lg"
+                      style={{ backgroundColor: `${theme.accent}20`, color: theme.accent }}
+                    >
+                      <Save className="w-3.5 h-3.5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-xs" style={{ color: theme.textBright }}>
+                        Save States & Cookie Places
+                      </div>
+                      <div className="text-[10px]" style={{ color: theme.textDim }}>
+                        Snapshot multi-slot states or resume from breaks
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={onOpenSaveStates}
+                    className="px-2.5 py-1 rounded-lg text-[10px] font-semibold text-white transition-transform active:scale-95 shadow-sm"
+                    style={{ backgroundColor: theme.accent }}
+                  >
+                    Open
+                  </button>
+                </div>
+              )}
+
+              <span className="block text-[10px] font-mono uppercase tracking-wider font-semibold" style={{ color: theme.textDim }}>
                 Reading History & Bookmarks
               </span>
 

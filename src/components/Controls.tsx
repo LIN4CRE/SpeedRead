@@ -12,7 +12,11 @@ import {
   Maximize,
   Minimize,
   Eye,
-  Zap
+  Zap,
+  Volume2,
+  VolumeX,
+  Sparkles,
+  Cookie
 } from 'lucide-react';
 import { ThemeColors } from '../types/reader';
 
@@ -35,6 +39,10 @@ interface ControlsProps {
   onToggleContextPeek: () => void;
   isContextPeekOpen: boolean;
   disabled?: boolean;
+  isReadAloud?: boolean;
+  onToggleReadAloud?: () => void;
+  onToggleReticleStyle?: () => void;
+  onOpenSaveStates?: () => void;
 }
 
 export const Controls: React.FC<ControlsProps> = ({
@@ -55,6 +63,10 @@ export const Controls: React.FC<ControlsProps> = ({
   onToggleContextPeek,
   isContextPeekOpen,
   disabled = false,
+  isReadAloud = false,
+  onToggleReadAloud,
+  onToggleReticleStyle,
+  onOpenSaveStates,
 }) => {
   const progressPercent = totalWords > 0 ? (currentWordIndex / totalWords) * 100 : 0;
   const wordsRemaining = Math.max(0, totalWords - currentWordIndex);
@@ -193,8 +205,58 @@ export const Controls: React.FC<ControlsProps> = ({
           </button>
         </div>
 
-        {/* Right: Context Peek, Settings, Fullscreen */}
+        {/* Right: Read-Aloud, Reticle Style, Context Peek, Settings, Fullscreen */}
         <div className="flex items-center gap-1.5">
+          {/* Read-Aloud Web Speech Mode Toggle */}
+          {onToggleReadAloud && (
+            <button
+              onClick={onToggleReadAloud}
+              title={isReadAloud ? 'Turn Off Read-Aloud Voice (V)' : 'Turn On Read-Aloud Web Speech Synthesis (V)'}
+              className={`p-2.5 rounded-xl border transition-all active:scale-95 flex items-center justify-center ${
+                isReadAloud ? 'ring-2' : ''
+              }`}
+              style={{
+                backgroundColor: isReadAloud ? `${theme.accent}20` : theme.bg,
+                borderColor: isReadAloud ? theme.accent : theme.border,
+                color: isReadAloud ? theme.accent : theme.textDim,
+              }}
+            >
+              {isReadAloud ? <Volume2 className="w-4 h-4 animate-pulse" /> : <VolumeX className="w-4 h-4" />}
+            </button>
+          )}
+
+          {/* Quick Reticle Style Cycle Toggle */}
+          {onToggleReticleStyle && (
+            <button
+              onClick={onToggleReticleStyle}
+              title="Cycle Reticle Tracking Style (Line, Highlighter, Spotlight, Underline, etc.)"
+              className="p-2.5 rounded-xl border transition-all active:scale-95 hidden xs:flex items-center justify-center"
+              style={{
+                backgroundColor: theme.bg,
+                borderColor: theme.border,
+                color: theme.textDim,
+              }}
+            >
+              <Sparkles className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Save States & Cookie Break Button */}
+          {onOpenSaveStates && (
+            <button
+              onClick={onOpenSaveStates}
+              title="Save States & Cookie Places / Take a Break (K)"
+              className="p-2.5 rounded-xl border transition-all active:scale-95 flex items-center justify-center hover:opacity-90"
+              style={{
+                backgroundColor: theme.bg,
+                borderColor: theme.border,
+                color: theme.accent,
+              }}
+            >
+              <Cookie className="w-4 h-4 text-amber-400" />
+            </button>
+          )}
+
           <button
             onClick={onToggleContextPeek}
             title="Toggle Paragraph Context Peek (C)"

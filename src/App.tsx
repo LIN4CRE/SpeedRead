@@ -21,7 +21,14 @@ import {
   Mic, 
   MicOff, 
   Flame, 
-  Clock 
+  Clock,
+  Volume2,
+  VolumeX,
+  Cookie,
+  Save,
+  Coffee,
+  User,
+  X
 } from 'lucide-react';
 import { 
   DocumentSource, 
@@ -29,7 +36,11 @@ import {
   ThemeColors, 
   PacingConfig, 
   SavedBookmark, 
-  ReadingInsightsData 
+  ReadingInsightsData,
+  ReticleStyle,
+  UserAccount,
+  SaveState,
+  CookieBreakPlace
 } from './types/reader';
 import { computeWordDelay, tokenizeText } from './utils/orp';
 import { parsePdfFile } from './utils/pdfParser';
@@ -53,7 +64,9 @@ import {
   DEFAULT_PACING 
 } from './utils/storage';
 import { SAMPLE_LIBRARY, createDocumentFromSample } from './utils/sampleTexts';
-import { ReticleDisplay } from './components/ReticleDisplay';
+import { getCurrentUser } from './utils/saveStateManager';
+import { saveBreakPlaceCookie, loadBreakPlaceCookie, clearBreakPlaceCookie } from './utils/cookieUtils';
+import { ReticleDisplay, RETICLE_STYLE_OPTIONS } from './components/ReticleDisplay';
 import { Controls } from './components/Controls';
 import { Sidebar } from './components/Sidebar';
 import { SettingsModal } from './components/SettingsModal';
@@ -63,7 +76,9 @@ import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
 import { FreeBooksModal } from './components/FreeBooksModal';
 import { ReadingInsightsModal } from './components/ReadingInsightsModal';
 import { EyeRestModal } from './components/EyeRestModal';
+import { SaveStateModal } from './components/SaveStateModal';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
+import { useSpeechSynthesis } from './hooks/useSpeechSynthesis';
 
 export default function App() {
   // 1. Settings & Persistence State
@@ -98,6 +113,15 @@ export default function App() {
   const [isZenMode, setIsZenMode] = useState<boolean>(false);
   const [isInsightsOpen, setIsInsightsOpen] = useState<boolean>(false);
   const [isEyeRestOpen, setIsEyeRestOpen] = useState<boolean>(false);
+  const [isSaveStateOpen, setIsSaveStateOpen] = useState<boolean>(false);
+
+  // User Accounts & Cookie Break Place States
+  const [currentUser, setCurrentUser] = useState<UserAccount | null>(() => getCurrentUser());
+  const [savedCookiePlace, setSavedCookiePlace] = useState<CookieBreakPlace | null>(() => loadBreakPlaceCookie());
+  const [showCookieResumeBanner, setShowCookieResumeBanner] = useState<boolean>(() => {
+    const c = loadBreakPlaceCookie();
+    return !!(c && c.wordIndex > 0);
+  });
 
   // 4. Reading Insights & Session Analytics
   const [insights, setInsights] = useState<ReadingInsightsData>(() => loadReadingInsights());
@@ -109,14 +133,47 @@ export default function App() {
   const [pomodoroFocusSeconds, setPomodoroFocusSeconds] = useState<number>(0);
   const [pomodoroStreak, setPomodoroStreak] = useState<number>(0);
 
-  // 6. Drag & Drop state for effortless book addition
+  // 6. Read-Aloud Web Speech Synthesis State
+  const [isReadAloud, setIsReadAloud] = useState<boolean>(false);
+
+  // 7. Drag & Drop state for effortless book addition
   const [isDraggingOver, setIsDraggingOver] = useState<boolean>(false);
   const [isDroppingAndParsing, setIsDroppingAndParsing] = useState<boolean>(false);
   const [dropStatus, setDropStatus] = useState<string>('');
 
-  // 7. Timer Reference
+  // 8. Timer Reference
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const currentTheme: ThemeColors = THEMES[themeId] || THEMES.oled;
+
+  // Web Speech API Text-to-Speech Hook for Read-Aloud Mode
+  const {
+    isSupported: isTtsSupported,
+    speakWord,
+    cancel: cancelTts,
+  } = useSpeechSynthesis({
+    enabled: isReadAloud,
+    wpm,
+  });
+
+  // Cycle reticle styles (standard line, highlighter, spotlight, underline, etc.)
+  const cycleReticleStyle = useCallback(() => {
+    setTypography((prev) => {
+      const currentIdx = RETICLE_STYLE_OPTIONS.findIndex((s) => s.id === prev.reticleStyle);
+      const nextIdx = (currentIdx + 1) % RETICLE_STYLE_OPTIONS.length;
+      const nextStyle = RETICLE_STYLE_OPTIONS[nextIdx].id;
+      const updated = { ...prev, reticleStyle: nextStyle };
+      saveSettings(updated);
+      return updated;
+    });
+  }, []);
+
+  const selectReticleStyle = useCallback((newStyle: ReticleStyle) => {
+    setTypography((prev) => {
+      const updated = { ...prev, reticleStyle: newStyle };
+      saveSettings(updated);
+      return updated;
+    });
+  }, []);
 
   // Persist typography changes
   const handleUpdateTypography = (newSettings: TypographySettings) => {
@@ -188,6 +245,22 @@ export default function App() {
     setActiveDoc(newDoc);
     setCurrentWordIndex(startWordIndex);
     recordBookmark(newDoc, startWordIndex, wpm);
+
+    // Save place into browser cookies for breaks
+    const currentChapter = newDoc.chapters.slice().reverse().find(
+      c => startWordIndex >= c.startWordIndex
+    ) || newDoc.chapters[0];
+    saveBreakPlaceCookie({
+      documentId: newDoc.id,
+      documentTitle: newDoc.title,
+      wordIndex: startWordIndex,
+      totalWords: newDoc.totalWords,
+      chapterTitle: currentChapter?.title,
+      wpm,
+      timestamp: Date.now(),
+      dateStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    });
+    setSavedCookiePlace(loadBreakPlaceCookie());
   };
 
   const handleRemoveBookmark = (docId: string) => {
@@ -203,6 +276,23 @@ export default function App() {
       setIsPlaying(false);
       if (timerRef.current) clearTimeout(timerRef.current);
       recordBookmark(activeDoc, currentWordIndex, wpm);
+
+      // Save exact reading place into browser cookie for breaks
+      const currentChapter = activeDoc.chapters.slice().reverse().find(
+        c => currentWordIndex >= c.startWordIndex
+      ) || activeDoc.chapters[0];
+
+      saveBreakPlaceCookie({
+        documentId: activeDoc.id,
+        documentTitle: activeDoc.title,
+        wordIndex: currentWordIndex,
+        totalWords: activeDoc.totalWords,
+        chapterTitle: currentChapter?.title,
+        wpm,
+        timestamp: Date.now(),
+        dateStr: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      });
+      setSavedCookiePlace(loadBreakPlaceCookie());
 
       // Record reading session for Insights analytics
       const wordsRead = Math.max(0, currentWordIndex - sessionStartWordIndex.current);
@@ -227,6 +317,47 @@ export default function App() {
       setIsPlaying(true);
     }
   }, [activeDoc, isPlaying, currentWordIndex, wpm, recordBookmark]);
+
+  // Load a full saved state (restoring book, word index, WPM, and reticle)
+  const handleLoadSaveState = useCallback((state: SaveState) => {
+    setIsPlaying(false);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    cancelTts();
+
+    const foundSample = SAMPLE_LIBRARY.find(s => s.id === state.documentId);
+    if (foundSample && activeDoc.id !== state.documentId) {
+      const doc = createDocumentFromSample(foundSample);
+      setActiveDoc(doc);
+    }
+
+    setCurrentWordIndex(state.wordIndex);
+    if (state.wpm) setWpm(state.wpm);
+    if (state.reticleStyle) selectReticleStyle(state.reticleStyle);
+    if (state.fontSize) {
+      setTypography(prev => {
+        const next = { ...prev, fontSize: state.fontSize! };
+        saveSettings(next);
+        return next;
+      });
+    }
+  }, [activeDoc.id, cancelTts, selectReticleStyle]);
+
+  // Resume from saved cookie break place
+  const handleResumeCookiePlace = useCallback((place: CookieBreakPlace) => {
+    setIsPlaying(false);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    cancelTts();
+
+    const foundSample = SAMPLE_LIBRARY.find(s => s.id === place.documentId);
+    if (foundSample && activeDoc.id !== place.documentId) {
+      const doc = createDocumentFromSample(foundSample);
+      setActiveDoc(doc);
+    }
+
+    setCurrentWordIndex(place.wordIndex);
+    if (place.wpm) setWpm(place.wpm);
+    setShowCookieResumeBanner(false);
+  }, [activeDoc.id, cancelTts]);
 
   // Step forward or backward by words
   const stepWords = useCallback((delta: number) => {
@@ -330,6 +461,11 @@ export default function App() {
 
     const currentWord = activeDoc.words[currentWordIndex];
     const delay = computeWordDelay(currentWord, wpm, pacing);
+
+    // Read-Aloud Web Speech API multi-sensory synthesis
+    if (isReadAloud && currentWord) {
+      speakWord(currentWord.clean || currentWord.raw);
+    }
 
     timerRef.current = setTimeout(() => {
       setCurrentWordIndex((prev) => {
@@ -442,6 +578,27 @@ export default function App() {
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault();
             setIsSidebarOpen((prev) => !prev);
+          }
+          break;
+
+        case 'KeyK':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            setIsSaveStateOpen((prev) => !prev);
+          }
+          break;
+
+        case 'KeyV':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            setIsReadAloud((prev) => !prev);
+          }
+          break;
+
+        case 'KeyS':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            cycleReticleStyle();
           }
           break;
 
@@ -614,6 +771,45 @@ export default function App() {
 
           {/* Right: Insights, Voice Control, Pomodoro, Free Books, Zen, Theme, Shortcuts, Settings */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Read-Aloud Web Speech Synthesis Toggle */}
+            <button
+              onClick={() => {
+                const nextState = !isReadAloud;
+                setIsReadAloud(nextState);
+                if (!nextState) cancelTts();
+              }}
+              className={`px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm ${
+                isReadAloud
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 ring-1 ring-emerald-500/50 shadow-emerald-500/10'
+                  : 'hover:opacity-100 opacity-80'
+              }`}
+              style={{
+                backgroundColor: isReadAloud ? undefined : currentTheme.surface,
+                borderColor: isReadAloud ? undefined : currentTheme.border,
+                color: isReadAloud ? undefined : currentTheme.textDim,
+              }}
+              title={
+                isReadAloud
+                  ? 'Read-Aloud Active (Listening while reading). Press V to turn off.'
+                  : 'Enable Read-Aloud Voice Synthesis for Multi-Sensory Reinforcement (V)'
+              }
+            >
+              {isReadAloud ? <Volume2 className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> : <VolumeX className="w-3.5 h-3.5" />}
+              <span className="hidden md:inline">{isReadAloud ? 'Read-Aloud: ON' : 'Read-Aloud'}</span>
+            </button>
+
+            {/* Save States & Cookie Breaks (K) */}
+            <button
+              onClick={() => setIsSaveStateOpen(true)}
+              className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-amber-400 border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20"
+              title="Save States & Cookie Places / Take a Break (K)"
+            >
+              <Cookie className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden sm:inline">
+                {currentUser ? currentUser.displayName : 'Save States'}
+              </span>
+            </button>
+
             {/* Reading Insights Dashboard */}
             <button
               onClick={() => {
@@ -747,9 +943,57 @@ export default function App() {
 
       {/* 3. Main Center Stage */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col justify-center items-center gap-5 sm:gap-6">
+        {/* Cookie Break Resume Banner */}
+        {showCookieResumeBanner && savedCookiePlace && (
+          <div 
+            className="w-full px-4 py-2.5 rounded-2xl border flex items-center justify-between gap-3 text-xs animate-fadeIn shadow-lg select-none"
+            style={{ 
+              backgroundColor: `${currentTheme.surface}f5`, 
+              borderColor: `${currentTheme.accent}50`,
+              color: currentTheme.textBright
+            }}
+          >
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div 
+                className="p-1.5 rounded-lg shrink-0"
+                style={{ backgroundColor: `${currentTheme.accent}20`, color: currentTheme.accent }}
+              >
+                <Cookie className="w-4 h-4 text-amber-400" />
+              </div>
+              <div className="min-w-0">
+                <div className="font-semibold text-xs truncate">
+                  Break Place Saved in Cookies: <span style={{ color: currentTheme.accent }}>{savedCookiePlace.documentTitle}</span>
+                </div>
+                <div className="text-[10px] font-mono opacity-70" style={{ color: currentTheme.textDim }}>
+                  Word {savedCookiePlace.wordIndex.toLocaleString()} of {savedCookiePlace.totalWords.toLocaleString()} · {savedCookiePlace.wpm} WPM · Saved on break
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => handleResumeCookiePlace(savedCookiePlace)}
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-transform active:scale-95 shadow-sm"
+                style={{ backgroundColor: currentTheme.accent }}
+              >
+                Resume Place
+              </button>
+              <button
+                onClick={() => setShowCookieResumeBanner(false)}
+                className="p-1 rounded-lg border transition-colors hover:opacity-80"
+                style={{ borderColor: currentTheme.border, color: currentTheme.textDim }}
+                title="Dismiss banner"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Quick Reading Starters Bar (Hidden in Zen Mode) */}
         {!isZenMode && (
           <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap text-xs select-none w-full">
+            {/* 1. Fairytales for Kids */}
             <button
               onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[0]), 0)}
               className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
@@ -763,11 +1007,11 @@ export default function App() {
                 color: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.textBright,
               }}
             >
-              <Zap className="w-3.5 h-3.5 shrink-0" />
-              <span>600 WPM Video Drill</span>
+              <Sparkles className="w-3.5 h-3.5 shrink-0 text-amber-400" />
+              <span>Fairytales for Kids</span>
             </button>
 
-            {/* Harry Potter and the Sorcerer's Stone */}
+            {/* 2. Peter Pan (Full Book) */}
             <button
               onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[1]), 0)}
               className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
@@ -781,11 +1025,11 @@ export default function App() {
                 color: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.textBright,
               }}
             >
-              <Sparkles className="w-3.5 h-3.5 shrink-0 text-amber-400" />
-              <span>Harry Potter (Ch. 1-4)</span>
+              <BookOpen className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
+              <span>Peter Pan (Full Book)</span>
             </button>
 
-            {/* Alice in Wonderland */}
+            {/* 3. Alice in Wonderland (Complete Book) */}
             <button
               onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[2]), 0)}
               className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
@@ -799,8 +1043,29 @@ export default function App() {
                 color: activeDoc.id === SAMPLE_LIBRARY[2].id ? currentTheme.accent : currentTheme.textBright,
               }}
             >
-              <BookOpen className="w-3.5 h-3.5 shrink-0" />
-              <span>Alice in Wonderland</span>
+              <BookOpen className="w-3.5 h-3.5 shrink-0 text-sky-400" />
+              <span>Alice in Wonderland (Complete)</span>
+            </button>
+
+            {/* 4. The 600 WPM Video Drill */}
+            <button
+              onClick={() => {
+                const drill = SAMPLE_LIBRARY.find(s => s.id === 'sample-video-speed-challenge') || SAMPLE_LIBRARY[5];
+                handleSelectDocument(createDocumentFromSample(drill), 0);
+              }}
+              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === 'sample-video-speed-challenge'
+                  ? 'font-bold ring-2 shadow-sm'
+                  : 'opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: activeDoc.id === 'sample-video-speed-challenge' ? currentTheme.surfaceHover : currentTheme.surface,
+                borderColor: activeDoc.id === 'sample-video-speed-challenge' ? currentTheme.accent : currentTheme.border,
+                color: activeDoc.id === 'sample-video-speed-challenge' ? currentTheme.accent : currentTheme.textBright,
+              }}
+            >
+              <Zap className="w-3.5 h-3.5 shrink-0" />
+              <span>600 WPM Video Drill</span>
             </button>
 
             <button
@@ -813,15 +1078,7 @@ export default function App() {
               }}
             >
               <Upload className="w-3.5 h-3.5 shrink-0" />
-              <span>+ Upload (PDF/ePub)</span>
-            </button>
-
-            <button
-              onClick={() => setIsFreeBooksOpen(true)}
-              className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
-            >
-              <Globe className="w-3.5 h-3.5 shrink-0" />
-              <span>Free Books (70k+)</span>
+              <span>+ Upload / Library</span>
             </button>
           </div>
         )}
@@ -838,6 +1095,9 @@ export default function App() {
             wpm={wpm}
             documentTitle={activeDoc.title}
             onBoxClick={togglePlay}
+            isReadAloudActive={isReadAloud}
+            onToggleReticleStyle={cycleReticleStyle}
+            onSelectReticleStyle={selectReticleStyle}
           />
         </div>
 
@@ -872,6 +1132,14 @@ export default function App() {
             onToggleContextPeek={() => setIsContextPeekOpen((prev) => !prev)}
             isContextPeekOpen={isContextPeekOpen}
             disabled={activeDoc.words.length === 0}
+            isReadAloud={isReadAloud}
+            onToggleReadAloud={() => {
+              const next = !isReadAloud;
+              setIsReadAloud(next);
+              if (!next) cancelTts();
+            }}
+            onToggleReticleStyle={cycleReticleStyle}
+            onOpenSaveStates={() => setIsSaveStateOpen(true)}
           />
         </div>
       </main>
@@ -886,10 +1154,13 @@ export default function App() {
             backgroundColor: `${currentTheme.surface}66`,
           }}
         >
-          <div className="hidden sm:flex items-center gap-4 text-[11px]">
+          <div className="hidden sm:flex items-center gap-3 text-[11px] flex-wrap">
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Space</kbd> Play/Pause</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">K</kbd> Save State</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">V</kbd> Read-Aloud</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">S</kbd> Reticle Style</span>
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">B</kbd> Bookshelf</span>
-            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Z</kbd> Zen Mode</span>
+            <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">Z</kbd> Zen</span>
             <span><kbd className="px-1.5 py-0.5 rounded border mr-1 font-bold">C</kbd> Context</span>
           </div>
 
@@ -913,8 +1184,24 @@ export default function App() {
         bookmarks={bookmarks}
         onRemoveBookmark={handleRemoveBookmark}
         onOpenFreeBooks={() => setIsFreeBooksOpen(true)}
+        onOpenSaveStates={() => setIsSaveStateOpen(true)}
         theme={currentTheme}
         wpm={wpm}
+      />
+
+      {/* Multi-Slot Save States & Cookie Places Modal */}
+      <SaveStateModal
+        isOpen={isSaveStateOpen}
+        onClose={() => setIsSaveStateOpen(false)}
+        currentUser={currentUser}
+        onUserChange={setCurrentUser}
+        activeDoc={activeDoc}
+        currentWordIndex={currentWordIndex}
+        wpm={wpm}
+        typography={typography}
+        onLoadSaveState={handleLoadSaveState}
+        onResumeCookiePlace={handleResumeCookiePlace}
+        theme={currentTheme}
       />
 
       <SettingsModal
