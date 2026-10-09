@@ -1,7 +1,9 @@
 {
-  "name": "react-example",
+  "name": "kinetic-rsvp-speed-reader",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "High-performance RSVP speed reader supporting PDF, ePub, TXT, and custom books with Optimal Recognition Point (ORP) focal tracking.",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
