@@ -69,7 +69,7 @@ Rapid Serial Visual Presentation, or RSVP, completely eliminates eye saccades. B
 `),n=n.replace(/<br\s*\/?>/gi,`
 `),n=n.replace(/<[^>]+>/g,` `),n=n.replace(/&nbsp;/g,` `).replace(/&amp;/g,`&`).replace(/&lt;/g,`<`).replace(/&gt;/g,`>`).replace(/&quot;/g,`"`).replace(/&#39;/g,`'`),n=n.replace(/[ \t]+/g,` `).replace(/\n{3,}/g,`
 
-`).trim();let i=n.split(/\s+/).filter(Boolean).length,a=e.match(/<title[^>]*>([\s\S]*?)<\/title>/i)||e.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i),o=a?a[1].replace(/<[^>]+>/g,``).trim():t;o=o.replace(/\s*[-|–—]\s*.*$/,``).trim()||t;let s=e.match(/meta\s+name=["']author["']\s+content=["']([^"']+)["']/i)||e.match(/class=["'][^"']*author[^"']*["'][^>]*>([\s\S]*?)<\//i),c=s?s[1].replace(/<[^>]+>/g,``).trim():void 0;return{title:o,byline:c,cleanedText:n,wordCount:i}}function ir(e=`https://speedread-rsvp.surge.sh`){return`
+`).trim();let i=n.split(/\s+/).filter(Boolean).length,a=e.match(/<title[^>]*>([\s\S]*?)<\/title>/i)||e.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i),o=a?a[1].replace(/<[^>]+>/g,``).trim():t;o=o.replace(/\s*[-|–—]\s*.*$/,``).trim()||t;let s=e.match(/meta\s+name=["']author["']\s+content=["']([^"']+)["']/i)||e.match(/class=["'][^"']*author[^"']*["'][^>]*>([\s\S]*?)<\//i),c=s?s[1].replace(/<[^>]+>/g,``).trim():void 0;return{title:o,byline:c,cleanedText:n,wordCount:i}}function ir(e=`https://lin4cre.github.io/SpeedRead/`){return`
 javascript:(function(){
   try {
     var sel = window.getSelection().toString();

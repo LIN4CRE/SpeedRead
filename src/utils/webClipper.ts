@@ -155,7 +155,7 @@ export function extractCleanArticle(rawHtmlOrText: string, fallbackTitle = 'Web 
 /**
  * Generates copyable JavaScript bookmarklet code for 1-click web clipping
  */
-export function generateSpeedReadBookmarklet(appBaseUrl = 'https://speedread-rsvp.surge.sh'): string {
+export function generateSpeedReadBookmarklet(appBaseUrl = 'https://lin4cre.github.io/SpeedRead/'): string {
   // Bookmarklet gets selected text or article text and opens SpeedRead
   const code = `
 javascript:(function(){

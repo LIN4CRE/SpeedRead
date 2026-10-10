@@ -44,9 +44,12 @@ describe('Web Clipper & Readability Engine', () => {
   });
 
   it('generates a valid javascript bookmarklet string', () => {
-    const bookmarklet = generateSpeedReadBookmarklet('https://speedread-rsvp.surge.sh');
-    expect(bookmarklet.startsWith('javascript:(function()')).toBe(true);
-    expect(bookmarklet).toContain('speedread-rsvp.surge.sh');
-    expect(bookmarklet).toContain('getSelection');
+    const defaultBookmarklet = generateSpeedReadBookmarklet();
+    expect(defaultBookmarklet.startsWith('javascript:(function()')).toBe(true);
+    expect(defaultBookmarklet).toContain('lin4cre.github.io/SpeedRead');
+    expect(defaultBookmarklet).toContain('getSelection');
+
+    const customBookmarklet = generateSpeedReadBookmarklet('https://lin4cre.github.io/SpeedRead/');
+    expect(customBookmarklet).toContain('lin4cre.github.io/SpeedRead');
   });
 });

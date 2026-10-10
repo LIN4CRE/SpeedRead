@@ -6,7 +6,7 @@
 
 **Read full books at 600+ WPM with frictionless Rapid Serial Visual Presentation (RSVP) & Optimal Recognition Point (ORP) tracking.**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-speedread--rsvp.surge.sh-brightgreen.svg?style=for-the-badge&logo=fastapi)](https://speedread-rsvp-1791551209.surge.sh)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-brightgreen.svg?style=for-the-badge&logo=github)](https://lin4cre.github.io/SpeedRead/)
 
 [![CI](https://github.com/LIN4CRE/SpeedRead/actions/workflows/ci.yml/badge.svg)](https://github.com/LIN4CRE/SpeedRead/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -14,12 +14,12 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.x-646cff.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.x-38bdf8.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vitest](https://img.shields.io/badge/Tests-75%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
+[![Vitest](https://img.shields.io/badge/Tests-95%20Passed-22c55e.svg?logo=vitest&logoColor=white)](tests/)
 [![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-blueviolet.svg?logo=pwa&logoColor=white)](#offline-pwa-support)
 [![Formats](https://img.shields.io/badge/Formats-PDF%20%7C%20ePub%20%7C%20TXT%20%7C%20Web-emerald.svg)](#supported-formats)
 [![Privacy](https://img.shields.io/badge/Privacy-100%25%20Client--Side-rose.svg)](#privacy--security)
 
-[🚀 Live Demo](https://speedread-rsvp-1791551209.surge.sh) · [✨ Features](#key-features) · [🔬 The Science](#the-science-of-rsvp) · [⌨️ Shortcuts](#keyboard-shortcuts) · [📚 Free Ebooks](#free-ebooks-directory) · [🗺️ Roadmap](ROADMAP.md) · [🛠️ Installation](#getting-started) · [🤝 Contributing](CONTRIBUTING.md)
+[🚀 Live Demo](https://lin4cre.github.io/SpeedRead/) · [✨ Features](#key-features) · [🔬 The Science](#the-science-of-rsvp) · [⌨️ Shortcuts](#keyboard-shortcuts) · [📚 Free Ebooks](#free-ebooks-directory) · [🗺️ Roadmap](ROADMAP.md) · [🛠️ Installation](#getting-started) · [🤝 Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -255,15 +255,15 @@ npm run preview
 
 The application is deployed live and can be hosted seamlessly on any static host:
 
-- **Live Production URL:** [https://speedread-rsvp.surge.sh](https://speedread-rsvp.surge.sh)
-- **GitHub Pages:** Automated deployment configured via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) on push to `main`.
+- **Live Production URL (GitHub Pages):** [https://lin4cre.github.io/SpeedRead/](https://lin4cre.github.io/SpeedRead/)
+- **GitHub Pages:** Automated deployment configured via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) on push to `main` and served directly from the `gh-pages` branch.
 - **Vercel:** Single-page rewrite rules configured via [`vercel.json`](vercel.json).
 - **Netlify:** Single-page redirect rules configured via [`netlify.toml`](netlify.toml).
 
-To deploy your own fork to Surge:
+To deploy your own fork to any static host:
 ```bash
 npm run build
-npx surge ./dist your-custom-subdomain.surge.sh
+# Deploy the contents of ./dist to GitHub Pages, Netlify, Vercel, or Cloudflare Pages
 ```
 
 ---
