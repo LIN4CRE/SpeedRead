@@ -12,6 +12,14 @@ import {
   METAMORPHOSIS_FULL,
   SHERLOCK_HOLMES_FULL,
   CHRISTMAS_CAROL_FULL,
+  DRACULA_FULL,
+  CARMILLA_FULL,
+  IRON_HEEL_FULL,
+  MACHINE_STOPS_FULL,
+  LOST_WORLD_FULL,
+  SECRET_GARDEN_FULL,
+  DOCTOR_MOREAU_FULL,
+  JOURNEY_CENTRE_EARTH_FULL,
 } from '../books';
 
 export interface SampleBookDef {
@@ -24,14 +32,22 @@ export interface SampleBookDef {
 }
 
 export const SAMPLE_LIBRARY: SampleBookDef[] = [
-  // Sci-Fi, Gothic & Adventure Classics (Full Unabridged Books)
+  // Gothic, Vampire & Thriller Classics (Full Unabridged Books)
   {
-    id: TIME_MACHINE_FULL.id,
-    title: TIME_MACHINE_FULL.title,
-    author: TIME_MACHINE_FULL.author,
-    category: TIME_MACHINE_FULL.category,
-    description: TIME_MACHINE_FULL.description,
-    chapters: TIME_MACHINE_FULL.chapters,
+    id: DRACULA_FULL.id,
+    title: DRACULA_FULL.title,
+    author: DRACULA_FULL.author,
+    category: DRACULA_FULL.category,
+    description: DRACULA_FULL.description,
+    chapters: DRACULA_FULL.chapters,
+  },
+  {
+    id: CARMILLA_FULL.id,
+    title: CARMILLA_FULL.title,
+    author: CARMILLA_FULL.author,
+    category: CARMILLA_FULL.category,
+    description: CARMILLA_FULL.description,
+    chapters: CARMILLA_FULL.chapters,
   },
   {
     id: JEKYLL_AND_HYDE_FULL.id,
@@ -91,6 +107,56 @@ After days and nights of incredible labour and fatigue, I succeeded in discoveri
     ]
   },
 
+  // Dystopian & Speculative Sci-Fi Classics (Full Books)
+  {
+    id: DOCTOR_MOREAU_FULL.id,
+    title: DOCTOR_MOREAU_FULL.title,
+    author: DOCTOR_MOREAU_FULL.author,
+    category: DOCTOR_MOREAU_FULL.category,
+    description: DOCTOR_MOREAU_FULL.description,
+    chapters: DOCTOR_MOREAU_FULL.chapters,
+  },
+  {
+    id: IRON_HEEL_FULL.id,
+    title: IRON_HEEL_FULL.title,
+    author: IRON_HEEL_FULL.author,
+    category: IRON_HEEL_FULL.category,
+    description: IRON_HEEL_FULL.description,
+    chapters: IRON_HEEL_FULL.chapters,
+  },
+  {
+    id: MACHINE_STOPS_FULL.id,
+    title: MACHINE_STOPS_FULL.title,
+    author: MACHINE_STOPS_FULL.author,
+    category: MACHINE_STOPS_FULL.category,
+    description: MACHINE_STOPS_FULL.description,
+    chapters: MACHINE_STOPS_FULL.chapters,
+  },
+  {
+    id: TIME_MACHINE_FULL.id,
+    title: TIME_MACHINE_FULL.title,
+    author: TIME_MACHINE_FULL.author,
+    category: TIME_MACHINE_FULL.category,
+    description: TIME_MACHINE_FULL.description,
+    chapters: TIME_MACHINE_FULL.chapters,
+  },
+  {
+    id: LOST_WORLD_FULL.id,
+    title: LOST_WORLD_FULL.title,
+    author: LOST_WORLD_FULL.author,
+    category: LOST_WORLD_FULL.category,
+    description: LOST_WORLD_FULL.description,
+    chapters: LOST_WORLD_FULL.chapters,
+  },
+  {
+    id: JOURNEY_CENTRE_EARTH_FULL.id,
+    title: JOURNEY_CENTRE_EARTH_FULL.title,
+    author: JOURNEY_CENTRE_EARTH_FULL.author,
+    category: JOURNEY_CENTRE_EARTH_FULL.category,
+    description: JOURNEY_CENTRE_EARTH_FULL.description,
+    chapters: JOURNEY_CENTRE_EARTH_FULL.chapters,
+  },
+
   // Philosophy, Strategy & Literature Classics (Full Unabridged Books)
   {
     id: ART_OF_WAR_FULL.id,
@@ -117,7 +183,15 @@ After days and nights of incredible labour and fatigue, I succeeded in discoveri
     chapters: CHRISTMAS_CAROL_FULL.chapters,
   },
 
-  // Beginner & Children's Famous Classics (Complete Books)
+  // Youth, Fantasy & Wonder Classics (Complete Books)
+  {
+    id: SECRET_GARDEN_FULL.id,
+    title: SECRET_GARDEN_FULL.title,
+    author: SECRET_GARDEN_FULL.author,
+    category: SECRET_GARDEN_FULL.category,
+    description: SECRET_GARDEN_FULL.description,
+    chapters: SECRET_GARDEN_FULL.chapters,
+  },
   {
     id: FAIRY_TALES_FOR_KIDS.id,
     title: FAIRY_TALES_FOR_KIDS.title,

@@ -10,6 +10,14 @@ import { ART_OF_WAR_FULL } from './artOfWar';
 import { METAMORPHOSIS_FULL } from './metamorphosis';
 import { SHERLOCK_HOLMES_FULL } from './sherlockHolmes';
 import { CHRISTMAS_CAROL_FULL } from './christmasCarol';
+import { DRACULA_FULL } from './dracula';
+import { CARMILLA_FULL } from './carmilla';
+import { IRON_HEEL_FULL } from './ironHeel';
+import { MACHINE_STOPS_FULL } from './machineStops';
+import { LOST_WORLD_FULL } from './lostWorld';
+import { SECRET_GARDEN_FULL } from './secretGarden';
+import { DOCTOR_MOREAU_FULL } from './doctorMoreau';
+import { JOURNEY_CENTRE_EARTH_FULL } from './journeyToCentreOfEarth';
 
 export {
   ALICE_IN_WONDERLAND_FULL,
@@ -23,14 +31,31 @@ export {
   METAMORPHOSIS_FULL,
   SHERLOCK_HOLMES_FULL,
   CHRISTMAS_CAROL_FULL,
+  DRACULA_FULL,
+  CARMILLA_FULL,
+  IRON_HEEL_FULL,
+  MACHINE_STOPS_FULL,
+  LOST_WORLD_FULL,
+  SECRET_GARDEN_FULL,
+  DOCTOR_MOREAU_FULL,
+  JOURNEY_CENTRE_EARTH_FULL,
 };
 export type { FullBookDef, BookChapter };
 
 export const ALL_FULL_BOOKS: FullBookDef[] = [
-  // Sci-Fi, Gothic & Thrillers
-  TIME_MACHINE_FULL,
+  // Gothic, Vampire & Thriller Classics
+  DRACULA_FULL,
+  CARMILLA_FULL,
   JEKYLL_AND_HYDE_FULL,
   SHERLOCK_HOLMES_FULL,
+
+  // Dystopian & Speculative Sci-Fi Classics
+  DOCTOR_MOREAU_FULL,
+  IRON_HEEL_FULL,
+  MACHINE_STOPS_FULL,
+  TIME_MACHINE_FULL,
+  LOST_WORLD_FULL,
+  JOURNEY_CENTRE_EARTH_FULL,
   
   // Philosophy & Wisdom
   ART_OF_WAR_FULL,
@@ -39,7 +64,8 @@ export const ALL_FULL_BOOKS: FullBookDef[] = [
   METAMORPHOSIS_FULL,
   CHRISTMAS_CAROL_FULL,
   
-  // Youth & Whimsical Classics
+  // Youth, Fantasy & Wonder Classics
+  SECRET_GARDEN_FULL,
   ALICE_IN_WONDERLAND_FULL,
   PETER_PAN_FULL,
   WIZARD_OF_OZ_FULL,

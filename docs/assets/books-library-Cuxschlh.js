@@ -3819,4 +3819,625 @@ Bob trembled, and got a little nearer to the ruler. He had a momentary idea of k
 
 Scrooge was better than his word. He did it all, and infinitely more; and to Tiny Tim, who did NOT die, he was a second father. He became as good a friend, as good a master, and as good a man, as the good old city knew, or any other good old city, town, or borough, in the good old world.
 
-And it was always said of him, that he knew how to keep Christmas well, if any man alive possessed the knowledge. May that be truly said of us, and all of us! And so, as Tiny Tim observed, God bless Us, Every One!`}]},d=[a,o,l,s,c,u,e,t,r,n,i];export{s as a,i as c,t as d,e as f,c as i,r as l,u as n,o,l as r,a as s,d as t,n as u};
+And it was always said of him, that he knew how to keep Christmas well, if any man alive possessed the knowledge. May that be truly said of us, and all of us! And so, as Tiny Tim observed, God bless Us, Every One!`}]},d={id:`book-dracula-full`,title:`Dracula (Unabridged Narrative Journey)`,author:`Bram Stoker`,year:`1897`,category:`Gothic Horror & Vampires`,description:`The defining vampire classic told through intimate journals and letters. Solicitor Jonathan Harker travels to a crumbling castle in the Carpathian Mountains, unleashing the ancient Count Dracula upon Victorian England.`,difficulty:`Intermediate`,coverAccent:`#b91c1c`,estimatedMinutes:65,chapters:[{title:`Chapter I: Jonathan Harker's Journal — Bistritz to Borgo Pass`,text:`3 May. Bistritz.—Left Munich at 8:35 P.M., on 1st May, arriving at Vienna early next morning; should have arrived at 6:46, but train was an hour late. Buda-Pesth seems a wonderful place, from the glimpse which I got of it from the train and the little I could walk through the streets. I feared to go very far from the station, as we had arrived late and would start as near the correct time as possible. The impression I had was that we were leaving the West and entering the East; the most western of splendid bridges over the Danube, which is here of noble width and depth, took us among the traditions of Turkish rule.
+
+The women looked pretty, except when you got near them, but they were very clumsy about the waist. They had all full white sleeves of some kind or other, and most of them had big belts with a lot of strips of something fluttering from them like the dresses in a ballet, but of course there were petticoats under them.
+
+It was on the eve of St. George's Day. Do you know what St. George's Day is? When the clock strikes midnight, all the evil things in the world will have full sway.
+
+The driver was an extraordinary figure. He was tall, with a long brown beard and a great black hat, which seemed to hide his face from us. I could see only the gleam of a pair of very bright eyes, which seemed red in the lamplight, as he turned to us. He said to the driver of our coach: "You are early to-night, my friend." The other answered: "The English Herr was in a hurry."
+
+As he spoke, he smiled, and the lamplight fell on a hard-looking mouth, with very red lips and sharp-looking teeth, as white as ivory. One of my companions whispered to another the line from Bürger's 'Lenore': "Denn die Todten reiten schnell"—"For the dead travel fast."
+
+The horses began to scream with terror and to rear up so that my driver had to jump down and hold their heads. The dark caleche pulled up beside us, and the strange driver swung me into his carriage with hands of steel. As we drove into the mountain pass, a ring of wolves gathered around us, their eyes glowing like white fire in the snow.`},{title:`Chapter II: Within Castle Dracula`,text:`7 May.—It is morning, and the library of the castle is silent. I must have fallen asleep, for when I woke I found the fire had died down to embers.
+
+When I arrived at the castle, my driver leaped down, giving me his hand to alight. I could not but notice that his hand was as cold as ice—more like the hand of a dead than a living man. He knocked at the massive iron-studded oak door, and after a moment the door swung slowly open.
+
+Within stood a tall old man, clean shaven save for a long white moustache, and clad in black from head to foot, without a single speck of colour about him anywhere. He held in his hand an antique silver lamp, in which the flame burned without chimney or globe of any kind, throwing long quivering shadows.
+
+The old man motioned me in with his right hand with a courtly gesture, saying in excellent English, but with a strange intonation: "Welcome to my house! Enter freely and of your own will!"
+
+He made no motion of stepping to meet me, but stood like a statue, as though his gesture of welcome had fixed him into stone. The instant, however, that I had stepped over the threshold, he moved impulsively forward, and holding out his hand grasped mine with a strength which made me wince, an effect which was not lessened by the fact that it seemed as cold as ice.
+
+"Welcome to my house. Come freely. Go safely; and leave something of the happiness you bring!"
+
+His face was a strong, a very strong, aquiline, with thin nose and peculiarly arched nostrils; with lofty domed forehead, and hair growing scantily round the temples, but profusely elsewhere. His eyebrows were very massive, almost meeting over the nose, and with bushy hair that seemed to curl in its own profusion. The mouth, so far as I could see it under the heavy moustache, was fixed and rather cruel-looking, with peculiarly sharp white teeth; these protruded over the lips, whose remarkable ruddiness showed astonishing vitality in a man of his years. For the rest, his ears were pale, and at the tops extremely pointed; the chin was broad and strong, and the cheeks firm though thin. The general effect was one of extraordinary pallor.
+
+Hitherto I had noticed the backs of his hands as they lay on his knees in the firelight, and they had seemed rather white and fine; but seeing them now close to me, I could not but notice that they were rather coarse—broad, with squat fingers. Strange to say, there were hairs in the centre of the palm. The nails were long and fine, and cut to a sharp point.`},{title:`Chapter III: The Three Sisters of the Night`,text:`15 May.—I am a prisoner! I start up at every sound, my heart beating frantically. The castle is on the very edge of a terrible precipice. A stone falling from the window would drop a thousand feet without touching anything!
+
+Last night, feeling unable to sleep in my room, I wandered into a southern wing of the castle which had been long disused. The moonlight flooded through the high, arched windows. I lay down on a velvet couch and allowed my eyelids to droop.
+
+In the moonlight opposite me were three young women, ladies by their dress and manner. I thought at the time that I must be dreaming, for though the moonlight was behind them, they threw no shadow on the floor. They came close to me, and looked at me for some time, and then whispered together. Two were dark, and had high aquiline noses, like the Count, and great dark, piercing eyes. The other was fair, as fair as can be, with great wavy masses of golden hair and eyes like pale sapphires. All three had brilliant white teeth that shone like pearls against the ruby of their voluptuous lips.
+
+There was a deliberate voluptuousness which was both thrilling and repulsive, and as she arched her neck she actually licked her lips like an animal, till I could see in the moonlight the moisture shining on the scarlet lips and on the red tongue as it lapped the white sharp teeth. Lower and lower went her head, and the skin of my throat quivered. I could feel the soft, shivering touch of the lips and the hard dent of two sharp teeth, just pausing there.
+
+I closed my eyes in a languorous ecstasy and waited—waited with beating heart.
+
+Suddenly, with the fury of a tempest, the Count swept into the room! His eyes blazed with demonic fury, his face was deathly white with rage, and with a sweep of his arm of iron he caught the fair woman by her throat and hurled her across the chamber!
+
+"How dare you touch him, any of you?" he hissed, in a terrible whisper. "How dare you cast eyes on him when I have forbidden it? Back, I tell you all! This man belongs to me! Beware how you meddle with him, or you'll have to deal with me!"`},{title:`Chapter IV: The Log of the Demeter — The Ghost Ship at Whitby`,text:`Log of the 'Demeter'. Varna to Whitby.
+
+18 July.—Rough weather, wind N.N.W. Crew dissatisfied about something. Seems to be some terror among them. Mate says they think there is something aboard. Sent mate to search hold; found nothing.
+
+24 July.—One of the men missing. Lost overboard in the night, mate thinks. Crew terrified.
+
+29 July.—Another man gone. Only four men left to work the ship. Men say there is a tall, thin man, not like of us, stalking the deck when the fog rolls in.
+
+3 August.—At midnight, mate went forward to relieve the wheel. Heard a dreadful cry and splash. Rushed forward; no one at the helm. Mate cried out: "He is there! I saw him! Save me, God!" and threw himself into the sea!
+
+4 August.—I am alone. God help me! I cannot leave the helm. If I lash my hands to the wheel with my rosary, I may yet steer her into harbor. The fog is thick as wool. He is coming toward me now through the mist, his red eyes burning like coals...
+
+When the ship struck the pier at Whitby during the great midnight storm, there was not a living soul aboard save the dead captain, lashed to the helm with a crucifix between his cold fingers. And as the ship touched the sand, an immense dog, black as coal, sprang from the deck onto the shore, running at supernatural speed toward the graveyard above the abbey.`},{title:`Chapter V: Lucy Westenra and Van Helsing's Vigil`,text:`Letter from Dr. John Seward to Arthur Holmwood.
+
+Lucy is sinking fast. There is an inexplicable loss of blood, yet no hemorrhage can be discovered. Her throat shows two tiny white punctures, bordered with a faint purple discoloration.
+
+I summoned Professor Abraham Van Helsing of Amsterdam, my revered old master. He examined her throat with an expression of gravest solemnity.
+
+"This is no common illness, friend John," said Van Helsing, his face pale with dread. "We must make a transfusion of blood at once, or she will not live till sunset."
+
+You, Arthur, gave your blood first, like a hero; then I, then the Professor himself. Yet each night, despite the doors being locked, she wakes more pallid, more drained of life.
+
+Van Helsing brought from London a large box filled with the flowers of garlic. He rubbed them upon the sashes, the doors, and hung a wreath of them about her fair neck.
+
+"Why the garlic, Professor?" I asked.
+
+"Because, my friend, there are things in this old world of which modern science has not yet dreamed. We are dealing with an Un-Dead—a monster that walks by night, that feeds upon the blood of the living, and whose touch corrupts both flesh and soul!"`},{title:`Chapter VI: The Un-Dead in the Tomb`,text:`It was near midnight when we four—Arthur, Van Helsing, Quincey Morris, and myself—approached the Westenra family tomb in the churchyard.
+
+The night was bitterly cold, and a white mist clung to the ground like a shroud. Van Helsing took a small saw and cut through the leaden coffin lid.
+
+Arthur cried aloud and covered his eyes. There lay Lucy, not decayed or withered, but radiant with an unearthly, terrible beauty! Her lips were red as fresh blood, her cheeks rosy, and in the torchlight her teeth seemed longer and sharper than they had ever been in life.
+
+"She is not dead!" cried Arthur. "She only sleeps!"
+
+"Alas, no," answered Van Helsing solemnly. "She is Un-Dead. She is now one of the children of the night. If we do not deliver her soul, she will prey upon the little children of Hampstead Heath for all eternity."
+
+Arthur took the heavy wooden stake in his left hand, and the heavy mallet in his right. He placed the point over Lucy's heart.
+
+Van Helsing began to read the office for the dead. Arthur struck with all his might!
+
+A dreadful, screeching shriek broke from the open mouth; the body writhed in wild, serpent-like convulsions, the teeth champed together until the lips were covered with crimson foam. But Arthur struck again and again, driving the stake deeper, until at last the writhing ceased.
+
+The look of cruel, predatory lust faded from her countenance; and there, in its place, lay Lucy as we had known and loved her—peaceful, holy, and asleep in God.`},{title:`Chapter VII: The Final Chase and Sunset in the Borgo Pass`,text:`Mina Harker's Journal.
+
+6 November.—We have pursued the Count across Europe, tracing his black earth-box up the waters of the Danube and into the gorges of Transylvania. Through my hypnotic trance, Professor Van Helsing can read the Count's mind at dawn and sunset, hearing the lapping of water and the creaking of wagon wheels.
+
+It is afternoon; the shadows of the Carpathians are lengthening across the snow. Ahead of us on the mountain trail is a heavy wagon driven by armed Gypsies, carrying an immense wooden box.
+
+Jonathan and Quincey Morris ride at full gallop, their rifles unslung. The Gypsies draw their knives, but with the roar of Winchester rifles the escort scatters into the rocky defiles.
+
+The sun is sinking—a red ball of fire touching the western peaks. If the sun sets before the box is opened, the Count will awaken with all his supernatural strength, and we are doomed!
+
+Jonathan throws himself from his saddle and leaps onto the wagon. With a crowbar he tears open the heavy lid.
+
+There lies the Count! His face is pale and cruel, his red eyes glowing in the twilight.
+
+Jonathan's heavy Kukri knife flashes in the dying sunlight—with one mighty sweep, he shears through the monster's throat! In the same instant, Quincey's bowie knife plunges into the vampire's heart!
+
+It was like a miracle. In that single instant, before our very eyes, the whole body crumbled into dust, and passed from our sight like a handful of grey ashes blown across the snow. And in the final moment of dissolution, there came upon that dreadful face a look of peace, such as I could never have imagined could have rested there.
+
+The curse of Castle Dracula was broken forever.`}]},f={id:`book-carmilla-full`,title:`Carmilla (Complete Gothic Novella)`,author:`J. Sheridan Le Fanu`,year:`1872`,category:`Gothic Horror & Vampires`,description:`The legendary Victorian gothic masterpiece that inspired Dracula. In a lonely castle in the Styrian forests, young Laura forms an intense friendship with a mysterious, hypnotic guest named Carmilla, unaware of the nocturnal horrors stalking the countryside.`,difficulty:`Intermediate`,coverAccent:`#9333ea`,estimatedMinutes:50,chapters:[{title:`Chapter I: An Early Terror in the Castle`,text:`In Styria, we, though by no means magnificent people, inhabit a castle, or schloss. A small property, too, and a small territory, neither of them having had anything to do with our titles. My father had served in the Austrian army, and when he retired, purchased this ancient feudal residence with its surrounding woods and vineyards.
+
+The schloss stands on a slight eminence in a picturesque and lonely country. A solitary road passes near it, and in front lies a deep forest of oak and pine, which stretches away to the blue mountains in the horizon.
+
+My first recollection is of something so strange that it has coloured all my life. I was about six years old, sleeping in my nursery with my nurse beside my bed. I awoke suddenly and saw a solemn, beautiful face bending over me. It was that of a young lady, who looked at me with great, mournful eyes. She caressed me, kissed me with warm lips, and lay down beside me upon the bed.
+
+Presently, she slipped her hand under the coverlet. I felt two sharp needles pierce my breast, and I cried aloud in pain. My nurse started up, the room was searched, but the mysterious lady had vanished into the darkness like a shadow. For years afterward, the memory of that beautiful face haunted my dreams.`},{title:`Chapter II: The Overturned Carriage`,text:`It was a lovely evening in July, and the full moon was shining down upon the lime trees before the drawbridge. My father and I were walking along the road, admiring the silvery mist rising from the river, when we heard the rapid clatter of horses' hoofs and the rumble of wheels approaching at furious speed.
+
+Before we could retreat to the gate, a carriage drawn by four black horses rushed round the bend of the road, struck a projecting stone at the corner of the bridge, and overturned with a terrible crash!
+
+The postilions were thrown from their saddles; the horses reared and plunged in their traces. We ran forward to give assistance.
+
+From the shattered carriage emerged an elderly lady of haughty, aristocratic bearing, holding in her arms the slender, swooning form of a young girl.
+
+"My daughter! My darling child is hurt!" cried the lady in great distress.
+
+My father, who was the soul of hospitality, immediately insisted that the young lady be carried into our schloss and placed under the care of our household. The elder lady embraced my father with profound gratitude, explaining that she was bound on a journey of vital, secret state business and could not delay; she begged us to shelter her daughter for three months until her return.
+
+"Her name is Carmilla," said the mysterious lady, looking at us with dark, burning eyes. "She is of noble blood, gentle and affectionate, but subject to strange nervous faintings. Guard her well, and let no one inquire into her lineage until I return."`},{title:`Chapter III: We Become Acquainted`,text:`I had not yet seen the face of our guest, as she had been carried directly to her chamber and tended by our physician.
+
+When I entered the room the next morning, Carmilla was sitting near the window, looking out over the sunlit forest. As she turned her head, our eyes met.
+
+A thrill of astonishment and fear ran through my veins.
+
+It was the very face—the exact, lovely face—that had bent over my pillow in the nursery twelve years before!
+
+She looked at me, too, with an expression of wonder and delight. She sprang from her chair, took both my hands in hers, and looked into my eyes with an intensity that took my breath away.
+
+"You are the girl of my dream!" she cried, in a voice like a silver bell. "Years ago, I dreamed of a child in a great room, and you were that child! We were destined to meet, my beautiful Laura! You will love me, and I shall adore you!"
+
+She embraced me with passionate tenderness. Her touch was warm, her slender fingers stroking my hair, and yet from her skin came a faint, cold fragrance like that of lilies in a crypt.`},{title:`Chapter IV: Her Habits: A Mystery`,text:`Carmilla soon recovered her strength, but her habits were singularly indolent and strange.
+
+She never appeared in the mornings; her door remained bolted on the inside until one or two in the afternoon. When she came down, she ate scarcely anything—a spoonful of jelly, a sip of water—yet her complexion was glowing, her cheeks flushed with a delicate rose, and her lips brilliant as rubies.
+
+She was incapable of any sustained physical exertion; yet occasionally, when we walked in the woods at dusk, I saw her move with an agile, effortless speed that was almost supernatural.
+
+She had a habit of looking at me with long, languid gazes of adoration, whispering: "You are mine, Laura, you shall be mine, you and I are one for ever."
+
+And sometimes she would murmur strange, melancholy words: "I live in you, and you would die for me, I love you so. Think me not cruel because I love you; the stronger must draw the weaker, as the flower draws the bee."
+
+Once, an itinerant picture-restorer came to the castle to clean our family portraits. Among the ancient canvasses was a portrait from 1698 of an ancestor of the extinct Counts of Karnstein: Mircalla, Countess Karnstein.
+
+When the grime was removed, there appeared the living image of Carmilla, down to the small mole upon her throat!`},{title:`Chapter V: The Nightmare and The Beast`,text:`About this time, a mysterious sickness began to ravage the peasant villages on our estate. Several young girls withered away within a fortnight, complaining of strange, suffocating dreams and tiny punctures on their throats, before dying in their sleep.
+
+Then the terror touched me.
+
+One night, I woke from a heavy, feverish slumber. The moonlight lay across the floor in a silver square. In that patch of light, I saw a monstrous black animal—resembling a monstrous cat or lynx, four or five feet long—pacing softly to and fro.
+
+It leaped upon my bed! I felt two sharp fangs sink deep into my throat, accompanied by a sensation of warm, drowning languor that paralyzed my tongue and limbs.
+
+I could not scream. A cold perspiration broke out upon my forehead, and I sank into an abyss of darkness.
+
+When I awoke at dawn, my nightdress was marked with two tiny spots of blood at the collar. My father summoned the physician, who examined my throat with an expression of grave alarm and urged my father to take me away from the schloss immediately.`},{title:`Chapter VI: The Tomb of Countess Mircalla`,text:`While we were preparing for our departure, an old friend of my father, General Spielsdorf, arrived at the schloss. His face was ravaged by grief; his beloved niece had recently died under the same mysterious circumstances.
+
+"My niece was murdered!" cried the General, drawing his sword. "Murdered by a demon in human form who called herself Millarca—an anagram of Mircalla, the vampire Countess of Karnstein! She entered my home as an invalid guest, won my niece's love, and drained her lifeblood drop by drop!"
+
+At that moment, Carmilla walked into the courtyard.
+
+The General took one look at her face and uttered a roar of fury! "Millarca! Carmilla! Monster from the pit!"
+
+He sprang upon her with his drawn sword, striking with all his strength. But Carmilla caught the blade in her bare hand, twisted it from his grasp like a straw, and vanished into the shadows of the ruins!
+
+That afternoon, accompanied by the authorities and the local priest, we opened the forgotten crypt of the ruined chapel of Karnstein.
+
+There, in a marble sarcophagus bathed in fresh blood, lay Carmilla!
+
+Her eyes were wide open, luminous and cruel; her limbs were soft and flexible; her cheeks flushed with unearthly bloom.
+
+The execution was performed according to ancient ritual: a sharp oak stake was driven through her heart, whereupon she uttered a piercing shriek that shook the vaulted ceiling; her head was struck off, and her body, reduced to ashes, was scattered upon the waters of the river.
+
+The plague ceased; the peasants were delivered; and peace returned to the Styrian valley. Yet to this day, when the twilight falls upon the forest, I still hear the rustle of a silken dress, and see the beautiful, sorrowful face of Carmilla gazing at me from the dark.`}]},p={id:`book-iron-heel-full`,title:`The Iron Heel (The First Dystopian Novel)`,author:`Jack London`,year:`1908`,category:`Dystopian Sci-Fi & Resistance`,description:`The pioneering dystopian classic that paved the way for Orwell and The Hunger Games. Avis Everhard chronicles the brutal rise of the Oligarchy—the Iron Heel—and the underground resistance that fought against totalitarian surveillance and corporate rule.`,difficulty:`Advanced`,coverAccent:`#d97706`,estimatedMinutes:60,chapters:[{title:`Chapter I: My Eagle — Ernest Everhard`,text:`I cannot but think of him as an eagle, magnificent in strength and flight, sweeping across the dark skies of an enslaved civilization.
+
+I first met Ernest Everhard at my father's house in Berkeley. My father was a professor of physics at the University of California, a quiet scholar absorbed in molecular science. Ernest had been invited to dinner to discuss sociology and the growing unrest in the industrial plants of the San Francisco Bay.
+
+I was unprepared for such a man. When he entered the room, he seemed to fill it with a turbulent vitality. His shoulders were massive, his neck thick as a bull's, yet his eyes burned with the brilliant flame of an intellect that had mastered every branch of history, economics, and philosophy.
+
+He had worked in the mills from the age of ten, educating himself by the light of tallow candles while his fellow workers drank their exhaustion away.
+
+"You speak of freedom, gentlemen," said Ernest, leaning across the dinner table and looking the assembled professors and divines in the face. "You talk of our democratic institutions, our courts of justice, our ballot box. But in reality, you live under a shadow. A new master class has arisen—a financial oligarchy that controls the railways, the steel mills, the press, the pulpits, and the courts.
+
+"They do not rule by divine right; they rule by economic necessity and monopoly power. And when the working class awakens to its strength and demands its rightful share of the earth, this oligarchy will throw off its mask of constitutional law. It will crush your liberties beneath an iron heel!"`},{title:`Chapter II: The Jackson Arm`,text:`The incident of Jackson's arm was what opened my eyes to the reality of the society in which I lived.
+
+Jackson was an ordinary working man in the Sierra Mills. He had worked thirty years at the machinery. One afternoon, while oiling a high-speed transmission gear that lacked a safety shield—a shield that would have cost the company four dollars to install—his sleeve was caught. His right arm was torn from his shoulder in an instant.
+
+The company paid him nothing. When he brought suit for damages, the company's high-priced lawyers produced a document signed by Jackson, waiving all liability. The judge, whose campaign had been funded by the mill owners, dismissed the case.
+
+Ernest took me to Jackson's home in the slums of Oakland. It was a squalid tenement of two rooms. Jackson sat in a broken chair, his empty sleeve pinned to his shirt, his hollow cheeks gray with hunger.
+
+"I gave them thirty years of my life," said Jackson, his voice shaking. "I never drank, I never missed a shift. And when the machine tore my arm off, they threw me out upon the street like a dead horse."
+
+I went to my father's friends—the lawyers, the judges, the editors of the great newspapers. I begged them to tell Jackson's story, to expose the corruption of the courts.
+
+One and all, they looked at me with pity or fear.
+
+"My dear Avis," said Colonel Van Gilbert, the senior partner of the great legal firm, "you must not meddle in these matters. The mill owners control the banks; the banks control the papers. If I should take Jackson's case, my firm would be ruined before sunset."
+
+It was then that I understood: the law was not an impartial shield for the weak; it was the weapon of the Iron Heel.`},{title:`Chapter III: The Shadow of the Oligarchy`,text:`The year 1912 was the turning point. The economic crisis deepened across the continent. Thousands of small businesses were swallowed whole by the giant monopolies. Farmers were evicted by the tens of thousands as mortgage companies foreclosed upon their land.
+
+The Socialist party swept the elections in dozens of states. Ernest was elected to the United States Congress, representing the working-class districts of California.
+
+On the night before his departure for Washington, we were married. It was a simple ceremony in my father's study. We knew that dark days lay ahead, that the Oligarchy would never surrender its power without a cataclysmic struggle.
+
+"They will not let us take office peacefully, Avis," said Ernest, holding my hands in his. "They have already formed their private armies—the Black Hundreds, the mercenaries, the Iron Heel. They will provoke riots, they will suspend the Constitution, and they will declare martial law.
+
+"Our only hope lies in the secret organization—the underground fighting groups that will keep the spark of liberty alive through the long night of tyranny."
+
+And his words proved prophetic. When the newly elected congressmen gathered in Washington, a bomb was exploded in the gallery of the House of Representatives—a bomb planted by agents provocateurs of the Oligarchy itself!
+
+The press raised a hysterical cry of treason. Martial law was proclaimed from Maine to California. The leaders of the opposition were arrested, their printing presses smashed, their meetings broken up by machine-gun fire.
+
+The reign of the Iron Heel had begun.`},{title:`Chapter IV: The Secret City and The Underground`,text:`For five years, Ernest and I lived as hunted fugitives in the secret underworld of the resistance.
+
+The Oligarchy had transformed society into a rigid caste system. At the top stood the Oligarchs—the masters of finance and industry, living in magnificent palace-cities of marble and glass, guarded by armies of pampered mercenaries known as the Mercenary Guards.
+
+Below them were the favored guilds of skilled artisans—the electricians, the machinists, the engineers—who were bought off with high wages, luxurious housing, and pensions to keep the industrial machine running.
+
+And at the bottom, numbering tens of millions, were the People of the Abyss—the disenfranchised, broken masses living in squalor, starvation, and filth, toiling twelve hours a day under the lash of corporate overseers.
+
+We took false names. We changed our appearances with surgical dyes and forged passports. We traveled through secret tunnels beneath the great cities, organizing the underground press, smuggling weapons, and preparing for the First Revolt.
+
+Ernest was the heart and brain of the underground. By day he disguised himself as a wealthy art dealer; by night he met with the council of the revolution in hidden cellars beneath the wharves.
+
+"History moves in long cycles, Avis," he said to me one night as we listened to the tramp of the Mercenary Guards outside our attic window. "The Iron Heel may rule for a century, or for three centuries. But the human spirit cannot be crushed forever. Some day, the Brotherhood of Man will rise from our ashes."`},{title:`Chapter V: The Chicago Commune and The Abyss`,text:`The First Revolt broke out in Chicago in the winter of 1917.
+
+It was a trap planned by the Oligarchy with monstrous cold-bloodedness. By cutting off food shipments to the working-class districts and instigating lockouts, they drove the People of the Abyss into desperate frenzy.
+
+I was in the streets of Chicago when the dam broke.
+
+From the slums poured millions of starving, ragged human beings—men, women, and children—maddened by hunger, armed with iron bars, paving stones, and broken bottles. They swept down Michigan Avenue like a roaring tidal wave of misery and wrath.
+
+Then the Oligarchy struck.
+
+From the rooftops and armored towers, thousands of machine guns opened fire with a continuous, tearing roar. Aerial battle-cruisers circled overhead, raining high-explosive shells and poison gas into the dense masses below.
+
+The carnage was beyond description. Blood ran like water in the gutters; the air was thick with the shrieks of the dying and the thunder of artillery. Whole avenues were carpeted with corpses three deep.
+
+Ernest fought like a titan, rallying the workers' militias, defending the barricades until his ammunition was spent and the ruins collapsed around him.
+
+He was captured, sentenced to death, and taken to the fortress of Alcatraz.
+
+I escaped into the mountains of northern California, carrying this manuscript—the record of our struggle, the testimony of Ernest's life and courage.
+
+As I write these last lines, I hear the horses of the Mercenary patrol coming up the forest trail. My time is short. I shall bury these pages beneath the floor of the old cabin, in the hope that future generations, living in a free world beneath the sun, will unearth them and remember the martyrs who dared to stand against the Iron Heel.`}]},m={id:`book-machine-stops-full`,title:`The Machine Stops (Complete Prophetic Novella)`,author:`E. M. Forster`,year:`1909`,category:`Dystopian Sci-Fi & Technology`,description:`The astonishing 1909 dystopian masterpiece predicting the internet, instant video communication, isolation in individual pods, and total reliance on an omnipresent technological Machine that eventually fails.`,difficulty:`Intermediate`,coverAccent:`#0ea5e9`,estimatedMinutes:45,chapters:[{title:`Part I: The Air-Ship and The Cell`,text:`Imagine, if you can, a small room, hexagonal in shape, like the cell of a bee. It is lighted neither by window nor by lamp, yet it is filled with a soft radiance. There are no apertures for ventilation, yet the air is fresh. There are no musical instruments, and yet, at the moment that my story begins, this room is throbbing with melodious sounds. An armchair is in the centre, by its side a reading-desk—that is all the furniture. And in the armchair there sits a swaddled lump of flesh—a woman, about five feet high, with a face as white as a fungus. It is to her that the little room belongs.
+
+Her name is Vashti.
+
+The book, which is sitting by her side, is the Book of the Machine.
+
+A bell rang faintly. She touched a switch and the music stopped.
+
+"Who is it?" she asked, her voice irritable. She had been interrupted several times during the afternoon while sharing ideas about the French Revolution with three thousand friends across the globe.
+
+The round plate in her room began to glow with light. The image of a young man appeared upon it—her son, Kuno, who lived in a cell on the other side of the planet, under the soil of Australia.
+
+"Mother," said the image, "I want to see you."
+
+"I am seeing you!" said Vashti. "What is there to complain of? I see your face, I hear your voice, we can speak to each other through the Machine."
+
+"The Machine is much, but it is not everything," replied Kuno. "I see something like you in this plate, but I do not see you. I hear something like you through this telephone, but I do not hear you. That is why I want you to come. I want to see you in the flesh, not through the Machine."
+
+"Oh, hush, hush!" cried Vashti, shocked at his lack of mechanical piety. "You mustn't say anything against the Machine."
+
+"Why shouldn't I? The Machine feeds us, clothes us, houses us; through it we speak to one another, through it we see one another, in it we have our being. It is an angel to you, Mother. But I tell you, it is choking us! We have lost the earth, we have lost the sky, we have lost our own bodies!"`},{title:`Part II: The Mending Apparatus and The Surface`,text:`Vashti made the journey by air-ship—an ordeal of immense horror to her, for it brought her into contact with the dreadful open air and the sight of stars.
+
+When she reached Kuno's hexagonal cell in Australia, she found him altered. He was restless, his eyes wild with a forbidden fever.
+
+"Listen to me, Mother," whispered Kuno, stepping close to her. "I have done a terrible thing. I have been out on the surface of the earth!"
+
+Vashti screamed and covered her ears. To visit the surface of the earth without a permit was punishable by Homelessness—which meant death in the unconditioned atmosphere above.
+
+"I found an old railway tunnel," Kuno continued with burning eyes. "I climbed up through the darkness, step by step, against the draught of the ventilation shafts. And at last, I broke through a crack into the open night!
+
+"Mother! There were hills! There were trees! There was grass, cool and damp with dew, smelling sweeter than any perfumed aerosol the Machine ever distilled! And above me, the stars—millions of them, blazing in the deep silence of space!
+
+"I saw a human being, Mother—a wild girl who lived in the hills, breathing the air, drinking from running streams!
+
+"And then the Mending Apparatus caught me. The great metal worms of the Machine crept up through the shaft, wrapped their cold steel tentacles around my legs, and dragged me back down into the dark.
+
+"The Committee of the Machine has warned me. They are withdrawing the respirator permits. Soon, all contact with the surface will be forbidden forever. Man has made the Machine to be his servant, but now the servant has become the God!"`},{title:`Part III: The Collapse and The Silence`,text:`Years passed. Humanity sank into absolute subservience to the Machine. Physical contact was abolished entirely. Babies were taken from mothers at birth and placed in mechanical nurseries. Religion was revived, but it was the worship of the Machine itself.
+
+Then, gradually, small defects began to appear.
+
+First, the music apparatus grew sour and harsh. When complaints were lodged, the Central Committee replied: "The Mending Apparatus will rectify it."
+
+Then the artificial air began to smell faintly of mold and oil. The Committee replied: "The Mending Apparatus will rectify it."
+
+Then the bath water ran cold, and the sleep-table failed to rise when summoned.
+
+One morning, the light plate in Vashti's cell flickered and died. She touched the call bell. It was silent. She touched the ventilator switch. The hum of the pumps died away.
+
+A silence—vast, terrible, absolute—fell upon the subterranean hive of humanity.
+
+The Machine had stopped!
+
+For the first time in centuries, the millions of dwellers in the hexagonal cells realized their helpless fragility. The air grew thick and foul; darkness enveloped the world.
+
+From the corridors came screams of terror and despair as millions of swaddled, helpless creatures crawled from their cells into the dark tunnels, weeping, choking, trampled underfoot.
+
+Vashti crawled into the black passageway, sobbing her son's name.
+
+A hand reached out through the dark and caught hers. It was Kuno!
+
+"Kuno!" she wept, kissing his cheek. "We are dying! The Machine is dead!"
+
+"Yes," answered Kuno, holding her in his arms as the roar of collapsing tunnels shook the ground. "We are dying, but we have died as men and women, not as parts of a machine. And those on the surface—the wild ones who escaped—they will live! They will build anew under the open sky, and they will never, never build a Machine again!"`}]},h={id:`book-lost-world-full`,title:`The Lost World (Prehistoric Adventure)`,author:`Arthur Conan Doyle`,year:`1912`,category:`Sci-Fi & Prehistoric Adventure`,description:`The grandfather of all dinosaur adventures. Intrepid journalist Edward Malone joins the bellicose Professor George Edward Challenger and big-game hunter Lord John Roxton on an expedition into the Amazon basin to find a forgotten plateau where dinosaurs still roam.`,difficulty:`Intermediate`,coverAccent:`#15803d`,estimatedMinutes:55,chapters:[{title:`Chapter I: An Impossible Person — Professor Challenger`,text:`Mr. McArdle, the news editor of the Daily Gazette, looked at me over his spectacles with a shrewd and cynical eye.
+
+"You're a young man, Malone, and you want adventure," said he. "Well, there's a subject that might suit you. Have you ever heard of Professor George Edward Challenger?"
+
+"I have heard his name mentioned in connection with his recent expedition to the Amazon," I answered.
+
+"He went there on some scientific errand," McArdle explained, "and came back two months ago with a story that has made him the laughingstock of the Royal Geographical Society. He claims to have discovered a prehistoric plateau where the animals of the Jurassic epoch are still living!
+
+"When the scientists asked him for evidence, he flew into an uncontrollable rage, assaulted two reporters, and threw a professor of zoology down his front steps! If you can get into his house and get him to tell you the truth, it will be the scoop of the century."
+
+Half an hour later, I was shown into Professor Challenger's study in Enmore Park.
+
+He was a man who might have served as a model for a prehistoric cave-dweller. His head was enormous, with a great black beard that swept down over his barrel-like chest. His shoulders were like those of an ox; his gray eyes, under heavy, tufted brows, glowed with an aggressive and haughty intelligence.
+
+"Now, sir," roared the Professor, glaring at me like a bull about to charge, "are you one of those contemptible scientific vermin who think I am a liar?"
+
+"I have come with an open mind, sir," I answered steadily, "prepared to examine whatever evidence you have."
+
+The Professor's face cleared. He opened a desk drawer and drew forth a tattered sketch-book. On one of the yellowed pages was a pencil drawing of a monstrous beast—a creature with the body of an alligator, the neck of a swan, and immense leathery wings like a bat!
+
+"A pterodactyl!" I exclaimed.
+
+"Precisely," said Challenger, with a grim smile. "A pterodactyl of the Upper Cretaceous. And tomorrow night, at the Zoological Institute, I shall challenge the scientific world to send an expedition with me to the heart of South America to verify its existence!"`},{title:`Chapter II: The Expedition Assembles`,text:`The meeting at the Zoological Institute was the stormiest in its history. When Professor Challenger announced his claims, the audience jeered and hooted.
+
+In the midst of the uproar, Challenger stepped forward to the footlights.
+
+"Since you doubt my word," he shouted above the din, "I propose that this meeting select a committee of three trustworthy persons to accompany me to the plateau and report back their findings to you!"
+
+The challenge was accepted on the spot.
+
+The committee consisted of:
+1. Professor Summerlee, a tall, gaunt, acid-tongued skeptic from the British Museum, who vowed to expose Challenger's fraud.
+2. Lord John Roxton, the famous sportsman and world traveler, whose courage and rifle had made him a legend on five continents.
+3. Myself, Edward Malone, representing the press.
+
+Three weeks later, our ship dropped anchor at the port of Pará, at the mouth of the mighty Amazon River.
+
+From there, we hired steam launches and canoes, ascending the river through hundreds of miles of impenetrable tropical jungle, until the river became a narrow, rocky torrent flowing between towering canyon walls.
+
+On the third week, Challenger stood up in the bow of our canoe and pointed forward.
+
+Rising out of the green sea of the jungle, gleaming red in the sunset, was a line of perpendicular basalt cliffs that towered three thousand feet into the sky—the Lost World!`},{title:`Chapter III: Scaling the Unreachable Heights`,text:`The plateau was an island in the sky. For miles its sheer rock ramparts rose unbroken, smooth as polished glass, defying any mortal climber.
+
+At last, by Lord John Roxton's keen eye, we discovered an isolated pinnacle of rock that stood within forty feet of the main cliff face, separated by a dizzying abyss of two thousand feet.
+
+We scaled the pinnacle by cutting steps in the rock. At the summit grew a tall, ancient ginkgo tree.
+
+"Fetch the axes, Malone!" cried Challenger.
+
+With vigorous blows, Challenger and Lord John felled the great tree. It crashed across the chasm, its leafy crown lodging firmly upon the lip of the plateau, forming a narrow wooden bridge over the abyss.
+
+One by one, crawling on hands and knees above that terrifying drop, we crossed into the Lost World!
+
+We were scarcely across when a dreadful disaster overtook us.
+
+One of our native bearers, Gomez, who bore a secret blood-feud against Lord John Roxton, had followed us up the pinnacle. With a heavy lever, he pried the fallen tree loose!
+
+With a rending groan, our bridge plunged into the two-thousand-foot abyss below.
+
+"We are trapped!" cried Professor Summerlee, wringing his hands.
+
+Lord John Roxton calmly examined his double-barreled express rifle. "Trapped we may be, my dear Professor," said he, "but we have forty rounds of ammunition apiece, and the whole Jurassic age before us. Come along!"`},{title:`Chapter IV: The Dinosaurs of the Swamp`,text:`We pitched our camp in a cluster of tree-ferns near the edge of a great central lake, which Challenger named Lake Gladys.
+
+That evening, as the shadows fell, we heard a deep, resonant bellowing that shook the earth beneath our feet.
+
+Creeping forward through the giant reeds, we reached the edge of a muddy swamp.
+
+There, feeding upon the lush vegetation in the twilight, were five gigantic creatures!
+
+They were colossal iguanodons—monstrous bipedal reptiles thirty feet in height, their slate-colored skin glistening with moisture, their three-toed tracks deep enough to hold a bucket of water!
+
+Beside them in the mud played two young ones, gamboling like enormous, playful puppies.
+
+Professor Summerlee stood beside Challenger, his glasses trembling upon his nose, his skepticism vanquished forever.
+
+"My dear Challenger," he whispered, extending his hand, "I owe you a public apology. You have discovered the greatest biological wonder in the history of the world!"
+
+Challenger beamed like a proud father. "You see, my dear Summerlee! Did I not tell you? The Jurassic lives!"
+
+Our triumph, however, was short-lived.
+
+A sudden, blood-curdling screech tore the air! From the black depths of a volcanic pit rose a flock of monstrous pterodactyls, their leathery wings beating the air with a dry, rustling sound, their long yellow beaks snapping like shears.
+
+They swooped down upon our camp, their talons tearing at our clothes! Lord John Roxton fired both barrels of his rifle, bringing down two of the winged fiends, while Challenger and I fought them off with blazing firebrands until the flock scattered into the night sky.`},{title:`Chapter V: The Queen's Hall Triumph`,text:`After three months of perilous adventures—during which we allied ourselves with an indigenous tribe of plateau Indians, defeated the savage horde of ape-men, and discovered caves glittering with rough diamonds—we succeeded in constructing a rope-ladder and descended from the plateau.
+
+In the autumn of that year, the Queen's Hall in London was packed to the doors with thousands of spectators.
+
+The atmosphere was tense with skepticism and ridicule. When Professor Summerlee and I read our report, a distinguished zoologist rose from the audience and proclaimed that our photographs were fakes and our dinosaur sketches the inventions of a clever novelist.
+
+Professor Challenger rose to his feet.
+
+A hush fell over the great hall.
+
+"Gentlemen," said Challenger quietly, "you demand evidence. You shall have it."
+
+He turned to the wings of the stage and signaled to two attendants. They carried forward a large, wicker crate covered with a canvas cloth.
+
+Challenger drew a revolver from his pocket, stepped to the crate, and unlatched the lid.
+
+Out of the crate hopped a creature about the size of a large pelican. It had leathery wings, a long reptilian beak studded with needle-sharp teeth, and eyes of cold, glittering malevolence.
+
+It was a living, breathing pterodactyl!
+
+For one second the vast audience sat frozen in sheer stupefaction.
+
+Then the pterodactyl spread its great wings, rose into the air, and circled the hall, snapping at the chandeliers!
+
+The hall erupted into pandemonium! Women shrieked and fainted; men scrambled over the backs of the chairs in wild panic; the pterodactyl flew out through an open skylight into the London night, soaring away toward the Atlantic Ocean.
+
+The truth of Professor Challenger's discovery was proven forever, and our names were written into the annals of exploration.`}]},g={id:`book-secret-garden-full`,title:`The Secret Garden (Complete Classic)`,author:`Frances Hodgson Burnett`,year:`1911`,category:`Youth, Wonder & Growth`,description:`The heartwarming and magical classic of healing and friendship. Sour, lonely orphan Mary Lennox is sent to live in a sprawling 600-year-old manor on the Yorkshire moors, where she discovers a locked, hidden garden that changes her life forever.`,difficulty:`Beginner`,coverAccent:`#16a34a`,estimatedMinutes:55,chapters:[{title:`Chapter I: There is No One Left`,text:`When Mary Lennox was sent to Misselthwaite Manor to live with her uncle everybody said she was the most disagreeable-looking child ever seen. It was true, too. She had a little thin face and a little thin body, thin light hair and a sour expression. Her hair was yellow, and her face was yellow because she had been born in India and had always been ill in one way or another.
+
+Her father had held a position under the English Government and had always been busy and ill himself, and her mother had been a great beauty who cared only to go to parties and amuse herself with gay people. She had not wanted a little girl at all, and when Mary was born she handed her over to the care of an Ayah, who was made to understand that if she wished to please the Mem Sahib she must keep the child out of sight as much as possible.
+
+So when she was a sickly, fretful, ugly little baby she was kept out of the way, and when she became a sickly, fretful, toddling thing she was kept out of the way also. She never remembered seeing familiarly anything but the dark faces of her Ayah and the other native servants, and as they always obeyed her and gave her her own way in everything, because the Mem Sahib would be angry if she was disturbed by her crying, by the time she was six years old she was as tyrannical and selfish a little pig as ever lived.
+
+One morning, when she was about nine years old, she awoke to find that cholera had broken out in the bungalow. Within two days, her parents and all the servants were dead.
+
+Mary was left alone in the silent house until two officers found her playing in the dirt. A few weeks later, she was put on a ship bound for England, to live with her uncle, Mr. Archibald Craven, at Misselthwaite Manor in Yorkshire.`},{title:`Chapter II: The Robin and The Buried Key`,text:`Misselthwaite Manor was a huge, dark house with nearly a hundred rooms, most of which were shut up and locked. It sat on the edge of a vast, wild expanse of moorland covered with purple heather and gorse.
+
+Mary hated it at first. But Martha, the cheerful Yorkshire housemaid, told her of the gardens:
+
+"Mr. Craven had a garden that was locked up ten years ago, when his poor young wife died. He locked the door, dug a hole, and buried the key; and no one has been allowed inside since."
+
+Mary began to walk in the gardens every day. In the kitchen gardens, she met old Ben Weatherstaff, the crusty old gardener, and a friendly little robin with a bright red breast.
+
+The robin hopped along the gravel path, cocking his head and chirping cheerily, as if inviting Mary to be his friend.
+
+One morning, as Mary was walking near an ivy-covered stone wall, the robin perched upon a mound of freshly turned earth. A gust of wind blew aside the trailing ivy, and Mary saw something metallic glinting in the dirt.
+
+She stooped down and picked it up.
+
+It was an old, rusty brass key!
+
+"The key to the secret garden!" whispered Mary, her heart beating fast.
+
+The next day, as the wind blew the heavy curtain of ivy aside once more, Mary saw the round knob of a locked wooden door. She slipped the rusty key into the lock. It turned with a click!
+
+She pushed the door open, stepped through, and found herself standing inside a secret, walled world of climbing roses, mossy paths, and dormant fruit trees.`},{title:`Chapter III: Dickon and The Awakening of the Earth`,text:`The garden had been asleep for ten years, but it was not dead.
+
+Beneath the brown leaves and gray grass, Mary found tiny green shoots poking through the moist black earth.
+
+"They're crocuses and snowdrops!" cried Martha's brother, Dickon, when Mary secretly brought him to see the garden.
+
+Dickon was a wonderful twelve-year-old boy who lived on the moor. He smelled of heather and fresh wind, and animals followed him wherever he went—a tame young fox named Captain, a crow named Soot, and two wild moorland ponies.
+
+Dickon brought a spade, a trowel, and pockets full of flower seeds. Together, day after day, they weeded the beds, pruned the dead wood from the rose bushes, and cleared the earth around the green shoots so they could breathe.
+
+The fresh air and physical work began to change Mary completely. Her yellow cheeks turned rosy, her appetite grew hearty, and her sour, fretful temper melted into wonder and affection.
+
+"The earth's waking up, Mary!" Dickon would say with his broad, sunny smile. "It's what they call Magic. Everything's coming alive!"`},{title:`Chapter IV: The Secret in the Night — Colin Craven`,text:`One stormy night, as the wind howled across the moors and rain beat against the windows of the manor, Mary heard the sound of someone crying.
+
+Determined to find where it came from, she took a candle and walked down the long, echoing corridors of the dark house.
+
+At the end of a remote gallery, she opened a tapestry-covered door.
+
+Inside, upon a magnificent four-poster bed draped in embroidered silk, lay a boy about her own age, weeping bitterly.
+
+He was Colin Craven, her uncle's secret, invalid son.
+
+Colin had been kept in bed since his birth, told by doctors and anxious nurses that he had a crooked spine and would grow up to be a hunchback and die young. He had become a hysterical, hysterical tyrant who screamed until he threw himself into convulsions whenever he was crossed.
+
+"Who are you?" Colin cried, staring at Mary in the candlelight. "Are you a ghost?"
+
+"No, I am your cousin Mary," she answered firmly. "And there's nothing wrong with your back! You're just spoiled and miserable because you stay in bed all day smelling medicine!"
+
+Mary told him about the moor, about Dickon and his tame animals, and about the secret garden.
+
+For the first time in his life, Colin stopped weeping and began to listen with shining eyes.`},{title:`Chapter V: In the Secret Garden — The Miracle`,text:`A week later, on a glorious spring morning, Dickon and Mary secretly wheeled Colin in his bath-chair out through the manor grounds and into the hidden garden.
+
+The garden was ablaze with color! Thousands of white and purple crocuses, yellow daffodils, and climbing pink roses were in full bloom; the air was sweet with the fragrance of spring earth, and the robin sang triumphantly from the top of an apple tree.
+
+Colin looked up at the blue sky and the green canopy of leaves, tears of rapture running down his face.
+
+"Mary! Dickon!" he cried. "I shall get well! I shall live forever and ever and ever!"
+
+Every sunny day they brought him to the garden. He began to stand on his own feet, holding onto Dickon's shoulder. Then he walked three steps; then ten; then across the whole length of the path!
+
+By midsummer, Colin was running, digging, and laughing like a healthy young lion!
+
+When Mr. Archibald Craven, weary and sorrowful, returned home from his travels in Europe, a strange voice seemed to call him to the locked garden.
+
+He unlocked the wooden door and stepped inside.
+
+Out from behind a wall of climbing roses ran a tall, handsome, laughing boy with his mother's radiant gray eyes, straight into his father's arms!
+
+"Father!" cried Colin. "It is I! It's Colin! The garden has made me completely well!"
+
+And as the servants watched in joyous tears, Mr. Craven walked back to the manor house with his head held high, his son walking proudly by his side.`}]},_={id:`book-doctor-moreau`,title:`The Island of Doctor Moreau`,author:`H. G. Wells`,year:`1896`,category:`Dystopian Bio-Sci-Fi Classic`,description:`H. G. Wells's visionary masterpiece exploring biological alteration, conformist laws, and human survival on an uncharted volcanic island governed by surgical transformation.`,difficulty:`Intermediate`,coverAccent:`#059669`,estimatedMinutes:48,chapters:[{title:`Chapter I: In the Dingey of the Lady Vain & The Strange Cargo`,text:`I do not propose to add anything to what has already been written concerning the loss of the Lady Vain. As everyone knows, she collided with a derelict when ten days out from Callao. The lifeboat with seven survivors was separated in the storm; of the small dingey in which three of us escaped, I alone survived after eight agonizing days without water under a blistering equatorial sun.
+
+When consciousness returned to me, I was lying in a narrow bunk, staring at white-painted beams overhead. A dark, unshaven man with bloodshot grey eyes and drooping lids stood looking down at me, holding a tumbler containing a dark red fluid with a pungent smell.
+
+"Drink this," he commanded in a quiet, dry voice. "It tastes like liquid fire, but it will bring your pulse back."
+
+The draft burned like sulphuric acid in my parched throat, but within moments a tingling warmth spread through my extremities. My companion introduced himself as Montgomery. He was a medical biologist traveling aboard an untidy schooner laden with an extraordinary cargo: cages of snarling pumas, baying wolf-hounds, caged rabbits, and strange bundles of surgical paraphernalia.
+
+"Where are we bound?" I croaked, leaning heavily against the bulkhead.
+
+"An uncharted volcanic island of no commercial consequence," Montgomery replied evasively, glancing toward the companionway. "A private biological station. You were picked up half-dead by our skipper, but you cannot stay aboard when we arrive. We do not receive guests."
+
+As I dragged myself onto the deck that evening, I encountered the first of Montgomery's attendants—a misshapen, crouched figure clad in rough sailor's dungarees, whose head sat awkwardly upon rounded shoulders. When he turned to catch a mooring line, his face caught the moonlight: a flat, muzzle-like visage with dull, black-bristled skin, retreating forehead, and eyes that glowed in the darkness with a greenish phosphorescence. A cold shudder ran through my marrow. He moved with a clumsy, shambling gait, more like a beast walking upright on its hind legs than any son of Adam I had ever beheld.`},{title:`Chapter II: The Island & The White-Haired Master`,text:`At dawn, the volcanic cone of the island rose from the glassy Pacific like an emerald cinder. Beyond the white surf line of the coral reef lay a narrow black-sand beach backed by impenetrable jungle and steaming fumaroles.
+
+A long-boat was lowered to transport Montgomery's menagerie. On the beach stood a tall, magnificent figure with a mane of white hair, broad shoulders, and an imposing, austere countenance. He wore light linen garments and leaned upon a stout cane. This was Doctor Moreau.
+
+"We have no provisions for castaways, Montgomery," Moreau's deep baritone rang out across the surf as our boat touched the shingle. "Our work here demands absolute isolation and secrecy. A stranger is an impossibility."
+
+"The drunken skipper refused to carry him back to Hawaii," Montgomery replied sullenly. "We could not cast him adrift to drown in sight of land."
+
+Moreau scrutinized me with cold, grey eyes that seemed to dissect every fiber of my being. "Very well, Mr. Prendick. You shall have shelter in the outer thatched enclosure of the compound. But understand this clearly: the central laboratory is locked, and any attempt to pry into my investigations will meet with immediate expulsion into the interior."
+
+The compound consisted of a stout timber palisade surrounding a windowless stone laboratory built against the volcanic rock face. As night descended, a heavy, oppressive silence settled over the jungle, broken only by the hiss of distant volcanic vents and the restless prowling of Montgomery's great staghounds.`},{title:`Chapter III: The Crying of the Puma & The House of Pain`,text:`The horrors began on the second night.
+
+From within the stone laboratory came a sound that froze the blood in my veins: the long, rhythmic, agonizing scream of a living creature in unendurable torment. It was the puma. Not the savage cry of a wild beast defending its lair, but a prolonged, human-like wail of articulate suffering that rose and fell in sickening cadence through the heavy tropical night.
+
+I pressed my palms over my ears, pacing the rough floor of my outer room, but the sound pierced through stone and timber. It was an outrage against nature, a cry of mortal agony that tore at the very fabric of reason.
+
+Hour after hour the screaming continued, punctuated by the clink of surgical steel, the hissing of steam, and the low, detached voices of Moreau and Montgomery. Unable to endure the torture of listening, I forced open the latch of the inner corridor and peered through the heavy curtain.
+
+What I beheld upon the operating table struck me with dizzying revulsion. Strapped beneath bright surgical lamps lay a creature—neither puma nor human—its limbs reshaped, its muscles flayed and rewired, its torso bound in bandages soaked in carbolic. Doctor Moreau stood over it, sleeves rolled to his elbows, his calm, benevolent white hair stark against his blood-spattered apron.
+
+"Prendick!" Moreau's voice barked with sudden fury as he turned.
+
+Terror seized me. The conviction seized my mind that I was surrounded by a lunatic who took human beings and carved them into beasts—and that my turn upon that butcher's table was imminent. I turned and fled blindly into the black, humid jungle.`},{title:`Chapter IV: The Law of the Beast Folk & The Sayer of the Law`,text:`I ran through dense fern brakes and volcanic gullies, branches whipping my face, pursued by the imagined phantom of Moreau's scalpel.
+
+Suddenly, out of the shadows of the giant ferns, three figures emerged. They walked on two legs, but their gait was grotesque—a swaying, bowed trot. Their garments were tattered gunny sacks; their jaws projected like muzzles, and their ears were pointed and tufted with hair.
+
+"Who comes to the huts?" growled one in a thick, guttural voice that sounded like a distorted parody of human speech.
+
+They led me down into a subterranean ravine where a colony of these beings dwelled in crude wattle huts. In the central clearing sat an ancient, grey-haired creature with bowed legs and the silver-furred muzzle of a baboon—the Sayer of the Law.
+
+He struck the ground with a carved bone staff, and the assembled circle of forty beast-men dropped to their knees, swaying in unison, chanting a terrifying litany:
+
+"Not to go on all-Fours; that is the Law. Are we not Men?"
+"Not to suck up Drink; that is the Law. Are we not Men?"
+"Not to eat Flesh or Fish; that is the Law. Are we not Men?"
+"Not to claw the Bark of Trees; that is the Law. Are we not Men?"
+"Not to chase other Men; that is the Law. Are we not Men?"
+
+And at the end of each stanza, the grey baboon creature raised his staff and howled:
+"His is the House of Pain!
+His is the Hand that makes!
+His is the Hand that wounds!
+His is the Hand that heals!"
+
+I understood then the awful truth. Moreau was not degrading humans into beasts; he was carving beasts into the semblance of men through surgical vivisection, grafting their nerves, reshaping their larynxes, and burning this artificial Law into their tormented brains with fear and fire!`},{title:`Chapter V: The Fall of Moreau & The Return to Savagery`,text:`The fragile reign of terror could not endure.
+
+Within six weeks of my arrival, the great puma—partially transformed and driven to madness by its agony—snapped its steel fetters, burst from the laboratory, and fled into the hills. Moreau snatched his heavy revolver and hunting whip and pursued it alone into the volcanic crags.
+
+Two hours later, Montgomery and I found him lying beside a steaming sulfur spring. His skull was crushed by a basalt boulder, his whip broken in his dead hand, and the dying puma lay across his chest.
+
+With Moreau dead, the Law dissolved like mist. The artificial humanity of the Beast Folk began to unravel. Their speech deteriorated into snarls and grunts; their posture slumped from the upright walk back toward the four-footed prowl. Montgomery, succumbing to despair and alcohol, was killed in a riot near the beach.
+
+For ten terrifying months, I lived alone on that volcanic island among a degenerating population of reverting predators, armed only with my pistol and the fading memory of Moreau's authority, until a drifting long-boat grounded upon the reef.
+
+I returned to England, but I was changed forever. When I walk the crowded streets of London, I see in the faces of my fellow citizens the lurking beast—the wolfish grin, the bovine dullness, the swine-like greed. I retreated to a quiet country cottage among books and astronomy, finding peace only under the cold, silent stars, far from the restless beast that slumbers beneath the skin of man.`}]},v={id:`book-journey-centre-earth`,title:`A Journey to the Centre of the Earth`,author:`Jules Verne`,year:`1864`,category:`Classic Fantasy & Adventure`,description:`Jules Verne's legendary quest of ancient runic ciphers, subterranean volcanoes, and subterranean prehistoric oceans beneath the crust of the earth.`,difficulty:`Intermediate`,coverAccent:`#d97706`,estimatedMinutes:52,chapters:[{title:`Chapter I: The Runic Cryptogram of Arne Saknussemm`,text:`On the 24th of May, 1863, my uncle, Professor Otto Lidenbrock, rushed into his little house, No. 19 Königstrasse, in the oldest portion of Hamburg. He was an eccentric polyglot, professor of mineralogy, and an intrepid enthusiast whose passion for geological specimens surpassed all mortal bounds.
+
+In his hand he waved an ancient, parchment-bound volume: the Heims-Kringla of Snorro Turleson, a chronicle of the Norwegian princes who ruled over Iceland in the twelfth century. But as he turned the yellowed vellum leaves, a slip of dirty parchment fluttered to the floor.
+
+Across it were scrawled two lines of 16th-century runic characters. For two sleepless days and nights, my uncle fasted and paced the floor like a caged panther, attempting every permutation of the cipher.
+
+It was by pure chance, while fanning myself with the parchment in the heat of the study, that I happened to observe the back of the leaf. Held against the light, the reversed characters aligned in Latin:
+
+"Descende, audax viator, in craterem Jokulis Yngvi Sneffels, quem umbra Scartaris delibat ante kalendas Julii, et terrestre centrum attinges; quod feci. Arne Saknussemm."
+
+("Descend, bold traveler, into the crater of the Jokul of Sneffels, which the shadow of Scartaris touches before the calends of July, and you will attain the centre of the earth; which I did. Arne Saknussemm.")
+
+The blood froze in my veins. The Icelandic alchemist had penetrated into the bowels of our planet! Before I could burn the dangerous scrap, Professor Lidenbrock snatched it from my fingers, deciphered the words, and shouted with triumphant rapture: "Axel, pack our trunks and our barometers! We leave for Iceland at dawn!"`},{title:`Chapter II: The Descent into Mount Sneffels`,text:`By late June we had arrived in Reykjavik and engaged our guide, Hans Bjelke—an impassive, unshakeable Eider-duck hunter of giant stature and heroic silence.
+
+Sneffels rose five thousand feet above the arctic sea, a vast conical volcano crowned with dazzling glaciers. On the 24th of June, the weather cleared. We stood upon the narrow lip of the volcanic crater, looking down into an inverted funnel whose black chimney plunged sheer into the abyss.
+
+Three chimneys opened at the bottom of the crater. Which had Saknussemm entered? The parchment supplied the answer: "which the shadow of Scartaris touches before the calends of July."
+
+At noon on the 25th, the sun broke through the summer fog. The shadow of the needle-like peak of Scartaris lengthened across the floor of the crater like the pointer of a colossal sundial, coming to rest precisely upon the aperture of the central chimney!
+
+"Forward, travelers!" cried my uncle.
+
+We roped ourselves together. Hans lowered our heavy baggage—Ruhmkorff electric lanterns, Ruhmkorff coils, chronometers, and dried pemmican—down the abyssal pit. Inch by inch, descending down natural basalt stairs and fissures worn by ancient lava torrents, we left the light of day behind. By the third day of descent, we were six miles beneath the surface of the earth, walking through galleries of porphyry and brilliant quartz crystal whose facets glittered under our electric lamps like subterranean palaces of Aladdin.`},{title:`Chapter III: Lost in the Whispering Gallery`,text:`On the 7th of August, disaster struck our little company.
+
+I had lingered behind to examine a bed of carboniferous coal and delicate fossil ferns preserved in the schist walls. When I looked up, the glow of my uncle's Ruhmkorff lamp had vanished. I called aloud; only the hollow subterranean echoes answered.
+
+I hastened forward, turned into a side gallery, and discovered that the rock face closed before me. I had taken the wrong bifurcation. In my panic, my foot slipped on an oily slate incline, and my lantern struck a boulder, shattering the glass and plunging me into absolute, impenetrable darkness.
+
+No words can depict the horror of that subterranean night. Miles beneath the oceans, buried under billions of tons of granite, I was entombed alive. The silence was heavier than lead; the air smelled of sulfur and subterranean dust. I fell to my knees, weeping for my betrothed Graüben and praying for a merciful end.
+
+Suddenly, a faint sound vibrated against the rock face where my ear rested. It was a rhythmic murmur. I pressed both ears to the granite.
+
+"Axel! Axel! Are you there?"
+
+It was my uncle's voice! By a miracle of acoustics, this parabolic fissure functioned as a colossal whispering gallery, carrying the sound of speech along its polished curves for miles.
+
+"Uncle! I am here, in the dark!" I shouted.
+
+"Listen carefully," the professor's voice whispered back through the stone. "We are walking along the bank of the subterranean stream. Follow the slope downward toward the sound of running water!"
+
+Guided by the gentle incline of the gallery and the resonant murmur of the hidden cascade, I stumbled forward until a burst of light pierced the gloom and I fell into the arms of Hans and my weeping uncle.`},{title:`Chapter IV: The Central Sea & Prehistoric Leviathans`,text:`What opened before our eyes upon emerging from the gallery surpassed all human imagination.
+
+We stood upon the shore of a vast, subterranean ocean—the Lidenbrock Sea! Overhead vaulted a colossal granite sky whose ceiling was lost in electrical clouds that bathed the immense cavern in a soft, silvery, phosphorescent dawn. A gentle breeze rippled the greenish waters of the boundless inland main.
+
+Upon the shore grew forests of colossal vegetation: mushrooms forty feet tall with fleshy umbrellas of pale violet, tree ferns of the Carboniferous epoch, and giant Lycopods resembling thirty-foot asparagus stalks.
+
+Hans constructed a stout raft from petrified surturbrand wood, and we set sail across the subterranean sea with a light offshore breeze. On the third day of our voyage, the water around us began to churn in violent foam.
+
+Out of the deep rose a nightmare from the Mesozoic dawn: an Ichthyosaurus with the snout of a porpoise, the teeth of a crocodile, and eyes as large as a man's head! Moments later, a second monster erupted from the waves—a Plesiosaurus with a serpent's neck forty feet long coiled above the water like a colossal swan.
+
+The two prehistoric leviathans locked in mortal combat within fifty yards of our frail raft, lashing the waves into white cataracts until the wounded Plesiosaurus sank beneath the bloody foam.`},{title:`Chapter V: The Volcanic Ascent through Stromboli`,text:`On the opposite shore of the subterranean sea, we discovered a dark basalt cavern upon whose lintel were carved two weathered initials: "A. S."
+
+Arne Saknussemm had passed this way! But the tunnel beyond was blocked by a massive boulder that had collapsed from the vault.
+
+Determined to clear the passage, Professor Lidenbrock bored a hole into the rock and laid a charge of fifty pounds of guncotton. We retreated to our raft on the shore and ignited the slow match.
+
+The explosion was catastrophic. It did not merely split the boulder; it tore open the very floor of the subterranean abyss! The entire Lidenbrock Sea rushed into the yawning chasm like an oceanic Niagara, sweeping our wooden raft down an inclined cataract of roaring foam into total darkness.
+
+For hours we fell through the subterranean torrent at dizzying velocity. Then the motion changed. The roar of the water was replaced by the hissing of boiling steam. The temperature rose from forty to one hundred degrees, then higher still!
+
+We were trapped in the vertical chimney of an active volcanic crater! A rising column of boiling water, steam, and liquid pumice was propelling our raft upward like a cork in a geyser.
+
+"Hold fast to the ropes!" shouted the professor through the deafening roar of subterranean combustion. "The eruptive forces are carrying us to the surface!"
+
+With a blinding flash and an earth-shaking detonation, our raft was shot into the open air upon a fountain of incandescent lava. We tumbled down the grassy slopes of an olive grove under a brilliant southern sky.
+
+Beside us, a barefoot boy was herding goats on a sun-drenched terrace. When we spoke to him in Italian, he told us we were upon the island of Stromboli, in the warm Mediterranean Sea!
+
+We had entered through the frozen glaciers of Iceland and emerged, two thousand leagues distant, from the burning volcanic heart of southern Italy!`}]},y=[d,f,o,l,_,p,m,a,h,v,s,c,u,g,e,t,r,n,i];export{r as _,h as a,e as b,f as c,l as d,c as f,i as g,a as h,g as i,d as l,o as m,v as n,m as o,s as p,_ as r,p as s,y as t,u,n as v,t as y};
