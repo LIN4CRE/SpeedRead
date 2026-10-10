@@ -76,6 +76,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { ContextPeek } from './components/ContextPeek';
 import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
 import { FreeBooksModal } from './components/FreeBooksModal';
+import { LibraryDropdown } from './components/LibraryDropdown';
 import { ReadingInsightsModal } from './components/ReadingInsightsModal';
 import { EyeRestModal } from './components/EyeRestModal';
 import { SaveStateModal } from './components/SaveStateModal';
@@ -1118,16 +1119,17 @@ export default function App() {
               <span>Focus: {Math.floor(pomodoroFocusSeconds / 60)}/25m</span>
             </button>
 
-            {/* Library Link */}
-            <button
-              onClick={() => setIsFreeBooksOpen(true)}
-              className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 shadow-sm text-rose-400 border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20"
-              title="Open SpeedRead Library & Free Classics Hub (L)"
-            >
-              <BookOpen className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Library</span>
-              <span className="sm:hidden">Books</span>
-            </button>
+            {/* Library Dropdown Menu */}
+            <LibraryDropdown
+              activeDocId={activeDoc.id}
+              onSelectDocument={handleSelectDocument}
+              onOpenFullCatalogModal={() => setIsFreeBooksOpen(true)}
+              onOpenUploadSidebar={() => setIsSidebarOpen(true)}
+              theme={currentTheme}
+              wpm={wpm}
+              align="right"
+              variant="navbar"
+            />
 
             <button
               onClick={() => setIsZenMode(true)}
@@ -1248,69 +1250,17 @@ export default function App() {
         {/* Quick Reading Starters & Library Hub Bar (Hidden in Zen Mode) */}
         {!isZenMode && (
           <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap text-xs select-none w-full">
-            {/* 1. Direct Book Dropdown Selector (All 19 Books & Drills) */}
-            <div 
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all max-w-full sm:max-w-xs shadow-sm"
-              style={{
-                backgroundColor: currentTheme.surface,
-                borderColor: currentTheme.border,
-              }}
-            >
-              <BookOpen className="w-3.5 h-3.5 text-rose-400 shrink-0" />
-              <select
-                value={activeDoc.id}
-                onChange={(e) => {
-                  const selected = SAMPLE_LIBRARY.find((s) => s.id === e.target.value);
-                  if (selected) handleSelectDocument(createDocumentFromSample(selected), 0);
-                }}
-                className="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer truncate w-full"
-                style={{ color: currentTheme.textBright }}
-                title="Select any book or drill from the library"
-              >
-                <optgroup label="⚡ Video Speed Drills">
-                  <option value="sample-video-speed-challenge">600 WPM Speed Reader Drill (From Video)</option>
-                  <option value="sample-speed-reading-science">The Neuroscience of RSVP & ORP</option>
-                </optgroup>
-                <optgroup label="🧛 Gothic & Vampire Classics">
-                  <option value="book-dracula-full">Dracula — Bram Stoker (7 Ch.)</option>
-                  <option value="book-carmilla-full">Carmilla — J.S. Le Fanu (6 Ch.)</option>
-                  <option value="book-jekyll-and-hyde-full">Dr. Jekyll & Mr. Hyde — Stevenson (10 Ch.)</option>
-                  <option value="book-sherlock-holmes-full">Sherlock Holmes — Conan Doyle (12 Ch.)</option>
-                  <option value="sample-frankenstein">Frankenstein — Mary Shelley</option>
-                </optgroup>
-                <optgroup label="🧬 Dystopian, Sci-Fi & Survival">
-                  <option value="book-doctor-moreau">The Island of Doctor Moreau — H.G. Wells (5 Ch.)</option>
-                  <option value="book-iron-heel-full">The Iron Heel — Jack London (5 Ch.)</option>
-                  <option value="book-machine-stops-full">The Machine Stops — E.M. Forster (3 Ch.)</option>
-                  <option value="book-time-machine-full">The Time Machine — H.G. Wells (13 Ch.)</option>
-                  <option value="book-lost-world-full">The Lost World — Conan Doyle (5 Ch.)</option>
-                  <option value="book-journey-centre-earth">Journey to the Centre of the Earth — Verne (5 Ch.)</option>
-                </optgroup>
-                <optgroup label="📜 Philosophy & World Literature">
-                  <option value="book-art-of-war-full">The Art of War — Sun Tzu (13 Ch.)</option>
-                  <option value="book-metamorphosis-full">The Metamorphosis — Franz Kafka (3 Ch.)</option>
-                  <option value="book-christmas-carol-full">A Christmas Carol — Dickens (5 Ch.)</option>
-                </optgroup>
-                <optgroup label="✨ Youth, Fantasy & Wonder">
-                  <option value="book-secret-garden-full">The Secret Garden — Burnett (5 Ch.)</option>
-                  <option value="book-alice-in-wonderland-full">Alice in Wonderland — Carroll (12 Ch.)</option>
-                  <option value="book-peter-pan-full">Peter Pan — J.M. Barrie (17 Ch.)</option>
-                  <option value="book-wizard-of-oz-full">The Wonderful Wizard of Oz — Baum (24 Ch.)</option>
-                  <option value="book-fairytales-for-kids-full">Classic Fairytales for Kids (12 Stories)</option>
-                  <option value="book-aesop-fables-for-kids">Aesop's Fables for Young Minds (25 Tales)</option>
-                </optgroup>
-              </select>
-            </div>
-
-            {/* 2. Browse All 19 Books Hub Button (Opens FreeBooksModal) */}
-            <button
-              onClick={() => setIsFreeBooksOpen(true)}
-              className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 text-xs font-semibold shadow-sm text-rose-300 border-rose-500/40 bg-rose-500/15 hover:bg-rose-500/25"
-              title="Open Full Classics Library & Gutenberg Catalog (L)"
-            >
-              <Sparkles className="w-3.5 h-3.5 shrink-0 text-rose-400" />
-              <span>Full Library (19 Books)</span>
-            </button>
+            {/* 1. Direct Library Dropdown Menu (All 19 Books & Drills) */}
+            <LibraryDropdown
+              activeDocId={activeDoc.id}
+              onSelectDocument={handleSelectDocument}
+              onOpenFullCatalogModal={() => setIsFreeBooksOpen(true)}
+              onOpenUploadSidebar={() => setIsSidebarOpen(true)}
+              theme={currentTheme}
+              wpm={wpm}
+              align="center"
+              variant="banner"
+            />
 
             {/* 3. Curated Quick Launch Pills */}
             <button
