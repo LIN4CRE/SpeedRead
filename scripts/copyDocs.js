@@ -8,7 +8,12 @@ if (fs.existsSync('dist')) {
     fs.copyFileSync('dist/index.html', 'dist/404.html');
   }
 
-  // Sync to docs/
+  // Clean docs/ to prevent orphaned hashed bundles
+  if (fs.existsSync('docs')) {
+    fs.rmSync('docs', { recursive: true, force: true });
+  }
+
+  // Mirror clean dist/ to docs/
   fs.cpSync('dist', 'docs', { recursive: true });
-  console.log('✓ Synced build output with .nojekyll and 404.html to docs/ for GitHub Pages');
+  console.log('✓ Synced clean build output with .nojekyll and 404.html to docs/ for GitHub Pages');
 }
