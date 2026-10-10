@@ -25,6 +25,7 @@ export const KeyboardShortcutsModal: React.FC<KeyboardShortcutsModalProps> = ({
     { key: 'V', desc: 'Toggle Read-Aloud Web Speech synthesis' },
     { key: 'M', desc: 'Toggle Audio Metronome Cadence Ticker' },
     { key: 'S', desc: 'Cycle Reticle style (Line, Highlighter, Spotlight, etc.)' },
+    { key: 'L', desc: 'Open SpeedRead Library & Free Classics Hub' },
     { key: 'B', desc: 'Toggle Bookshelf & Table of Contents Sidebar' },
     { key: 'Z', desc: 'Toggle Zen Focus Mode' },
     { key: '←  /  →', desc: 'Step back / forward 10 words' },

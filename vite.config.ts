@@ -13,7 +13,7 @@ export default defineConfig(() => {
       },
     },
     build: {
-      chunkSizeWarningLimit: 800,
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           manualChunks(id) {
@@ -25,6 +25,9 @@ export default defineConfig(() => {
             }
             if (id.includes('node_modules/jszip')) {
               return 'vendor-jszip';
+            }
+            if (id.includes('/src/books/')) {
+              return 'books-library';
             }
           },
         },

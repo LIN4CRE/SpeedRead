@@ -185,3 +185,174 @@ export function parseOpdsFeedXml(xmlString: string): Array<{
     };
   });
 }
+
+export interface GutenbergBookPreset {
+  id: string;
+  title: string;
+  author: string;
+  year?: string;
+  category: string;
+  description: string;
+  estimatedWords: number;
+  coverAccent: string;
+}
+
+export const GUTENBERG_DIRECT_BOOKS: GutenbergBookPreset[] = [
+  {
+    id: '84',
+    title: 'Frankenstein; or, The Modern Prometheus',
+    author: 'Mary Shelley',
+    year: '1818',
+    category: 'Gothic Sci-Fi',
+    description: 'The celebrated gothic tale of Victor Frankenstein and his tragic creature.',
+    estimatedWords: 75000,
+    coverAccent: '#10b981',
+  },
+  {
+    id: '1342',
+    title: 'Pride and Prejudice',
+    author: 'Jane Austen',
+    year: '1813',
+    category: 'Romance & Satire',
+    description: 'The sparkling classic of Elizabeth Bennet and Mr. Darcy in Regency England.',
+    estimatedWords: 122000,
+    coverAccent: '#ec4899',
+  },
+  {
+    id: '345',
+    title: 'Dracula',
+    author: 'Bram Stoker',
+    year: '1897',
+    category: 'Gothic Horror',
+    description: 'The epistolary vampire classic following Jonathan Harker and Count Dracula.',
+    estimatedWords: 161000,
+    coverAccent: '#e11d48',
+  },
+  {
+    id: '64317',
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    year: '1925',
+    category: 'Jazz Age Classic',
+    description: 'Nick Carraway narrates the tragic dream of mysterious millionaire Jay Gatsby.',
+    estimatedWords: 48000,
+    coverAccent: '#f59e0b',
+  },
+  {
+    id: '2701',
+    title: 'Moby Dick; or, The Whale',
+    author: 'Herman Melville',
+    year: '1851',
+    category: 'Sea Adventure & Epic',
+    description: 'Captain Ahab obsessively hunts the elusive white sperm whale across the world oceans.',
+    estimatedWords: 206000,
+    coverAccent: '#06b6d4',
+  },
+  {
+    id: '98',
+    title: 'A Tale of Two Cities',
+    author: 'Charles Dickens',
+    year: '1859',
+    category: 'Historical Drama',
+    description: '"It was the best of times, it was the worst of times"—London and Paris during the French Revolution.',
+    estimatedWords: 135000,
+    coverAccent: '#8b5cf6',
+  },
+  {
+    id: '174',
+    title: 'The Picture of Dorian Gray',
+    author: 'Oscar Wilde',
+    year: '1890',
+    category: 'Philosophical Fiction',
+    description: 'A handsome young man retains eternal youth while his hidden portrait ages with moral corruption.',
+    estimatedWords: 78000,
+    coverAccent: '#6366f1',
+  },
+  {
+    id: '2680',
+    title: 'Meditations',
+    author: 'Marcus Aurelius',
+    year: '180 AD',
+    category: 'Stoic Philosophy',
+    description: 'Timeless private reflections on duty, inner fortitude, nature, and virtue by the Roman emperor.',
+    estimatedWords: 52000,
+    coverAccent: '#14b8a6',
+  },
+  {
+    id: '2591',
+    title: "Grimms' Fairy Tales",
+    author: 'Brothers Grimm',
+    year: '1812',
+    category: 'Folk & Fairy Tales',
+    description: 'The original unabridged collection of Cinderella, Hansel and Gretel, Rapunzel, and more.',
+    estimatedWords: 104000,
+    coverAccent: '#f97316',
+  },
+  {
+    id: '74',
+    title: 'The Adventures of Tom Sawyer',
+    author: 'Mark Twain',
+    year: '1876',
+    category: 'American Adventure',
+    description: 'The mischievous adventures of Tom Sawyer, Huckleberry Finn, and Becky Thatcher on the Mississippi.',
+    estimatedWords: 71000,
+    coverAccent: '#84cc16',
+  },
+];
+
+/**
+ * Strips Project Gutenberg legal header and footer notices
+ */
+export function cleanGutenbergBoilerplate(rawText: string): string {
+  let cleaned = rawText;
+
+  const startMatch = cleaned.match(/\*\*\*\s*START OF (THE|THIS) PROJECT GUTENBERG EBOOK[\s\S]*?\*\*\*/i);
+  if (startMatch && startMatch.index !== undefined) {
+    cleaned = cleaned.slice(startMatch.index + startMatch[0].length);
+  }
+
+  const endMatch = cleaned.match(/\*\*\*\s*END OF (THE|THIS) PROJECT GUTENBERG EBOOK/i);
+  if (endMatch && endMatch.index !== undefined) {
+    cleaned = cleaned.slice(0, endMatch.index);
+  }
+
+  return cleaned.trim();
+}
+
+/**
+ * Extracts structured chapters from plain text based on standard chapter headings
+ */
+export function extractChaptersFromText(text: string, defaultTitle = 'Full Text'): Array<{ title: string; text: string }> {
+  const chapterPattern = /(?:^|\n\n+)(?:(?:CHAPTER|Chapter|STAVE|Stave|BOOK|Book|PART|Part|ACT|Act)\s+[0-9IVXLCDMivxlcdm]+[^\n]*|(?:CHAPTER|Chapter)\s+[^\n]+)/g;
+
+  const matches: Array<{ title: string; index: number }> = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = chapterPattern.exec(text)) !== null) {
+    const heading = match[0].trim();
+    matches.push({ title: heading, index: match.index });
+  }
+
+  if (matches.length < 2) {
+    return [{ title: defaultTitle, text: text.trim() }];
+  }
+
+  const chapters: Array<{ title: string; text: string }> = [];
+
+  for (let i = 0; i < matches.length; i++) {
+    const current = matches[i];
+    const startIndex = current.index;
+    const endIndex = i < matches.length - 1 ? matches[i + 1].index : text.length;
+    const chapterBody = text.slice(startIndex, endIndex).trim();
+
+    if (chapterBody.length > 50) {
+      chapters.push({
+        title: current.title,
+        text: chapterBody,
+      });
+    }
+  }
+
+  return chapters.length > 0 ? chapters : [{ title: defaultTitle, text: text.trim() }];
+}
+

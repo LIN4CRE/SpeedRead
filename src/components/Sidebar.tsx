@@ -58,7 +58,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   wpm,
 }) => {
   const [activeTab, setActiveTab] = useState<'chapters' | 'library' | 'history'>('chapters');
-  const [libraryFilter, setLibraryFilter] = useState<'all' | 'beginner' | 'classics'>('all');
+  const [libraryFilter, setLibraryFilter] = useState<'all' | 'beginner' | 'classics' | 'scifi'>('all');
   const [isParsing, setIsParsing] = useState(false);
   const [parseStatus, setDropStatus] = useState('');
   const [showPasteBox, setShowPasteBox] = useState(false);
@@ -416,7 +416,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
 
                 {/* Filter Chips */}
-                <div className="flex gap-1 mb-2.5">
+                <div className="flex gap-1 mb-2.5 overflow-x-auto pb-0.5">
                   <button
                     onClick={() => setLibraryFilter('all')}
                     className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
@@ -430,16 +430,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     All
                   </button>
                   <button
-                    onClick={() => setLibraryFilter('beginner')}
+                    onClick={() => setLibraryFilter('scifi')}
                     className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
-                      libraryFilter === 'beginner' ? 'font-bold' : 'opacity-60'
+                      libraryFilter === 'scifi' ? 'font-bold' : 'opacity-60'
                     }`}
                     style={{
-                      backgroundColor: libraryFilter === 'beginner' ? `${theme.accent}25` : theme.bg,
-                      color: libraryFilter === 'beginner' ? theme.accent : theme.textDim,
+                      backgroundColor: libraryFilter === 'scifi' ? `${theme.accent}25` : theme.bg,
+                      color: libraryFilter === 'scifi' ? theme.accent : theme.textDim,
                     }}
                   >
-                    Beginner & Kids
+                    Sci-Fi & Thriller
                   </button>
                   <button
                     onClick={() => setLibraryFilter('classics')}
@@ -451,17 +451,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       color: libraryFilter === 'classics' ? theme.accent : theme.textDim,
                     }}
                   >
-                    Drills & Sci-Fi
+                    Philosophy & Classics
+                  </button>
+                  <button
+                    onClick={() => setLibraryFilter('beginner')}
+                    className={`px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
+                      libraryFilter === 'beginner' ? 'font-bold' : 'opacity-60'
+                    }`}
+                    style={{
+                      backgroundColor: libraryFilter === 'beginner' ? `${theme.accent}25` : theme.bg,
+                      color: libraryFilter === 'beginner' ? theme.accent : theme.textDim,
+                    }}
+                  >
+                    Youth
                   </button>
                 </div>
 
                 <div className="space-y-1.5">
                   {SAMPLE_LIBRARY.filter((sample) => {
+                    const cat = sample.category.toLowerCase();
                     if (libraryFilter === 'beginner') {
-                      return sample.category.toLowerCase().includes('beginner') || sample.category.toLowerCase().includes('children');
+                      return cat.includes('beginner') || cat.includes('children') || cat.includes('fables');
+                    }
+                    if (libraryFilter === 'scifi') {
+                      return cat.includes('sci-fi') || cat.includes('mystery') || cat.includes('thriller') || cat.includes('gothic') || cat.includes('detective');
                     }
                     if (libraryFilter === 'classics') {
-                      return !sample.category.toLowerCase().includes('beginner') && !sample.category.toLowerCase().includes('children');
+                      return cat.includes('philosophy') || cat.includes('strategy') || cat.includes('classics') || cat.includes('drama') || cat.includes('science &');
                     }
                     return true;
                   }).map((sample) => {
@@ -625,10 +641,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }}
           >
             <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4 text-emerald-400 shrink-0" />
+              <BookOpen className="w-4 h-4 text-rose-400 shrink-0" />
               <div className="text-left">
-                <div className="font-semibold text-xs">70,000+ Free Ebooks</div>
-                <div className="text-[10px]" style={{ color: theme.textDim }}>Standard Ebooks & Gutenberg</div>
+                <div className="font-semibold text-xs">Full Classics Library (L)</div>
+                <div className="text-[10px]" style={{ color: theme.textDim }}>11 Complete Books & Gutenberg Hub</div>
               </div>
             </div>
             <ArrowRight className="w-3.5 h-3.5" style={{ color: theme.accent }} />

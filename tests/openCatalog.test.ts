@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { CURATED_OPEN_CATALOG, parseOpdsFeedXml } from '../src/utils/openCatalog';
+import { 
+  CURATED_OPEN_CATALOG, 
+  parseOpdsFeedXml, 
+  cleanGutenbergBoilerplate, 
+  extractChaptersFromText 
+} from '../src/utils/openCatalog';
 
 describe('Open Ebook Catalog & OPDS Parser', () => {
   it('contains expected curated public domain classics', () => {
@@ -44,5 +49,21 @@ describe('Open Ebook Catalog & OPDS Parser', () => {
     expect(entries[0].author).toBe('Mary Shelley');
     expect(entries[0].summary).toContain('sentient monster');
     expect(entries[0].downloadUrl).toContain('frankenstein.epub');
+  });
+
+  it('strips Project Gutenberg legal boilerplate cleanly', () => {
+    const raw = `*** START OF THE PROJECT GUTENBERG EBOOK FRANKENSTEIN ***\n\nChapter 1\nI am by birth a Genevese...\n\n*** END OF THE PROJECT GUTENBERG EBOOK FRANKENSTEIN ***`;
+    const cleaned = cleanGutenbergBoilerplate(raw);
+    expect(cleaned).not.toContain('*** START OF');
+    expect(cleaned).not.toContain('*** END OF');
+    expect(cleaned).toContain('I am by birth a Genevese');
+  });
+
+  it('extracts structured chapters from text', () => {
+    const text = `CHAPTER I: Down the Rabbit Hole\n\nAlice was beginning to get very tired of sitting by her sister on the bank...\n\nCHAPTER II: The Pool of Tears\n\nCuriouser and curiouser cried Alice...`;
+    const chapters = extractChaptersFromText(text);
+    expect(chapters.length).toBe(2);
+    expect(chapters[0].title).toContain('CHAPTER I');
+    expect(chapters[1].title).toContain('CHAPTER II');
   });
 });

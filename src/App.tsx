@@ -847,6 +847,15 @@ export default function App() {
           }
           break;
 
+        case 'KeyL':
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault();
+            setIsPlaying(false);
+            if (timerRef.current) clearTimeout(timerRef.current);
+            setIsFreeBooksOpen((prev) => !prev);
+          }
+          break;
+
         case 'Escape':
           setIsSettingsOpen(false);
           setIsShortcutsOpen(false);
@@ -1109,15 +1118,15 @@ export default function App() {
               <span>Focus: {Math.floor(pomodoroFocusSeconds / 60)}/25m</span>
             </button>
 
-            {/* Free Books Link */}
+            {/* Library Link */}
             <button
               onClick={() => setIsFreeBooksOpen(true)}
-              className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-emerald-400 border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20"
-              title="Browse 70,000+ Free Ebooks & EPUBs"
+              className="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl border flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 shadow-sm text-rose-400 border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20"
+              title="Open SpeedRead Library & Free Classics Hub (L)"
             >
-              <Globe className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Free Books</span>
-              <span className="sm:hidden">Free</span>
+              <BookOpen className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Library</span>
+              <span className="sm:hidden">Books</span>
             </button>
 
             <button
@@ -1519,6 +1528,7 @@ export default function App() {
         onClose={() => setIsFreeBooksOpen(false)}
         onSelectBook={(doc) => handleSelectDocument(doc, 0)}
         theme={currentTheme}
+        wpm={wpm}
       />
 
       {/* Vocabulary Vault & SM-2 Spaced Repetition */}
