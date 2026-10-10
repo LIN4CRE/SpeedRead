@@ -152,19 +152,19 @@ export const FreeBooksModal: React.FC<FreeBooksModalProps> = ({
     if (!matchesSearch) return false;
 
     if (selectedCategory === 'scifi') {
-      return book.category.toLowerCase().includes('sci-fi') || book.category.toLowerCase().includes('travel') || book.category.toLowerCase().includes('time');
+      return book.category.toLowerCase().includes('sci-fi') || book.category.toLowerCase().includes('travel') || book.category.toLowerCase().includes('time') || book.category.toLowerCase().includes('dystopian') || book.category.toLowerCase().includes('adventure');
     }
     if (selectedCategory === 'mystery') {
-      return book.category.toLowerCase().includes('mystery') || book.category.toLowerCase().includes('thriller') || book.category.toLowerCase().includes('detective');
+      return book.category.toLowerCase().includes('mystery') || book.category.toLowerCase().includes('thriller') || book.category.toLowerCase().includes('detective') || book.category.toLowerCase().includes('gothic') || book.category.toLowerCase().includes('vampire') || book.category.toLowerCase().includes('horror');
     }
     if (selectedCategory === 'philosophy') {
-      return book.category.toLowerCase().includes('philosophy') || book.category.toLowerCase().includes('strategy');
+      return book.category.toLowerCase().includes('philosophy') || book.category.toLowerCase().includes('strategy') || book.category.toLowerCase().includes('existentialist');
     }
     if (selectedCategory === 'literature') {
-      return book.category.toLowerCase().includes('classics') || book.category.toLowerCase().includes('drama') || book.category.toLowerCase().includes('victorian') || book.category.toLowerCase().includes('surrealism');
+      return book.category.toLowerCase().includes('classics') || book.category.toLowerCase().includes('drama') || book.category.toLowerCase().includes('victorian') || book.category.toLowerCase().includes('surrealist') || book.category.toLowerCase().includes('moral') || book.category.toLowerCase().includes('existentialist');
     }
     if (selectedCategory === 'youth') {
-      return book.category.toLowerCase().includes('beginner') || book.category.toLowerCase().includes('children') || book.category.toLowerCase().includes('fables');
+      return book.category.toLowerCase().includes('beginner') || book.category.toLowerCase().includes('children') || book.category.toLowerCase().includes('fables') || book.category.toLowerCase().includes('youth') || book.category.toLowerCase().includes('fantasy');
     }
 
     return true;

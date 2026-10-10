@@ -471,13 +471,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   {SAMPLE_LIBRARY.filter((sample) => {
                     const cat = sample.category.toLowerCase();
                     if (libraryFilter === 'beginner') {
-                      return cat.includes('beginner') || cat.includes('children') || cat.includes('fables');
+                      return cat.includes('beginner') || cat.includes('children') || cat.includes('fables') || cat.includes('youth') || cat.includes('fantasy');
                     }
                     if (libraryFilter === 'scifi') {
-                      return cat.includes('sci-fi') || cat.includes('mystery') || cat.includes('thriller') || cat.includes('gothic') || cat.includes('detective');
+                      return cat.includes('sci-fi') || cat.includes('mystery') || cat.includes('thriller') || cat.includes('gothic') || cat.includes('detective') || cat.includes('dystopian') || cat.includes('adventure') || cat.includes('vampire');
                     }
                     if (libraryFilter === 'classics') {
-                      return cat.includes('philosophy') || cat.includes('strategy') || cat.includes('classics') || cat.includes('drama') || cat.includes('science &');
+                      return cat.includes('philosophy') || cat.includes('strategy') || cat.includes('classics') || cat.includes('drama') || cat.includes('science &') || cat.includes('existentialist') || cat.includes('victorian');
                     }
                     return true;
                   }).map((sample) => {
@@ -644,7 +644,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <BookOpen className="w-4 h-4 text-rose-400 shrink-0" />
               <div className="text-left">
                 <div className="font-semibold text-xs">Full Classics Library (L)</div>
-                <div className="text-[10px]" style={{ color: theme.textDim }}>11 Complete Books & Gutenberg Hub</div>
+                <div className="text-[10px]" style={{ color: theme.textDim }}>19 Complete Books & Gutenberg Hub</div>
               </div>
             </div>
             <ArrowRight className="w-3.5 h-3.5" style={{ color: theme.accent }} />

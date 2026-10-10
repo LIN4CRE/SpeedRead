@@ -1245,73 +1245,132 @@ export default function App() {
           </div>
         )}
 
-        {/* Quick Reading Starters Bar (Hidden in Zen Mode) */}
+        {/* Quick Reading Starters & Library Hub Bar (Hidden in Zen Mode) */}
         {!isZenMode && (
           <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap text-xs select-none w-full">
-            {/* 1. Fairytales for Kids */}
-            <button
-              onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[0]), 0)}
-              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
-                activeDoc.id === SAMPLE_LIBRARY[0].id
-                  ? 'font-bold ring-2 shadow-sm'
-                  : 'opacity-70 hover:opacity-100'
-              }`}
+            {/* 1. Direct Book Dropdown Selector (All 19 Books & Drills) */}
+            <div 
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border transition-all max-w-full sm:max-w-xs shadow-sm"
               style={{
-                backgroundColor: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.surfaceHover : currentTheme.surface,
-                borderColor: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.border,
-                color: activeDoc.id === SAMPLE_LIBRARY[0].id ? currentTheme.accent : currentTheme.textBright,
+                backgroundColor: currentTheme.surface,
+                borderColor: currentTheme.border,
               }}
             >
-              <Sparkles className="w-3.5 h-3.5 shrink-0 text-amber-400" />
-              <span>Fairytales for Kids</span>
-            </button>
+              <BookOpen className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+              <select
+                value={activeDoc.id}
+                onChange={(e) => {
+                  const selected = SAMPLE_LIBRARY.find((s) => s.id === e.target.value);
+                  if (selected) handleSelectDocument(createDocumentFromSample(selected), 0);
+                }}
+                className="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer truncate w-full"
+                style={{ color: currentTheme.textBright }}
+                title="Select any book or drill from the library"
+              >
+                <optgroup label="⚡ Video Speed Drills">
+                  <option value="sample-video-speed-challenge">600 WPM Speed Reader Drill (From Video)</option>
+                  <option value="sample-speed-reading-science">The Neuroscience of RSVP & ORP</option>
+                </optgroup>
+                <optgroup label="🧛 Gothic & Vampire Classics">
+                  <option value="book-dracula-full">Dracula — Bram Stoker (7 Ch.)</option>
+                  <option value="book-carmilla-full">Carmilla — J.S. Le Fanu (6 Ch.)</option>
+                  <option value="book-jekyll-and-hyde-full">Dr. Jekyll & Mr. Hyde — Stevenson (10 Ch.)</option>
+                  <option value="book-sherlock-holmes-full">Sherlock Holmes — Conan Doyle (12 Ch.)</option>
+                  <option value="sample-frankenstein">Frankenstein — Mary Shelley</option>
+                </optgroup>
+                <optgroup label="🧬 Dystopian, Sci-Fi & Survival">
+                  <option value="book-doctor-moreau">The Island of Doctor Moreau — H.G. Wells (5 Ch.)</option>
+                  <option value="book-iron-heel-full">The Iron Heel — Jack London (5 Ch.)</option>
+                  <option value="book-machine-stops-full">The Machine Stops — E.M. Forster (3 Ch.)</option>
+                  <option value="book-time-machine-full">The Time Machine — H.G. Wells (13 Ch.)</option>
+                  <option value="book-lost-world-full">The Lost World — Conan Doyle (5 Ch.)</option>
+                  <option value="book-journey-centre-earth">Journey to the Centre of the Earth — Verne (5 Ch.)</option>
+                </optgroup>
+                <optgroup label="📜 Philosophy & World Literature">
+                  <option value="book-art-of-war-full">The Art of War — Sun Tzu (13 Ch.)</option>
+                  <option value="book-metamorphosis-full">The Metamorphosis — Franz Kafka (3 Ch.)</option>
+                  <option value="book-christmas-carol-full">A Christmas Carol — Dickens (5 Ch.)</option>
+                </optgroup>
+                <optgroup label="✨ Youth, Fantasy & Wonder">
+                  <option value="book-secret-garden-full">The Secret Garden — Burnett (5 Ch.)</option>
+                  <option value="book-alice-in-wonderland-full">Alice in Wonderland — Carroll (12 Ch.)</option>
+                  <option value="book-peter-pan-full">Peter Pan — J.M. Barrie (17 Ch.)</option>
+                  <option value="book-wizard-of-oz-full">The Wonderful Wizard of Oz — Baum (24 Ch.)</option>
+                  <option value="book-fairytales-for-kids-full">Classic Fairytales for Kids (12 Stories)</option>
+                  <option value="book-aesop-fables-for-kids">Aesop's Fables for Young Minds (25 Tales)</option>
+                </optgroup>
+              </select>
+            </div>
 
-            {/* 2. Peter Pan (Full Book) */}
+            {/* 2. Browse All 19 Books Hub Button (Opens FreeBooksModal) */}
             <button
-              onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[1]), 0)}
-              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
-                activeDoc.id === SAMPLE_LIBRARY[1].id
-                  ? 'font-bold ring-2 shadow-sm'
-                  : 'opacity-70 hover:opacity-100'
-              }`}
-              style={{
-                backgroundColor: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.surfaceHover : currentTheme.surface,
-                borderColor: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.border,
-                color: activeDoc.id === SAMPLE_LIBRARY[1].id ? currentTheme.accent : currentTheme.textBright,
-              }}
+              onClick={() => setIsFreeBooksOpen(true)}
+              className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 text-xs font-semibold shadow-sm text-rose-300 border-rose-500/40 bg-rose-500/15 hover:bg-rose-500/25"
+              title="Open Full Classics Library & Gutenberg Catalog (L)"
             >
-              <BookOpen className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
-              <span>Peter Pan (Full Book)</span>
+              <Sparkles className="w-3.5 h-3.5 shrink-0 text-rose-400" />
+              <span>Full Library (19 Books)</span>
             </button>
 
-            {/* 3. Alice in Wonderland (Complete Book) */}
-            <button
-              onClick={() => handleSelectDocument(createDocumentFromSample(SAMPLE_LIBRARY[2]), 0)}
-              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
-                activeDoc.id === SAMPLE_LIBRARY[2].id
-                  ? 'font-bold ring-2 shadow-sm'
-                  : 'opacity-70 hover:opacity-100'
-              }`}
-              style={{
-                backgroundColor: activeDoc.id === SAMPLE_LIBRARY[2].id ? currentTheme.surfaceHover : currentTheme.surface,
-                borderColor: activeDoc.id === SAMPLE_LIBRARY[2].id ? currentTheme.accent : currentTheme.border,
-                color: activeDoc.id === SAMPLE_LIBRARY[2].id ? currentTheme.accent : currentTheme.textBright,
-              }}
-            >
-              <BookOpen className="w-3.5 h-3.5 shrink-0 text-sky-400" />
-              <span>Alice in Wonderland (Complete)</span>
-            </button>
-
-            {/* 4. The 600 WPM Video Drill */}
+            {/* 3. Curated Quick Launch Pills */}
             <button
               onClick={() => {
-                const drill = SAMPLE_LIBRARY.find(s => s.id === 'sample-video-speed-challenge') || SAMPLE_LIBRARY[5];
-                handleSelectDocument(createDocumentFromSample(drill), 0);
+                const book = SAMPLE_LIBRARY.find((s) => s.id === 'book-dracula-full');
+                if (book) handleSelectDocument(createDocumentFromSample(book), 0);
               }}
-              className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
-                activeDoc.id === 'sample-video-speed-challenge'
-                  ? 'font-bold ring-2 shadow-sm'
-                  : 'opacity-70 hover:opacity-100'
+              className={`px-2.5 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === 'book-dracula-full' ? 'font-bold ring-2 shadow-sm' : 'opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: activeDoc.id === 'book-dracula-full' ? currentTheme.surfaceHover : currentTheme.surface,
+                borderColor: activeDoc.id === 'book-dracula-full' ? currentTheme.accent : currentTheme.border,
+                color: activeDoc.id === 'book-dracula-full' ? currentTheme.accent : currentTheme.textBright,
+              }}
+            >
+              <span>🧛 Dracula</span>
+            </button>
+
+            <button
+              onClick={() => {
+                const book = SAMPLE_LIBRARY.find((s) => s.id === 'book-doctor-moreau');
+                if (book) handleSelectDocument(createDocumentFromSample(book), 0);
+              }}
+              className={`px-2.5 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === 'book-doctor-moreau' ? 'font-bold ring-2 shadow-sm' : 'opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: activeDoc.id === 'book-doctor-moreau' ? currentTheme.surfaceHover : currentTheme.surface,
+                borderColor: activeDoc.id === 'book-doctor-moreau' ? currentTheme.accent : currentTheme.border,
+                color: activeDoc.id === 'book-doctor-moreau' ? currentTheme.accent : currentTheme.textBright,
+              }}
+            >
+              <span>🧬 Dr. Moreau</span>
+            </button>
+
+            <button
+              onClick={() => {
+                const book = SAMPLE_LIBRARY.find((s) => s.id === 'book-time-machine-full');
+                if (book) handleSelectDocument(createDocumentFromSample(book), 0);
+              }}
+              className={`px-2.5 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === 'book-time-machine-full' ? 'font-bold ring-2 shadow-sm' : 'opacity-70 hover:opacity-100'
+              }`}
+              style={{
+                backgroundColor: activeDoc.id === 'book-time-machine-full' ? currentTheme.surfaceHover : currentTheme.surface,
+                borderColor: activeDoc.id === 'book-time-machine-full' ? currentTheme.accent : currentTheme.border,
+                color: activeDoc.id === 'book-time-machine-full' ? currentTheme.accent : currentTheme.textBright,
+              }}
+            >
+              <span>⏳ Time Machine</span>
+            </button>
+
+            <button
+              onClick={() => {
+                const drill = SAMPLE_LIBRARY.find((s) => s.id === 'sample-video-speed-challenge');
+                if (drill) handleSelectDocument(createDocumentFromSample(drill), 0);
+              }}
+              className={`px-2.5 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 text-xs ${
+                activeDoc.id === 'sample-video-speed-challenge' ? 'font-bold ring-2 shadow-sm' : 'opacity-70 hover:opacity-100'
               }`}
               style={{
                 backgroundColor: activeDoc.id === 'sample-video-speed-challenge' ? currentTheme.surfaceHover : currentTheme.surface,
@@ -1319,21 +1378,23 @@ export default function App() {
                 color: activeDoc.id === 'sample-video-speed-challenge' ? currentTheme.accent : currentTheme.textBright,
               }}
             >
-              <Zap className="w-3.5 h-3.5 shrink-0" />
-              <span>600 WPM Video Drill</span>
+              <Zap className="w-3.5 h-3.5 shrink-0 text-amber-400" />
+              <span>Video Drill</span>
             </button>
 
+            {/* 4. Upload & Bookshelf Drawer Trigger */}
             <button
               onClick={() => setIsSidebarOpen(true)}
-              className="px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 opacity-80 hover:opacity-100 text-xs"
+              className="px-2.5 py-1.5 rounded-xl border flex items-center gap-1.5 transition-all active:scale-95 opacity-80 hover:opacity-100 text-xs"
               style={{
                 backgroundColor: currentTheme.surface,
                 borderColor: currentTheme.border,
                 color: currentTheme.textDim,
               }}
+              title="Open Bookshelf drawer & file upload (B)"
             >
               <Upload className="w-3.5 h-3.5 shrink-0" />
-              <span>+ Upload / Library</span>
+              <span>Upload File</span>
             </button>
           </div>
         )}
