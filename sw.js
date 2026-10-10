@@ -1,8 +1,7 @@
 // SpeedRead PWA Offline Service Worker
-const CACHE_NAME = 'speedread-cache-v2';
+const CACHE_NAME = 'speedread-cache-v4';
 
 const STATIC_ASSETS = [
-  './',
   './index.html',
   './favicon.svg',
   './manifest.json',
@@ -28,6 +27,13 @@ self.addEventListener('activate', (event) => {
       );
     }).then(() => self.clients.claim())
   );
+});
+
+// Skip waiting message handler
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 // Fetch: Network-first for HTML, Stale-While-Revalidate for scripts/styles, Cache-First for fonts/icons
@@ -73,7 +79,7 @@ self.addEventListener('fetch', (event) => {
         .catch(async () => {
           const cached = await caches.match(request);
           if (cached) return cached;
-          return caches.match('./index.html') || caches.match('/');
+          return caches.match('./index.html') || caches.match('./');
         })
     );
     return;
